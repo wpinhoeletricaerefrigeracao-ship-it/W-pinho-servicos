@@ -6,1725 +6,227 @@
 <meta name="theme-color" content="#0b5fb3">
 <title>W.Pinho Serviços PRO</title>
 <style>
-:root{
---blue:#0b5fb3;
---blue2:#073d75;
---bg:#f2f6fa;
---card:#fff;
---text:#182230;
---muted:#657386;
---line:#dbe4ed;
---ok:#16854b;
---warn:#b56a00;
---danger:#bd2d2d;
---shadow:0 8px 28px rgba(20,50,80,.08)
-}
-*{box-sizing:border-box}
-body{
-margin:0;
-font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-background:var(--bg);
-color:var(--text)
-}
-button,input,select,textarea{font:inherit}
-.hidden{display:none!important}
-.top{
-position:sticky;
-top:0;
-z-index:20;
-background:linear-gradient(135deg,var(--blue2),var(--blue));
-color:white;
-padding:14px 16px;
-box-shadow:0 3px 12px #0002
-}
-.brand{display:flex;align-items:center;gap:10px}
-.mark{
-width:42px;
-height:42px;
-border-radius:12px;
-background:white;
-color:var(--blue);
-font-weight:900;
-display:grid;
-place-items:center
-}
-.brand b{display:block;font-size:17px}
-.brand small{opacity:.88}
-.toprow{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:12px
-}
-.menuBtn{
-border:0;
-background:#ffffff20;
-color:white;
-border-radius:10px;
-padding:10px 12px;
-font-size:20px
-}
-.shell{
-display:grid;
-grid-template-columns:240px 1fr;
-min-height:calc(100vh - 70px)
-}
-aside{
-background:#0c2741;
-color:white;
-padding:16px 10px
-}
-nav button{
-width:100%;
-border:0;
-background:transparent;
-color:#dce9f4;
-text-align:left;
-padding:12px 13px;
-border-radius:10px;
-margin:2px 0;
-cursor:pointer
-}
-nav button.active,nav button:hover{
-background:#ffffff18;
-color:white
-}
-.main{
-padding:20px;
-max-width:1250px;
-width:100%;
-margin:auto
-}
-.grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:14px
-}
-.card{
-background:var(--card);
-border:1px solid var(--line);
-border-radius:16px;
-padding:18px;
-box-shadow:var(--shadow)
-}
-.stat b{
-font-size:30px;
-display:block;
-color:var(--blue)
-}
-.stat span{color:var(--muted)}
-h1{font-size:25px;margin:0 0 4px}
-h2{font-size:18px;margin:0 0 12px}
-.head{
-display:flex;
-justify-content:space-between;
-gap:12px;
-align-items:center;
-margin-bottom:16px
-}
-.muted{color:var(--muted)}
-.btn{
-border:1px solid var(--line);
-background:white;
-color:var(--text);
-padding:10px 13px;
-border-radius:10px;
-cursor:pointer;
-font-weight:650
-}
-.btn.primary{
-background:var(--blue);
-border-color:var(--blue);
-color:white
-}
-.btn.danger{
-color:var(--danger);
-border-color:#f1caca
-}
-.btn.ok{
-background:var(--ok);
-border-color:var(--ok);
-color:white
-}
-.btn.small{padding:7px 10px;font-size:13px}
-.row{display:flex;gap:10px;flex-wrap:wrap}
-.form{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:12px
-}
-.form label{
-display:flex;
-flex-direction:column;
-gap:6px;
-font-size:13px;
-font-weight:650
-}
-.form .full{grid-column:1/-1}
-input,select,textarea{
-width:100%;
-border:1px solid #cdd9e5;
-border-radius:10px;
-padding:11px;
-background:white;
-color:var(--text)
-}
-textarea{resize:vertical}
-.list{display:grid;gap:9px}
-.item{
-border:1px solid var(--line);
-border-radius:12px;
-padding:12px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:12px;
-background:white
-}
-.item .info{min-width:0}
-.item strong{display:block}
-.item small{
-display:block;
-color:var(--muted);
-white-space:normal
-}
-.badge{
-display:inline-block;
-padding:4px 8px;
-border-radius:999px;
-background:#eaf3fb;
-color:var(--blue2);
-font-size:12px;
-font-weight:700
-}
-.badge.ok{background:#e8f6ee;color:var(--ok)}
-.badge.warn{background:#fff4df;color:var(--warn)}
-.section{display:none}
-.section.active{display:block}
-.loginWrap{
-min-height:100vh;
-background:linear-gradient(135deg,#062b50,#0b6bc5);
-display:grid;
-place-items:center;
-padding:20px
-}
-.loginCard{
-background:white;
-width:min(460px,100%);
-padding:24px;
-border-radius:20px;
-box-shadow:0 18px 60px #0004
-}
-.loginLogo{
-width:72px;
-height:72px;
-background:var(--blue);
-color:white;
-border-radius:18px;
-display:grid;
-place-items:center;
-font-size:24px;
-font-weight:900;
-margin-bottom:16px
-}
-.canvas{
-width:100%;
-height:150px;
-border:1px dashed #9db0c1;
-border-radius:12px;
-background:white;
-touch-action:none
-}
-.photoGrid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:10px
-}
-.photo{
-border:1px solid var(--line);
-border-radius:12px;
-overflow:hidden;
-background:white
-}
-.photo img{
-width:100%;
-height:160px;
-object-fit:cover;
-display:block
-}
-.photo div{padding:8px;font-size:12px}
-.planGrid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:12px
-}
-.plan{
-border:1px solid var(--line);
-border-radius:16px;
-background:white;
-padding:16px
-}
-.plan.selected{outline:3px solid #8ac0ef}
-.price{
-font-size:26px;
-font-weight:800;
-color:var(--blue)
-}
-.notice{
-padding:12px;
-border-radius:12px;
-background:#fff7e8;
-border:1px solid #f3d49a;
-color:#6f4a00
-}
-.table{width:100%;border-collapse:collapse}
-.table th,.table td{
-padding:10px;
-border-bottom:1px solid var(--line);
-text-align:left;
-font-size:13px
-}
-.search{max-width:300px}
-.footerNote{
-font-size:12px;
-color:var(--muted);
-margin-top:16px
-}
-@media(max-width:900px){
-.shell{grid-template-columns:1fr}
-aside{
-display:none;
-position:fixed;
-top:70px;
-left:0;
-right:0;
-z-index:15;
-max-height:calc(100vh - 70px);
-overflow:auto
-}
-.menuOpen aside{display:block}
-.grid{grid-template-columns:1fr 1fr}
-.planGrid{grid-template-columns:1fr 1fr}
-.photoGrid{grid-template-columns:1fr 1fr}
-.main{padding:14px}
-.form{grid-template-columns:1fr}
-.form .full{grid-column:auto}
-}
-@media(max-width:560px){
-.grid,.planGrid,.photoGrid{grid-template-columns:1fr}
-.head{align-items:flex-start;flex-direction:column}
-.card{padding:14px}
-.item{align-items:flex-start;flex-direction:column}
-}
+:root{--b:#0b5fb3;--b2:#073d75;--bg:#f3f7fb;--card:#fff;--tx:#172434;--mut:#68798a;--line:#dbe5ee;--ok:#16854b;--warn:#aa6800;--danger:#b92d2d}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--tx)}
+button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,var(--b2),var(--b));color:#fff;padding:13px 15px}.toprow{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{display:flex;align-items:center;gap:10px}.mark{width:42px;height:42px;border-radius:12px;background:#fff;color:var(--b);display:grid;place-items:center;font-weight:900}.brand b{display:block}.brand small{opacity:.9}.menu{border:0;background:#ffffff22;color:#fff;border-radius:10px;padding:9px 12px;font-size:20px}.shell{display:grid;grid-template-columns:235px 1fr;min-height:calc(100vh - 68px)}aside{background:#0c2741;padding:14px 9px}nav button{width:100%;border:0;background:transparent;color:#dce9f4;text-align:left;padding:12px;border-radius:10px;margin:2px 0}nav button.active,nav button:hover{background:#ffffff18;color:#fff}.main{width:100%;max-width:1250px;margin:auto;padding:18px}.section{display:none}.section.active{display:block}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}h1{font-size:24px;margin:0}h2{font-size:18px;margin:0 0 10px}.muted{color:var(--mut)}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:16px;margin-bottom:13px;box-shadow:0 7px 25px #163d5f0d}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat b{display:block;font-size:29px;color:var(--b)}.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer}.btn.primary{background:var(--b);border-color:var(--b);color:#fff}.btn.danger{color:var(--danger);border-color:#edc7c7}.btn.small{padding:7px 9px;font-size:12px}.row{display:flex;gap:9px;flex-wrap:wrap}.form{display:grid;grid-template-columns:1fr 1fr;gap:11px}.form label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:700}.form .full{grid-column:1/-1}input,select,textarea{width:100%;padding:11px;border:1px solid #cdd9e5;border-radius:10px;background:#fff}.list{display:grid;gap:9px}.item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;justify-content:space-between;gap:12px;align-items:center}.item strong{display:block}.item small{display:block;color:var(--mut)}.badge{display:inline-block;margin-top:5px;padding:4px 8px;border-radius:99px;font-size:12px;font-weight:700;background:#eaf3fb;color:var(--b2)}.badge.ok{background:#e9f7ef;color:var(--ok)}.badge.warn{background:#fff4df;color:var(--warn)}
+.login{min-height:100vh;display:grid;place-items:center;padding:18px;background:linear-gradient(135deg,#062b50,#0b6bc5)}.loginCard{width:min(470px,100%);background:#fff;border-radius:20px;padding:23px;box-shadow:0 18px 60px #0004}.tabs{display:flex;gap:6px;margin:12px 0}.tabs button{flex:1}.notice{background:#fff7e8;border:1px solid #f3d49a;border-radius:10px;padding:11px;color:#6c4900}.canvas{width:100%;height:145px;border:1px dashed #9eb0c0;border-radius:10px;background:#fff;touch-action:none}.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.photo{border:1px solid var(--line);border-radius:10px;overflow:hidden}.photo img{width:100%;height:150px;object-fit:cover;display:block}.photo div{padding:7px;font-size:11px}.search{max-width:300px}
+@media(max-width:900px){.shell{grid-template-columns:1fr}aside{display:none;position:fixed;top:68px;left:0;right:0;z-index:15;max-height:calc(100vh - 68px);overflow:auto}.menuOpen aside{display:block}.grid{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}.form .full{grid-column:auto}.photos{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.main{padding:12px}.grid,.photos{grid-template-columns:1fr}.head,.item{align-items:flex-start;flex-direction:column}.item .row{width:100%}.item .row button{flex:1}}
 </style>
 </head>
 <body>
 
-<div id="loginView" class="loginWrap">
+<div id="setupView" class="login hidden">
 <div class="loginCard">
-<div class="loginLogo">WP</div>
-<h1>W.Pinho Serviços PRO</h1>
-<p class="muted">Acesse seu sistema de serviços.</p>
+<div class="mark">WP</div>
+<h1 style="margin-top:12px">Configuração online</h1>
+<p class="muted">Esta versão usa Supabase para sincronizar clientes, ordens, fotos e usuários entre vários celulares.</p>
+<div class="notice">Abra o arquivo <b>config.js</b> e coloque a URL e a Publishable/Anon Key do seu projeto Supabase. Depois recarregue.</div>
+</div>
+</div>
 
+<div id="authView" class="login hidden">
+<div class="loginCard">
+<div class="mark">WP</div><h1 style="margin-top:12px">W.Pinho Serviços PRO</h1>
+<p class="muted">Sistema multiusuário online.</p>
+<div class="tabs">
+<button class="btn primary" id="tabLogin">Entrar</button>
+<button class="btn" id="tabSignup">Criar conta</button>
+</div>
 <form id="loginForm" class="form">
-<label class="full">
-E-mail
-<input id="loginEmail" type="email" required>
-</label>
-
-<label class="full">
-Senha
-<input id="loginPassword" type="password" required minlength="4">
-</label>
-
-<div class="full row">
-<button class="btn primary" type="submit">Entrar</button>
-<button class="btn" type="button" id="firstAccountBtn">
-Criar primeira conta
-</button>
-</div>
+<label class="full">E-mail<input id="loginEmail" type="email" required></label>
+<label class="full">Senha<input id="loginPass" type="password" minlength="6" required></label>
+<div class="full"><button class="btn primary" type="submit">Entrar</button></div>
 </form>
+<form id="signupForm" class="form hidden">
+<label class="full">Seu nome<input id="signupName" required></label>
+<label class="full">E-mail<input id="signupEmail" type="email" required></label>
+<label class="full">Senha<input id="signupPass" type="password" minlength="6" required></label>
+<label class="full">Como deseja começar?
+<select id="signupMode"><option value="owner">Criar minha empresa</option><option value="join">Entrar em uma empresa existente</option></select>
+</label>
+<label class="full" id="companyNameWrap">Nome da empresa<input id="companyName" placeholder="Ex.: W.Pinho Elétrica e Refrigeração"></label>
+<label class="full hidden" id="inviteWrap">Código da empresa<input id="inviteCode" placeholder="Ex.: WP-AB12CD"></label>
+<div class="full"><button class="btn primary" type="submit">Criar conta</button></div>
+</form>
+<div id="authMsg" class="muted" style="margin-top:10px"></div>
+</div>
+</div>
 
-<p class="footerNote">
-W.Pinho Serviços PRO
-</p>
-</div>
-</div>
 <div id="appView" class="hidden">
-<header class="top">
-  <div class="toprow">
-    <div class="brand">
-      <div class="mark">WP</div>
-      <div>
-        <b>W.Pinho Serviços PRO</b>
-        <small>Elétrica • Refrigeração • Climatização • PMOC</small>
-      </div>
-    </div>
-    <button class="menuBtn" id="menuBtn">☰</button>
-  </div>
-</header>
-
-<div class="shell" id="shell">
-<aside>
-<nav id="nav">
-  <button data-go="dashboard" class="active">▦ Painel</button>
-  <button data-go="clients">👥 Clientes</button>
-  <button data-go="orders">🛠 Ordens de serviço</button>
-  <button data-go="newOrder">＋ Nova OS</button>
-  <button data-go="users" data-admin>🔐 Usuários</button>
-  <button data-go="plans" data-admin>💳 Planos mensais</button>
-  <button data-go="backup">💾 Backup</button>
-  <button id="logoutBtn">↪ Sair</button>
-</nav>
-</aside>
-
+<header class="top"><div class="toprow"><div class="brand"><div class="mark">WP</div><div><b>W.Pinho Serviços PRO</b><small id="companyLabel">Online • Multiusuário</small></div></div><button id="menuBtn" class="menu">☰</button></div></header>
+<div id="shell" class="shell"><aside><nav>
+<button data-go="dash" class="active">▦ Painel</button>
+<button data-go="clients">👥 Clientes</button>
+<button data-go="orders">🛠 Ordens de serviço</button>
+<button data-go="newOrder">＋ Nova OS</button>
+<button data-go="team">👤 Equipe</button>
+<button data-go="backup">💾 Backup</button>
+<button id="logoutBtn">↪ Sair</button>
+</nav></aside>
 <main class="main">
 
-<section id="dashboard" class="section active">
-  <div class="head">
-    <div>
-      <h1>Painel</h1>
-      <div class="muted" id="welcome"></div>
-    </div>
-    <button class="btn primary" data-go="newOrder">＋ Nova OS</button>
-  </div>
-
-  <div class="grid">
-    <div class="card stat">
-      <b id="statClients">0</b>
-      <span>Clientes</span>
-    </div>
-    <div class="card stat">
-      <b id="statOrders">0</b>
-      <span>Ordens de serviço</span>
-    </div>
-    <div class="card stat">
-      <b id="statOpen">0</b>
-      <span>Em andamento</span>
-    </div>
-    <div class="card stat">
-      <b id="statDone">0</b>
-      <span>Concluídas</span>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:14px">
-    <h2>Últimos atendimentos</h2>
-    <div id="recentOrders" class="list"></div>
-  </div>
+<section id="dash" class="section active">
+<div class="head"><div><h1>Painel</h1><div class="muted" id="welcome"></div></div><button class="btn primary" data-go="newOrder">＋ Nova OS</button></div>
+<div class="grid">
+<div class="card stat"><b id="sClients">0</b><span>Clientes</span></div>
+<div class="card stat"><b id="sOrders">0</b><span>Ordens</span></div>
+<div class="card stat"><b id="sOpen">0</b><span>Em andamento</span></div>
+<div class="card stat"><b id="sDone">0</b><span>Concluídas</span></div>
+</div>
+<div class="card"><h2>Últimos atendimentos</h2><div id="recentOrders" class="list"></div></div>
 </section>
 
 <section id="clients" class="section">
-  <div class="head">
-    <div>
-      <h1>Clientes</h1>
-      <div class="muted">Cadastro e histórico dos seus clientes.</div>
-    </div>
-    <input id="clientSearch" class="search" placeholder="Pesquisar cliente...">
-  </div>
-
-  <div class="card">
-    <h2 id="clientFormTitle">Novo cliente</h2>
-
-    <form id="clientForm" class="form">
-      <input type="hidden" id="clientId">
-
-      <label>
-        Nome / Razão social
-        <input id="clientName" required>
-      </label>
-
-      <label>
-        Telefone
-        <input id="clientPhone">
-      </label>
-
-      <label>
-        CPF/CNPJ
-        <input id="clientDoc">
-      </label>
-
-      <label>
-        E-mail
-        <input id="clientEmail" type="email">
-      </label>
-
-      <label class="full">
-        Endereço
-        <textarea id="clientAddress" rows="2"></textarea>
-      </label>
-
-      <label class="full">
-        Observações
-        <textarea id="clientNotes" rows="2"></textarea>
-      </label>
-
-      <div class="full row">
-        <button class="btn primary" type="submit">Salvar cliente</button>
-        <button class="btn hidden" id="cancelClientEdit" type="button">
-          Cancelar edição
-        </button>
-      </div>
-    </form>
-  </div>
-
-  <div class="card" style="margin-top:14px">
-    <h2>Clientes cadastrados</h2>
-    <div id="clientList" class="list"></div>
-  </div>
+<div class="head"><div><h1>Clientes</h1><div class="muted">Compartilhados com a equipe.</div></div><input id="clientSearch" class="search" placeholder="Pesquisar..."></div>
+<div class="card"><h2 id="clientTitle">Novo cliente</h2><form id="clientForm" class="form">
+<input id="clientId" type="hidden">
+<label>Nome / Razão social<input id="clientName" required></label>
+<label>Telefone<input id="clientPhone"></label>
+<label>CPF/CNPJ<input id="clientDoc"></label>
+<label>E-mail<input id="clientEmail" type="email"></label>
+<label class="full">Endereço<textarea id="clientAddress" rows="2"></textarea></label>
+<div class="full row"><button class="btn primary">Salvar cliente</button><button id="cancelClient" type="button" class="btn hidden">Cancelar</button></div>
+</form></div>
+<div id="clientList" class="list"></div>
 </section>
 
 <section id="orders" class="section">
-  <div class="head">
-    <div>
-      <h1>Ordens de serviço</h1>
-      <div class="muted">
-        Serviços, fotos, GPS, assinaturas e PDF.
-      </div>
-    </div>
-    <input id="orderSearch" class="search" placeholder="Pesquisar OS...">
-  </div>
-
-  <div id="orderList" class="list"></div>
+<div class="head"><div><h1>Ordens de serviço</h1><div class="muted">Atualizadas em todos os celulares.</div></div><input id="orderSearch" class="search" placeholder="Pesquisar..."></div>
+<div id="orderList" class="list"></div>
 </section>
 
 <section id="newOrder" class="section">
-  <div class="head">
-    <div>
-      <h1 id="orderFormHeading">Nova ordem de serviço</h1>
-      <div class="muted">Registre o atendimento completo.</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <form id="orderForm" class="form">
-      <input id="orderId" type="hidden">
-
-      <label>
-        Cliente
-        <select id="orderClient" required></select>
-      </label>
-
-      <label>
-        Técnico
-        <input id="orderTech" required>
-      </label>
-
-      <label>
-        Tipo de serviço
-        <select id="orderType">
-          <option>PMOC / Preventiva</option>
-          <option>Corretiva</option>
-          <option>Instalação</option>
-          <option>Higienização</option>
-          <option>Inspeção</option>
-          <option>Elétrica</option>
-        </select>
-      </label>
-
-      <label>
-        Status
-        <select id="orderStatus">
-          <option>Em andamento</option>
-          <option>Pendente</option>
-          <option>Concluída</option>
-        </select>
-      </label>      <label>
-        Data do atendimento
-        <input id="orderDate" type="date" required>
-      </label>
-
-      <label>
-        Valor do serviço (R$)
-        <input id="orderValue" type="number" min="0" step="0.01" placeholder="0,00">
-      </label>
-
-      <label class="full">
-        Equipamento / Local
-        <input id="orderEquipment" placeholder="Ex.: Split 12.000 BTU - Sala">
-      </label>
-
-      <label class="full">
-        Defeito / Solicitação
-        <textarea id="orderProblem" rows="3"></textarea>
-      </label>
-
-      <label class="full">
-        Serviço executado
-        <textarea id="orderService" rows="4"></textarea>
-      </label>
-
-      <label class="full">
-        Materiais utilizados
-        <textarea id="orderMaterials" rows="3"></textarea>
-      </label>
-
-      <label class="full">
-        Observações
-        <textarea id="orderNotes" rows="3"></textarea>
-      </label>
-
-      <div class="full">
-        <h2>Fotos do serviço</h2>
-        <p class="muted">
-          As fotos podem registrar automaticamente data, hora e localização.
-        </p>
-
-        <div class="row">
-          <label class="btn">
-            📷 Adicionar foto
-            <input id="photoInput" type="file" accept="image/*" capture="environment" hidden>
-          </label>
-
-          <button class="btn" id="getLocationBtn" type="button">
-            📍 Obter localização
-          </button>
-        </div>
-
-        <div id="locationInfo" class="footerNote"></div>
-        <div id="photoPreview" class="photoGrid" style="margin-top:12px"></div>
-      </div>
-
-      <div class="full">
-        <h2>Assinatura do cliente</h2>
-        <canvas id="clientSignature" class="canvas"></canvas>
-        <div class="row" style="margin-top:8px">
-          <button type="button" class="btn small" data-clear-sign="clientSignature">
-            Limpar assinatura
-          </button>
-        </div>
-      </div>
-
-      <div class="full">
-        <h2>Assinatura do técnico</h2>
-        <canvas id="techSignature" class="canvas"></canvas>
-        <div class="row" style="margin-top:8px">
-          <button type="button" class="btn small" data-clear-sign="techSignature">
-            Limpar assinatura
-          </button>
-        </div>
-      </div>
-
-      <div class="full row">
-        <button class="btn primary" type="submit">💾 Salvar ordem de serviço</button>
-        <button class="btn" id="cancelOrderEdit" type="button">Cancelar</button>
-      </div>
-    </form>
-  </div>
+<div class="head"><div><h1 id="orderTitle">Nova ordem de serviço</h1><div class="muted">Fotos, GPS e assinaturas ficam vinculados à empresa.</div></div></div>
+<div class="card"><form id="orderForm" class="form">
+<input id="orderId" type="hidden">
+<label>Cliente<select id="orderClient" required></select></label>
+<label>Técnico<input id="orderTech" required></label>
+<label>Tipo<select id="orderType"><option>PMOC / Preventiva</option><option>Corretiva</option><option>Instalação</option><option>Higienização</option><option>Inspeção</option><option>Elétrica</option></select></label>
+<label>Status<select id="orderStatus"><option>Em andamento</option><option>Pendente</option><option>Concluída</option></select></label>
+<label>Data<input id="orderDate" type="date" required></label>
+<label>Valor (R$)<input id="orderValue" type="number" min="0" step=".01"></label>
+<label class="full">Equipamento / local<input id="orderEquipment"></label>
+<label class="full">Defeito / solicitação<textarea id="orderProblem" rows="3"></textarea></label>
+<label class="full">Serviço executado<textarea id="orderService" rows="4"></textarea></label>
+<label class="full">Materiais<textarea id="orderMaterials" rows="2"></textarea></label>
+<label class="full">Observações<textarea id="orderNotes" rows="2"></textarea></label>
+<div class="full card" style="box-shadow:none"><h2>📍 Localização</h2><div id="gpsText" class="muted">Ainda não capturada.</div><button id="gpsBtn" class="btn" type="button" style="margin-top:8px">Capturar GPS</button></div>
+<div class="full card" style="box-shadow:none"><h2>📷 Fotos</h2><input id="photoInput" type="file" accept="image/*" capture="environment" multiple><div id="photoPreview" class="photos" style="margin-top:10px"></div></div>
+<div class="full"><h2>Assinaturas</h2><div class="form"><div><b>Cliente</b><canvas id="sigClient" class="canvas" width="700" height="220"></canvas><button class="btn small" type="button" data-clear="sigClient">Limpar</button></div><div><b>Técnico</b><canvas id="sigTech" class="canvas" width="700" height="220"></canvas><button class="btn small" type="button" data-clear="sigTech">Limpar</button></div></div></div>
+<div class="full row"><button class="btn primary">Salvar OS</button><button id="cancelOrder" class="btn" type="button">Cancelar</button></div>
+</form></div>
 </section>
 
-<section id="users" class="section">
-  <div class="head">
-    <div>
-      <h1>Usuários</h1>
-      <div class="muted">Controle quem pode acessar o sistema.</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>Novo usuário</h2>
-    <form id="userForm" class="form">
-      <label>
-        Nome
-        <input id="userName" required>
-      </label>
-
-      <label>
-        E-mail
-        <input id="userEmail" type="email" required>
-      </label>
-
-      <label>
-        Senha
-        <input id="userPassword" type="password" minlength="4" required>
-      </label>
-
-      <label>
-        Perfil
-        <select id="userRole">
-          <option value="tecnico">Técnico</option>
-          <option value="admin">Administrador</option>
-        </select>
-      </label>
-
-      <div class="full">
-        <button class="btn primary" type="submit">Criar usuário</button>
-      </div>
-    </form>
-  </div>
-
-  <div class="card" style="margin-top:14px">
-    <h2>Usuários cadastrados</h2>
-    <div id="userList" class="list"></div>
-  </div>
-</section>
-
-<section id="plans" class="section">
-  <div class="head">
-    <div>
-      <h1>Planos mensais</h1>
-      <div class="muted">Estrutura preparada para comercialização do sistema.</div>
-    </div>
-  </div>
-
-  <div class="notice">
-    Nesta versão, os planos são controlados no próprio aplicativo.
-    A cobrança automática online poderá ser conectada posteriormente.
-  </div>
-
-  <div class="planGrid" style="margin-top:14px">
-    <div class="plan" data-plan="Grátis">
-      <h2>Grátis</h2>
-      <div class="price">R$ 0</div>
-      <p>Teste e demonstração.</p>
-      <button class="btn choosePlan" data-plan="Grátis">Selecionar</button>
-    </div>
-
-    <div class="plan" data-plan="Básico">
-      <h2>Básico</h2>
-      <div class="price">R$ 29,90</div>
-      <p>Para profissional autônomo.</p>
-      <button class="btn choosePlan" data-plan="Básico">Selecionar</button>
-    </div>
-
-    <div class="plan" data-plan="PRO">
-      <h2>PRO</h2>
-      <div class="price">R$ 59,90</div>
-      <p>Clientes, OS, fotos, assinaturas e PDF.</p>
-      <button class="btn primary choosePlan" data-plan="PRO">Selecionar</button>
-    </div>
-
-    <div class="plan" data-plan="Empresa">
-      <h2>Empresa</h2>
-      <div class="price">R$ 99,90</div>
-      <p>Preparado para equipes e expansão.</p>
-      <button class="btn choosePlan" data-plan="Empresa">Selecionar</button>
-    </div>
-  </div>
-
-  <div class="card" style="margin-top:14px">
-    <h2>Plano atual</h2>
-    <div id="currentPlan"></div>
-  </div>
+<section id="team" class="section">
+<div class="head"><div><h1>Equipe</h1><div class="muted">Acesso remoto para vários celulares.</div></div></div>
+<div class="card"><h2>Código para entrar na empresa</h2><div class="notice"><b id="teamCode">—</b><br><small>O funcionário cria uma conta e escolhe “Entrar em uma empresa existente”, usando este código.</small></div></div>
+<div class="card"><h2>Usuários da empresa</h2><div id="teamList" class="list"></div></div>
 </section>
 
 <section id="backup" class="section">
-  <div class="head">
-    <div>
-      <h1>Backup</h1>
-      <div class="muted">Proteja os dados cadastrados no aparelho.</div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>Exportar e restaurar</h2>
-    <div class="row">
-      <button id="exportBackup" class="btn primary">⬇ Exportar backup</button>
-
-      <label class="btn">
-        ⬆ Restaurar backup
-        <input id="importBackup" type="file" accept=".json,application/json" hidden>
-      </label>
-    </div>
-  </div>
+<div class="head"><div><h1>Backup</h1><div class="muted">Os dados principais já ficam online. Você também pode baixar uma cópia JSON.</div></div></div>
+<div class="card"><button id="exportBtn" class="btn primary">Baixar cópia JSON</button></div>
 </section>
 
-</main>
-</div>
-</div>
+</main></div></div>
 
 <script>
-const KEY = "wpinho_servicos_pro_v11";
-
-let db = {
-  users: [],
-  clients: [],
-  orders: [],
-  plan: "PRO"
+window.WPINHO_SUPABASE = {
+  url: "https://iadxzqozsyzelvqhtvot.supabase.co",
+  key: "sb_publishable_2pR9V3QSFUPqucO1iZpLDA_YXraMc3F"
 };
-
-let currentUser = null;
-let currentPhotos = [];
-let currentLocation = null;
-
-function loadDB(){
-  try{
-    const saved = localStorage.getItem(KEY);
-    if(saved) db = {...db, ...JSON.parse(saved)};
-  }catch(e){}
-}
-
-function saveDB(){
-  localStorage.setItem(KEY, JSON.stringify(db));
-}
-
-function id(){
-  return Date.now().toString(36) + Math.random().toString(36).slice(2,7);
-}
-
-function esc(v=""){
-  return String(v)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;");
-}
-
-function money(v){
-  return Number(v || 0).toLocaleString("pt-BR",{
-    style:"currency",
-    currency:"BRL"
-  });
-}
-
-function today(){
-  return new Date().toISOString().slice(0,10);
-}function showApp(){
-  document.getElementById("loginView").classList.add("hidden");
-  document.getElementById("appView").classList.remove("hidden");
-
-  document.getElementById("welcome").textContent =
-    "Olá, " + (currentUser?.name || "Usuário");
-
-  document.querySelectorAll("[data-admin]").forEach(el=>{
-    el.classList.toggle("hidden", currentUser?.role !== "admin");
-  });
-
-  renderAll();
-}
-
-function showLogin(){
-  document.getElementById("appView").classList.add("hidden");
-  document.getElementById("loginView").classList.remove("hidden");
-}
-
-document.getElementById("firstAccountBtn").onclick = async ()=>{
-  if(db.users.length){
-    alert("Já existe uma conta cadastrada.");
-    return;
-  }
-
-  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-  const password = document.getElementById("loginPassword").value;
-
-  if(!email || password.length < 4){
-    alert("Digite um e-mail e uma senha com pelo menos 4 caracteres.");
-    return;
-  }
-
-  const name = prompt("Nome do proprietário:", "Warllen Pinho") || "Proprietário";
-
-  db.users.push({
-    id:id(),
-    name,
-    email,
-    password,
-    role:"admin",
-    active:true
-  });
-
-  saveDB();
-
-  alert("Conta criada. Agora toque em Entrar.");
-};
-
-document.getElementById("loginForm").onsubmit = e=>{
-  e.preventDefault();
-
-  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
-  const password = document.getElementById("loginPassword").value;
-
-  const user = db.users.find(u =>
-    u.email === email &&
-    u.password === password &&
-    u.active !== false
-  );
-
-  if(!user){
-    alert("E-mail ou senha inválidos.");
-    return;
-  }
-
-  currentUser = user;
-  sessionStorage.setItem("wp_user", user.id);
-  showApp();
-};
-
-document.getElementById("logoutBtn").onclick = ()=>{
-  sessionStorage.removeItem("wp_user");
-  currentUser = null;
-  location.reload();
-};
-
-function go(section){
-  document.querySelectorAll(".section").forEach(s=>{
-    s.classList.toggle("active", s.id === section);
-  });
-
-  document.querySelectorAll("[data-go]").forEach(b=>{
-    b.classList.toggle("active", b.dataset.go === section);
-  });
-
-  document.getElementById("shell").classList.remove("menuOpen");
-
-  if(section === "newOrder"){
-    prepareNewOrder();
-  }
-
-  window.scrollTo(0,0);
-}
-
-document.addEventListener("click", e=>{
-  const btn = e.target.closest("[data-go]");
-  if(btn) go(btn.dataset.go);
-});
-
-document.getElementById("menuBtn").onclick = ()=>{
-  document.getElementById("shell").classList.toggle("menuOpen");
-};
-
-function renderDashboard(){
-  const orders = db.orders;
-
-  document.getElementById("statClients").textContent = db.clients.length;
-  document.getElementById("statOrders").textContent = orders.length;
-
-  document.getElementById("statOpen").textContent =
-    orders.filter(o=>o.status !== "Concluída").length;
-
-  document.getElementById("statDone").textContent =
-    orders.filter(o=>o.status === "Concluída").length;
-
-  const recent = orders
-    .slice()
-    .sort((a,b)=>b.createdAt-a.createdAt)
-    .slice(0,5);
-
-  document.getElementById("recentOrders").innerHTML =
-    recent.map(orderCard).join("") ||
-    '<div class="muted">Nenhuma ordem de serviço cadastrada.</div>';
-}
-
-function clientName(clientId){
-  return db.clients.find(c=>c.id===clientId)?.name || "Cliente não encontrado";
-}
-
-function orderCard(o){
-  return `
-  <div class="item">
-    <div class="info">
-      <strong>OS #${esc(o.number)} • ${esc(clientName(o.clientId))}</strong>
-      <small>${esc(o.type)} • ${esc(o.date || "")}</small>
-      <small>${esc(o.equipment || "")}</small>
-      <span class="badge ${o.status==="Concluída" ? "ok" : "warn"}">
-        ${esc(o.status)}
-      </span>
-    </div>
-
-    <div class="row">
-      <button class="btn small" onclick="editOrder('${o.id}')">
-        Editar
-      </button>
-
-      <button class="btn small" onclick="printOrder('${o.id}')">
-        PDF
-      </button>
-
-      <button class="btn small danger" onclick="deleteOrder('${o.id}')">
-        Excluir
-      </button>
-    </div>
-  </div>`;
-}
-
-document.getElementById("clientForm").onsubmit = e=>{
-  e.preventDefault();
-
-  const cid = document.getElementById("clientId").value || id();
-
-  const client = {
-    id:cid,
-    name:document.getElementById("clientName").value.trim(),
-    phone:document.getElementById("clientPhone").value.trim(),
-    doc:document.getElementById("clientDoc").value.trim(),
-    email:document.getElementById("clientEmail").value.trim(),
-    address:document.getElementById("clientAddress").value.trim(),
-    notes:document.getElementById("clientNotes").value.trim(),
-    createdAt:Date.now()
-  };
-
-  const index = db.clients.findIndex(c=>c.id===cid);
-
-  if(index >= 0){
-    client.createdAt = db.clients[index].createdAt;
-    db.clients[index] = client;
-  }else{
-    db.clients.push(client);
-  }
-
-  saveDB();
-  resetClientForm();
-  renderAll();
-
-  alert("Cliente salvo com sucesso.");
-};
-
-function resetClientForm(){
-  document.getElementById("clientForm").reset();
-  document.getElementById("clientId").value = "";
-  document.getElementById("clientFormTitle").textContent = "Novo cliente";
-  document.getElementById("cancelClientEdit").classList.add("hidden");
-}
-
-document.getElementById("cancelClientEdit").onclick = resetClientForm;
-
-function editClient(cid){
-  const c = db.clients.find(x=>x.id===cid);
-  if(!c) return;
-
-  go("clients");
-
-  document.getElementById("clientId").value = c.id;
-  document.getElementById("clientName").value = c.name || "";
-  document.getElementById("clientPhone").value = c.phone || "";
-  document.getElementById("clientDoc").value = c.doc || "";
-  document.getElementById("clientEmail").value = c.email || "";
-  document.getElementById("clientAddress").value = c.address || "";
-  document.getElementById("clientNotes").value = c.notes || "";
-
-  document.getElementById("clientFormTitle").textContent = "Editar cliente";
-  document.getElementById("cancelClientEdit").classList.remove("hidden");
-}
-
-function deleteClient(cid){
-  if(db.orders.some(o=>o.clientId===cid)){
-    alert("Esse cliente possui ordem de serviço cadastrada.");
-    return;
-  }
-
-  if(confirm("Excluir este cliente?")){
-    db.clients = db.clients.filter(c=>c.id!==cid);
-    saveDB();
-    renderAll();
-  }
-}
-
-function renderClients(){
-  const q = document.getElementById("clientSearch").value.toLowerCase();
-
-  const list = db.clients.filter(c =>
-    JSON.stringify(c).toLowerCase().includes(q)
-  );
-
-  document.getElementById("clientList").innerHTML =
-    list.map(c=>`
-      <div class="item">
-        <div class="info">
-          <strong>${esc(c.name)}</strong>
-          <small>${esc(c.phone || "Sem telefone")}</small>
-          <small>${esc(c.address || "")}</small>
-        </div>
-
-        <div class="row">
-          <button class="btn small" onclick="editClient('${c.id}')">
-            Editar
-          </button>
-
-          <button class="btn small danger" onclick="deleteClient('${c.id}')">
-            Excluir
-          </button>
-        </div>
-      </div>
-    `).join("") ||
-    '<div class="muted">Nenhum cliente cadastrado.</div>';
-
-  renderClientSelect();
-}
-
-document.getElementById("clientSearch").oninput = renderClients;
-
-function renderClientSelect(){
-  const select = document.getElementById("orderClient");
-  const old = select.value;
-
-  select.innerHTML =
-    '<option value="">Selecione o cliente...</option>' +
-    db.clients.map(c=>
-      `<option value="${c.id}">${esc(c.name)}</option>`
-    ).join("");
-
-  if(db.clients.some(c=>c.id===old)){
-    select.value = old;
-  }
-}
-
-function nextOrderNumber(){
-  const max = db.orders.reduce((m,o)=>Math.max(m,Number(o.number)||0),0);
-  return String(max+1).padStart(5,"0");
-}
-
-function prepareNewOrder(){
-  if(document.getElementById("orderId").value) return;
-
-  document.getElementById("orderDate").value = today();
-
-  if(currentUser){
-    document.getElementById("orderTech").value = currentUser.name || "";
-  }
-
-  renderClientSelect();
-}
-
-document.getElementById("getLocationBtn").onclick = ()=>{
-  if(!navigator.geolocation){
-    alert("GPS não disponível neste aparelho.");
-    return;
-  }
-
-  document.getElementById("locationInfo").textContent =
-    "Buscando localização...";
-
-  navigator.geolocation.getCurrentPosition(
-    pos=>{
-      currentLocation = {
-        lat:pos.coords.latitude.toFixed(6),
-        lon:pos.coords.longitude.toFixed(6),
-        accuracy:Math.round(pos.coords.accuracy)
-      };
-
-      document.getElementById("locationInfo").textContent =
-        `GPS: ${currentLocation.lat}, ${currentLocation.lon} • precisão aproximada ${currentLocation.accuracy} m`;
-    },
-    ()=>{
-      document.getElementById("locationInfo").textContent =
-        "Não foi possível obter a localização. Autorize o GPS.";
-    },
-    {
-      enableHighAccuracy:true,
-      timeout:15000
-    }
-  );
-};
-
-document.getElementById("photoInput").onchange = async e=>{
-  const file = e.target.files[0];
-  if(!file) return;
-
-  const reader = new FileReader();
-
-  reader.onload = ()=>{
-    currentPhotos.push({
-      id:id(),
-      data:reader.result,
-      date:new Date().toLocaleString("pt-BR"),
-      location:currentLocation ? {...currentLocation} : null
-    });
-
-    renderPhotoPreview();
-  };
-
-  reader.readAsDataURL(file);
-  e.target.value = "";
-};
-
-function renderPhotoPreview(){
-  document.getElementById("photoPreview").innerHTML =
-    currentPhotos.map((p,i)=>`
-      <div class="photo">
-        <img src="${p.data}">
-        <div>
-          ${esc(p.date)}
-          <br>
-          ${p.location
-            ? `GPS: ${p.location.lat}, ${p.location.lon}`
-            : "Sem GPS"}
-          <br><br>
-          <button type="button"
-            class="btn small danger"
-            onclick="removePhoto(${i})">
-            Remover
-          </button>
-        </div>
-      </div>
-    `).join("");
-}
-
-function removePhoto(i){
-  currentPhotos.splice(i,1);
-  renderPhotoPreview();
-}
-
-function setupSignature(canvasId){
-  const canvas = document.getElementById(canvasId);
-  const ctx = canvas.getContext("2d");
-
-  canvas.width = 700;
-  canvas.height = 180;
-
-  ctx.lineWidth = 3;
-  ctx.lineCap = "round";
-
-  let drawing = false;
-
-  function position(e){
-    const r = canvas.getBoundingClientRect();
-    const p = e.touches ? e.touches[0] : e;
-
-    return {
-      x:(p.clientX-r.left) * canvas.width/r.width,
-      y:(p.clientY-r.top) * canvas.height/r.height
-    };
-  }
-
-  function start(e){
-    drawing = true;
-    const p = position(e);
-    ctx.beginPath();
-    ctx.moveTo(p.x,p.y);
-    e.preventDefault();
-  }
-
-  function move(e){
-    if(!drawing) return;
-
-    const p = position(e);
-    ctx.lineTo(p.x,p.y);
-    ctx.stroke();
-    e.preventDefault();
-  }
-
-  function stop(){
-    drawing = false;
-  }
-
-  canvas.addEventListener("mousedown",start);
-  canvas.addEventListener("mousemove",move);
-  window.addEventListener("mouseup",stop);
-
-  canvas.addEventListener("touchstart",start,{passive:false});
-  canvas.addEventListener("touchmove",move,{passive:false});
-  canvas.addEventListener("touchend",stop);
-}
-
-function clearSignature(canvasId){
-  const canvas = document.getElementById(canvasId);
-  canvas.getContext("2d").clearRect(0,0,canvas.width,canvas.height);
-}
-
-document.querySelectorAll("[data-clear-sign]").forEach(btn=>{
-  btn.onclick = ()=>clearSignature(btn.dataset.clearSign);
-});
-
-function signatureData(canvasId){
-  return document.getElementById(canvasId).toDataURL("image/png");
-}
-
-setupSignature("clientSignature");
-setupSignature("techSignature");document.getElementById("orderForm").onsubmit = e=>{
-  e.preventDefault();
-
-  const clientId = document.getElementById("orderClient").value;
-
-  if(!clientId){
-    alert("Selecione um cliente.");
-    return;
-  }
-
-  const oid = document.getElementById("orderId").value || id();
-  const existing = db.orders.find(o=>o.id===oid);
-
-  const order = {
-    id:oid,
-    number:existing?.number || nextOrderNumber(),
-    clientId,
-    technician:document.getElementById("orderTech").value.trim(),
-    type:document.getElementById("orderType").value,
-    status:document.getElementById("orderStatus").value,
-    date:document.getElementById("orderDate").value,
-    value:document.getElementById("orderValue").value,
-    equipment:document.getElementById("orderEquipment").value.trim(),
-    problem:document.getElementById("orderProblem").value.trim(),
-    service:document.getElementById("orderService").value.trim(),
-    materials:document.getElementById("orderMaterials").value.trim(),
-    notes:document.getElementById("orderNotes").value.trim(),
-    photos:currentPhotos,
-    location:currentLocation,
-    clientSignature:signatureData("clientSignature"),
-    techSignature:signatureData("techSignature"),
-    createdAt:existing?.createdAt || Date.now(),
-    updatedAt:Date.now()
-  };
-
-  const index = db.orders.findIndex(o=>o.id===oid);
-
-  if(index >= 0){
-    db.orders[index] = order;
-  }else{
-    db.orders.push(order);
-  }
-
-  saveDB();
-  resetOrderForm();
-  renderAll();
-
-  alert("Ordem de serviço salva com sucesso.");
-  go("orders");
-};
-
-function resetOrderForm(){
-  document.getElementById("orderForm").reset();
-  document.getElementById("orderId").value = "";
-  document.getElementById("orderFormHeading").textContent =
-    "Nova ordem de serviço";
-
-  currentPhotos = [];
-  currentLocation = null;
-
-  renderPhotoPreview();
-
-  document.getElementById("locationInfo").textContent = "";
-
-  clearSignature("clientSignature");
-  clearSignature("techSignature");
-
-  document.getElementById("orderDate").value = today();
-
-  if(currentUser){
-    document.getElementById("orderTech").value =
-      currentUser.name || "";
-  }
-
-  renderClientSelect();
-}
-
-document.getElementById("cancelOrderEdit").onclick = ()=>{
-  resetOrderForm();
-  go("orders");
-};
-
-function editOrder(oid){
-  const o = db.orders.find(x=>x.id===oid);
-  if(!o) return;
-
-  go("newOrder");
-
-  document.getElementById("orderId").value = o.id;
-  document.getElementById("orderClient").value = o.clientId;
-  document.getElementById("orderTech").value = o.technician || "";
-  document.getElementById("orderType").value = o.type || "Corretiva";
-  document.getElementById("orderStatus").value = o.status || "Em andamento";
-  document.getElementById("orderDate").value = o.date || today();
-  document.getElementById("orderValue").value = o.value || "";
-  document.getElementById("orderEquipment").value = o.equipment || "";
-  document.getElementById("orderProblem").value = o.problem || "";
-  document.getElementById("orderService").value = o.service || "";
-  document.getElementById("orderMaterials").value = o.materials || "";
-  document.getElementById("orderNotes").value = o.notes || "";
-
-  currentPhotos = o.photos ? [...o.photos] : [];
-  currentLocation = o.location || null;
-
-  renderPhotoPreview();
-
-  document.getElementById("locationInfo").textContent =
-    currentLocation
-      ? `GPS: ${currentLocation.lat}, ${currentLocation.lon}`
-      : "";
-
-  document.getElementById("orderFormHeading").textContent =
-    "Editar OS #" + o.number;
-}
-
-function deleteOrder(oid){
-  if(!confirm("Deseja realmente excluir esta ordem de serviço?")){
-    return;
-  }
-
-  db.orders = db.orders.filter(o=>o.id!==oid);
-
-  saveDB();
-  renderAll();
-
-  alert("Ordem de serviço excluída.");
-}
-
-function renderOrders(){
-  const q = document.getElementById("orderSearch").value.toLowerCase();
-
-  const arr = db.orders
-    .slice()
-    .sort((a,b)=>b.createdAt-a.createdAt)
-    .filter(o=>{
-      const c = clientName(o.clientId).toLowerCase();
-
-      return JSON.stringify(o).toLowerCase().includes(q) ||
-             c.includes(q);
-    });
-
-  document.getElementById("orderList").innerHTML =
-    arr.map(orderCard).join("") ||
-    '<div class="card muted">Nenhuma ordem de serviço cadastrada.</div>';
-}
-
-document.getElementById("orderSearch").oninput = renderOrders;
-
-function printOrder(oid){
-  const o = db.orders.find(x=>x.id===oid);
-  if(!o) return;
-
-  const c = db.clients.find(x=>x.id===o.clientId);
-
-  const photos = (o.photos || []).map(p=>`
-    <div style="margin:10px 0">
-      <img src="${p.data}"
-                     style="max-width:100%;max-height:400px;border-radius:8px">
-      <div style="font-size:11px">
-        ${esc(p.date || "")}
-        ${
-          p.location
-          ? `<br>GPS: ${p.location.lat}, ${p.location.lon}`
-          : ""
-        }
-      </div>
-    </div>
-  `).join("");
-
-  const win = window.open("","_blank");
-
-  win.document.write(`
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<title>OS ${esc(o.number)}</title>
-
-<style>
-body{
-  font-family:Arial,sans-serif;
-  color:#182230;
-  padding:20px;
-  line-height:1.4
-}
-h1{color:#0b5fb3;margin-bottom:4px}
-h2{
-  color:#0b5fb3;
-  border-bottom:1px solid #ccc;
-  padding-bottom:4px
-}
-.box{
-  border:1px solid #ccc;
-  padding:10px;
-  border-radius:8px;
-  margin-bottom:10px
-}
-.grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px
-}
-.signatures{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:20px;
-  margin-top:30px
-}
-.signatures img{
-  width:100%;
-  height:120px;
-  object-fit:contain;
-  border-bottom:1px solid #333
-}
-small{color:#666}
-@media print{
-  button{display:none}
-}
-</style>
-</head>
-
-<body>
-
-<h1>W.Pinho Serviços PRO</h1>
-<b>ORDEM DE SERVIÇO Nº ${esc(o.number)}</b>
-
-<br><br>
-
-<div class="grid">
-
-<div class="box">
-<b>Cliente</b><br>
-${esc(c?.name || "-")}<br>
-Telefone: ${esc(c?.phone || "-")}<br>
-CPF/CNPJ: ${esc(c?.doc || "-")}<br>
-Endereço: ${esc(c?.address || "-")}
-</div>
-
-<div class="box">
-<b>Atendimento</b><br>
-Data: ${esc(o.date || "-")}<br>
-Técnico: ${esc(o.technician || "-")}<br>
-Tipo: ${esc(o.type || "-")}<br>
-Status: ${esc(o.status || "-")}<br>
-Valor: ${money(o.value)}
-</div>
-
-</div>
-
-<h2>Equipamento / Local</h2>
-<p>${esc(o.equipment || "Não informado")}</p>
-
-<h2>Defeito / Solicitação</h2>
-<p>${esc(o.problem || "Não informado").replaceAll("\n","<br>")}</p>
-
-<h2>Serviço executado</h2>
-<p>${esc(o.service || "Não informado").replaceAll("\n","<br>")}</p>
-
-<h2>Materiais utilizados</h2>
-<p>${esc(o.materials || "Nenhum").replaceAll("\n","<br>")}</p>
-
-<h2>Observações</h2>
-<p>${esc(o.notes || "Nenhuma").replaceAll("\n","<br>")}</p>
-
-${
-  o.location
-  ? `<h2>Localização do atendimento</h2>
-     <p>Latitude: ${o.location.lat}<br>
-     Longitude: ${o.location.lon}</p>`
-  : ""
-}
-
-${
-  photos
-  ? `<h2>Fotos do serviço</h2>${photos}`
-  : ""
-}
-
-<h2>Assinaturas</h2>
-
-<div class="signatures">
-
-<div>
-<img src="${o.clientSignature}">
-<center>Cliente / Responsável</center>
-</div>
-
-<div>
-<img src="${o.techSignature}">
-<center>Técnico responsável</center>
-</div>
-
-</div>
-
-<br>
-
-<small>
-Documento gerado pelo W.Pinho Serviços PRO em
-${new Date().toLocaleString("pt-BR")}
-</small>
-
-<script>
-window.onload = ()=>{
-  setTimeout(()=>window.print(),500);
-};
-<\/script>
-
-</body>
-</html>
-`);
-
-  win.document.close();
-}
-
-document.getElementById("userForm").onsubmit = e=>{
-  e.preventDefault();
-
-  const email =
-    document.getElementById("userEmail").value.trim().toLowerCase();
-
-  if(db.users.some(u=>u.email===email)){
-    alert("Esse e-mail já está cadastrado.");
-    return;
-  }
-
-  db.users.push({
-    id:id(),
-    name:document.getElementById("userName").value.trim(),
-    email,
-    password:document.getElementById("userPassword").value,
-    role:document.getElementById("userRole").value,
-    active:true
-  });
-
-  saveDB();
-
-  e.target.reset();
-  renderUsers();
-
-  alert("Usuário criado com sucesso.");
-};
-
-function toggleUser(uid){
-  const u = db.users.find(x=>x.id===uid);
-  if(!u) return;
-
-  if(currentUser && currentUser.id===uid){
-    alert("Você não pode desativar seu próprio usuário.");
-    return;
-  }
-
-  u.active = u.active === false;
-
-  saveDB();
-  renderUsers();
-}
-
-function renderUsers(){
-  document.getElementById("userList").innerHTML =
-    db.users.map(u=>`
-      <div class="item">
-
-        <div class="info">
-          <strong>${esc(u.name)}</strong>
-          <small>${esc(u.email)}</small>
-          <small>
-            ${u.role==="admin" ? "Administrador" : "Técnico"}
-          </small>
-
-          <span class="badge ${u.active!==false ? "ok" : "warn"}">
-            ${u.active!==false ? "Ativo" : "Inativo"}
-          </span>
-        </div>
-
-        <button class="btn small"
-          onclick="toggleUser('${u.id}')">
-          ${u.active!==false ? "Desativar" : "Ativar"}
-        </button>
-
-      </div>
-    `).join("") ||
-    '<div class="muted">Nenhum usuário cadastrado.</div>';
-}
-
-document.querySelectorAll(".choosePlan").forEach(btn=>{
-  btn.onclick = ()=>{
-    db.plan = btn.dataset.plan;
-    saveDB();
-    renderPlans();
-
-    alert(
-      "Plano " + db.plan +
-      " selecionado. A cobrança automática será conectada futuramente."
-    );
-  };
-});
-
-function renderPlans(){
-  document.querySelectorAll(".plan").forEach(el=>{
-    el.classList.toggle(
-      "selected",
-      el.dataset.plan === db.plan
-    );
-  });
-
-  document.getElementById("currentPlan").innerHTML =
-    `<strong>${esc(db.plan)}</strong>
-     <p class="muted">
-     Plano selecionado para esta instalação.
-     </p>`;
-}
-
-document.getElementById("exportBackup").onclick = ()=>{
-  const data = {
-    version:11,
-    exportedAt:new Date().toISOString(),
-    data:db
-  };
-
-  const blob = new Blob(
-    [JSON.stringify(data,null,2)],
-    {type:"application/json"}
-  );
-
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-
-  a.href = url;
-  a.download =
-    "W_Pinho_Servicos_backup_" +
-    today() +
-    ".json";
-
-  a.click();
-
-  URL.revokeObjectURL(url);
-};
-
-document.getElementById("importBackup").onchange = async e=>{
-  const file = e.target.files[0];
-  if(!file) return;
-
-  try{
-    const obj = JSON.parse(await file.text());
-
-    if(!obj.data){
-      throw new Error();
-    }
-
-    if(!confirm(
-      "Restaurar este backup? Os dados atuais serão substituídos."
-    )){
-      return;
-    }
-
-    db = obj.data;
-
-    saveDB();
-
-    alert("Backup restaurado com sucesso.");
-
-    sessionStorage.removeItem("wp_user");
-    location.reload();
-
-  }catch(err){
-    alert("Arquivo de backup inválido.");
-  }
-};
-
-function renderAll(){
-  renderDashboard();
-  renderClients();
-  renderOrders();
-  renderUsers();
-  renderPlans();
-}
-
-loadDB();
-
-const sessionUser = sessionStorage.getItem("wp_user");
-
-if(sessionUser){
-  currentUser = db.users.find(
-    u=>u.id===sessionUser && u.active!==false
-  );
-
-  if(currentUser){
-    showApp();
-  }else{
-    showLogin();
-  }
-}else{
-  showLogin();
-}
-
-if(db.users.length){
-  document.getElementById("firstAccountBtn").classList.add("hidden");
-}else{
-  document.getElementById("firstAccountBtn").classList.remove("hidden");
-}
-
-document.getElementById("orderDate").value = today();
-
 </script>
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
-</body>
-</html>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const cfg=window.WPINHO_SUPABASE||{};
+if(!cfg.url||!cfg.key||cfg.url.includes("COLE_AQUI")){$("#setupView").classList.remove("hidden");throw new Error("Supabase não configurado");}
+const supabase=createClient(cfg.url,cfg.key);
+
+let user=null, membership=null, org=null, clients=[], orders=[], pendingPhotos=[], gps=null;
+
+function esc(s=""){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function money(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+function today(){return new Date().toISOString().slice(0,10)}
+function msg(t){$("#authMsg").textContent=t||""}
+function uuid(){return crypto.randomUUID()}
+
+$("#tabLogin").onclick=()=>{$("#loginForm").classList.remove("hidden");$("#signupForm").classList.add("hidden");$("#tabLogin").classList.add("primary");$("#tabSignup").classList.remove("primary")}
+$("#tabSignup").onclick=()=>{$("#signupForm").classList.remove("hidden");$("#loginForm").classList.add("hidden");$("#tabSignup").classList.add("primary");$("#tabLogin").classList.remove("primary")}
+$("#signupMode").onchange=()=>{const join=$("#signupMode").value==="join";$("#inviteWrap").classList.toggle("hidden",!join);$("#companyNameWrap").classList.toggle("hidden",join)}
+
+$("#loginForm").onsubmit=async e=>{e.preventDefault();msg("Entrando...");const {error}=await supabase.auth.signInWithPassword({email:$("#loginEmail").value.trim(),password:$("#loginPass").value});if(error)return msg(error.message);await boot()}
+$("#signupForm").onsubmit=async e=>{e.preventDefault();msg("Criando conta...");const name=$("#signupName").value.trim(),email=$("#signupEmail").value.trim(),password=$("#signupPass").value;const {data,error}=await supabase.auth.signUp({email,password,options:{data:{name}}});if(error)return msg(error.message);if(!data.session){msg("Conta criada. Confirme seu e-mail e depois entre.");return}user=data.user;const mode=$("#signupMode").value;if(mode==="owner"){const company=$("#companyName").value.trim();if(!company)return msg("Digite o nome da empresa.");const {error:e2}=await supabase.rpc("create_organization",{company_name:company});if(e2)return msg(e2.message)}else{const code=$("#inviteCode").value.trim().toUpperCase();const {error:e2}=await supabase.rpc("join_organization",{company_code:code});if(e2)return msg(e2.message)}await boot()}
+
+async function getContext(){
+ const {data:{user:u}}=await supabase.auth.getUser();user=u;if(!user)return false;
+ const {data:m,error}=await supabase.from("memberships").select("id,organization_id,display_name,role,active").eq("user_id",user.id).eq("active",true).limit(1).maybeSingle();
+ if(error)throw error;if(!m){await supabase.auth.signOut();msg("Esta conta ainda não pertence a uma empresa.");return false} membership=m;
+ const {data:o,error:e2}=await supabase.from("organizations").select("*").eq("id",m.organization_id).single();if(e2)throw e2;org=o;return true
+}
+async function boot(){
+ try{if(!(await getContext())){$("#authView").classList.remove("hidden");return}
+ $("#authView").classList.add("hidden");$("#setupView").classList.add("hidden");$("#appView").classList.remove("hidden");$("#companyLabel").textContent=org.name+" • Online";$("#welcome").textContent=`Olá, ${membership.display_name||user.email} • ${membership.role}`;$("#teamCode").textContent=org.invite_code;$("#orderTech").value=membership.display_name||user.email;$("#orderDate").value=today();await loadAll();listenRealtime()}catch(e){console.error(e);alert("Erro ao carregar: "+e.message)}
+}
+async function loadAll(){
+ const [{data:c,error:ce},{data:o,error:oe}]=await Promise.all([
+ supabase.from("clients").select("*").eq("organization_id",org.id).order("created_at",{ascending:false}),
+ supabase.from("orders").select("*").eq("organization_id",org.id).order("created_at",{ascending:false})
+ ]);if(ce)throw ce;if(oe)throw oe;clients=c||[];orders=o||[];renderAll();await renderTeam()
+}
+function listenRealtime(){
+ supabase.channel("wpinho-"+org.id)
+ .on("postgres_changes",{event:"*",schema:"public",table:"clients",filter:`organization_id=eq.${org.id}`},()=>loadAll())
+ .on("postgres_changes",{event:"*",schema:"public",table:"orders",filter:`organization_id=eq.${org.id}`},()=>loadAll())
+ .subscribe()
+}
+$("#logoutBtn").onclick=async()=>{await supabase.auth.signOut();location.reload()}
+$("#menuBtn").onclick=()=>$("#shell").classList.toggle("menuOpen");
+document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)})
+function go(id){$$(".section").forEach(s=>s.classList.toggle("active",s.id===id));$$("nav [data-go]").forEach(b=>b.classList.toggle("active",b.dataset.go===id));$("#shell").classList.remove("menuOpen");if(id==="newOrder"&&!$("#orderId").value)resetOrder();window.scrollTo(0,0)}
+
+function renderAll(){renderDash();renderClients();renderOrders();renderClientSelect()}
+function renderDash(){$("#sClients").textContent=clients.length;$("#sOrders").textContent=orders.length;$("#sOpen").textContent=orders.filter(o=>o.status!=="Concluída").length;$("#sDone").textContent=orders.filter(o=>o.status==="Concluída").length;$("#recentOrders").innerHTML=orders.slice(0,5).map(orderCard).join("")||'<div class="muted">Nenhuma OS.</div>'}
+function clientName(id){return clients.find(c=>c.id===id)?.name||"Cliente"}
+function orderCard(o){return `<div class="item"><div><strong>OS #${esc(o.number)} • ${esc(clientName(o.client_id))}</strong><small>${esc(o.service_type)} • ${esc(o.service_date||"")}</small><span class="badge ${o.status==="Concluída"?"ok":"warn"}">${esc(o.status)}</span></div><div class="row"><button class="btn small" onclick="window.editOrder('${o.id}')">Editar</button><button class="btn small" onclick="window.printOrder('${o.id}')">PDF</button><button class="btn small danger" onclick="window.deleteOrder('${o.id}')">Excluir</button></div></div>`}
+
+$("#clientForm").onsubmit=async e=>{e.preventDefault();const id=$("#clientId").value;const row={organization_id:org.id,name:$("#clientName").value.trim(),phone:$("#clientPhone").value.trim(),document:$("#clientDoc").value.trim(),email:$("#clientEmail").value.trim(),address:$("#clientAddress").value.trim(),updated_at:new Date().toISOString()};let r=id?await supabase.from("clients").update(row).eq("id",id):await supabase.from("clients").insert(row);if(r.error)return alert(r.error.message);resetClient();await loadAll()}
+function renderClients(){const q=$("#clientSearch").value.toLowerCase();$("#clientList").innerHTML=clients.filter(c=>JSON.stringify(c).toLowerCase().includes(q)).map(c=>`<div class="item"><div><strong>${esc(c.name)}</strong><small>${esc(c.phone||"")} • ${esc(c.document||"")}</small><small>${esc(c.address||"")}</small></div><div class="row"><button class="btn small" onclick="window.editClient('${c.id}')">Editar</button><button class="btn small danger" onclick="window.deleteClient('${c.id}')">Excluir</button></div></div>`).join("")||'<div class="muted">Nenhum cliente.</div>'}
+$("#clientSearch").oninput=renderClients;
+window.editClient=id=>{const c=clients.find(x=>x.id===id);if(!c)return;go("clients");$("#clientId").value=c.id;$("#clientName").value=c.name||"";$("#clientPhone").value=c.phone||"";$("#clientDoc").value=c.document||"";$("#clientEmail").value=c.email||"";$("#clientAddress").value=c.address||"";$("#clientTitle").textContent="Editar cliente";$("#cancelClient").classList.remove("hidden")}
+window.deleteClient=async id=>{if(!confirm("Excluir cliente?"))return;const {error}=await supabase.from("clients").delete().eq("id",id);if(error)alert(error.message)}
+function resetClient(){$("#clientForm").reset();$("#clientId").value="";$("#clientTitle").textContent="Novo cliente";$("#cancelClient").classList.add("hidden")}
+$("#cancelClient").onclick=resetClient;
+function renderClientSelect(){const v=$("#orderClient").value;$("#orderClient").innerHTML='<option value="">Selecione...</option>'+clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");if(clients.some(c=>c.id===v))$("#orderClient").value=v}
+
+$("#gpsBtn").onclick=()=>{if(!navigator.geolocation)return alert("GPS indisponível.");$("#gpsText").textContent="Capturando...";navigator.geolocation.getCurrentPosition(p=>{gps={lat:p.coords.latitude,lon:p.coords.longitude,accuracy:p.coords.accuracy};$("#gpsText").textContent=`${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)} • ±${Math.round(gps.accuracy)} m`},()=>$("#gpsText").textContent="Autorize a localização para usar o GPS.",{enableHighAccuracy:true,timeout:15000})}
+$("#photoInput").onchange=async e=>{for(const f of [...e.target.files]){const data=await fileData(f);pendingPhotos.push({file:f,preview:data})}renderPhotos();e.target.value=""}
+function fileData(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
+function renderPhotos(){$("#photoPreview").innerHTML=pendingPhotos.map((p,i)=>`<div class="photo"><img src="${p.preview}"><div><button type="button" class="btn small danger" onclick="window.removePhoto(${i})">Remover</button></div></div>`).join("")}
+window.removePhoto=i=>{pendingPhotos.splice(i,1);renderPhotos()}
+
+function setupCanvas(id){const c=$("#"+id),ctx=c.getContext("2d");ctx.lineWidth=3;ctx.lineCap="round";let d=false,last;const pos=e=>{const r=c.getBoundingClientRect(),p=e.touches?e.touches[0]:e;return{x:(p.clientX-r.left)*c.width/r.width,y:(p.clientY-r.top)*c.height/r.height}};const start=e=>{d=true;last=pos(e);e.preventDefault()},move=e=>{if(!d)return;const p=pos(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();last=p;e.preventDefault()},end=()=>d=false;c.addEventListener("mousedown",start);c.addEventListener("mousemove",move);window.addEventListener("mouseup",end);c.addEventListener("touchstart",start,{passive:false});c.addEventListener("touchmove",move,{passive:false});c.addEventListener("touchend",end)}
+function clearCanvas(id){const c=$("#"+id);c.getContext("2d").clearRect(0,0,c.width,c.height)}
+function canvasData(id){return $("#"+id).toDataURL("image/png")}
+$$("[data-clear]").forEach(b=>b.onclick=()=>clearCanvas(b.dataset.clear));setupCanvas("sigClient");setupCanvas("sigTech");
+
+async function nextNumber(){const y=new Date().getFullYear();const {count}=await supabase.from("orders").select("*",{count:"exact",head:true}).eq("organization_id",org.id);return `${y}-${String((count||0)+1).padStart(5,"0")}`}
+$("#orderForm").onsubmit=async e=>{e.preventDefault();if(!$("#orderClient").value)return alert("Selecione o cliente.");const id=$("#orderId").value;const existing=orders.find(o=>o.id===id);const orderId=id||uuid();const row={id:orderId,organization_id:org.id,number:existing?.number||await nextNumber(),client_id:$("#orderClient").value,technician:$("#orderTech").value.trim(),service_type:$("#orderType").value,status:$("#orderStatus").value,service_date:$("#orderDate").value,value:Number($("#orderValue").value||0),equipment:$("#orderEquipment").value.trim(),problem:$("#orderProblem").value.trim(),service_done:$("#orderService").value.trim(),materials:$("#orderMaterials").value.trim(),notes:$("#orderNotes").value.trim(),latitude:gps?.lat||existing?.latitude||null,longitude:gps?.lon||existing?.longitude||null,client_signature:canvasData("sigClient"),tech_signature:canvasData("sigTech"),updated_at:new Date().toISOString()};const r=id?await supabase.from("orders").update(row).eq("id",id):await supabase.from("orders").insert(row);if(r.error)return alert(r.error.message);for(const p of pendingPhotos){const ext=(p.file.name.split(".").pop()||"jpg").replace(/[^a-z0-9]/gi,"");const path=`${org.id}/${orderId}/${uuid()}.${ext}`;const up=await supabase.storage.from("service-photos").upload(path,p.file,{upsert:false});if(!up.error)await supabase.from("service_photos").insert({organization_id:org.id,order_id:orderId,storage_path:path,captured_at:new Date().toISOString(),latitude:gps?.lat||null,longitude:gps?.lon||null})}resetOrder();await loadAll();go("orders")}
+function resetOrder(){$("#orderForm").reset();$("#orderId").value="";$("#orderTitle").textContent="Nova ordem de serviço";$("#orderDate").value=today();$("#orderTech").value=membership?.display_name||user?.email||"";pendingPhotos=[];gps=null;renderPhotos();$("#gpsText").textContent="Ainda não capturada.";clearCanvas("sigClient");clearCanvas("sigTech");renderClientSelect()}
+$("#cancelOrder").onclick=()=>{resetOrder();go("orders")}
+function renderOrders(){const q=$("#orderSearch").value.toLowerCase();$("#orderList").innerHTML=orders.filter(o=>JSON.stringify(o).toLowerCase().includes(q)||clientName(o.client_id).toLowerCase().includes(q)).map(orderCard).join("")||'<div class="muted">Nenhuma OS.</div>'}
+$("#orderSearch").oninput=renderOrders;
+window.editOrder=id=>{const o=orders.find(x=>x.id===id);if(!o)return;go("newOrder");$("#orderId").value=o.id;$("#orderClient").value=o.client_id;$("#orderTech").value=o.technician||"";$("#orderType").value=o.service_type;$("#orderStatus").value=o.status;$("#orderDate").value=o.service_date||today();$("#orderValue").value=o.value||"";$("#orderEquipment").value=o.equipment||"";$("#orderProblem").value=o.problem||"";$("#orderService").value=o.service_done||"";$("#orderMaterials").value=o.materials||"";$("#orderNotes").value=o.notes||"";gps=o.latitude?{lat:o.latitude,lon:o.longitude}:null;$("#gpsText").textContent=gps?`${Number(gps.lat).toFixed(6)}, ${Number(gps.lon).toFixed(6)}`:"Ainda não capturada.";$("#orderTitle").textContent="Editar OS #"+o.number}
+window.deleteOrder=async id=>{if(!confirm("Excluir esta OS?"))return;const {error}=await supabase.from("orders").delete().eq("id",id);if(error)alert(error.message)}
+window.printOrder=id=>{const o=orders.find(x=>x.id===id),c=clients.find(x=>x.id===o?.client_id);if(!o)return;const w=window.open("","_blank");w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>OS ${esc(o.number)}</title><style>body{font-family:Arial;color:#172434;padding:18px}h1,h2{color:#0b5fb3}.box{border:1px solid #ccd8e3;padding:10px;margin:8px 0;border-radius:7px}.sig{display:grid;grid-template-columns:1fr 1fr;gap:18px}.sig img{width:100%;height:100px;object-fit:contain;border-bottom:1px solid #444}</style></head><body><h1>W.Pinho Serviços PRO</h1><b>${esc(org.name)} • OS ${esc(o.number)}</b><div class="box"><b>Cliente:</b> ${esc(c?.name||"-")}<br><b>Telefone:</b> ${esc(c?.phone||"-")}<br><b>Endereço:</b> ${esc(c?.address||"-")}</div><div class="box"><b>Data:</b> ${esc(o.service_date||"-")}<br><b>Técnico:</b> ${esc(o.technician||"-")}<br><b>Tipo:</b> ${esc(o.service_type)}<br><b>Status:</b> ${esc(o.status)}<br><b>Valor:</b> ${money(o.value)}</div><h2>Equipamento / local</h2><p>${esc(o.equipment||"-")}</p><h2>Defeito / solicitação</h2><p>${esc(o.problem||"-").replace(/\n/g,"<br>")}</p><h2>Serviço executado</h2><p>${esc(o.service_done||"-").replace(/\n/g,"<br>")}</p><h2>Materiais</h2><p>${esc(o.materials||"-").replace(/\n/g,"<br>")}</p><h2>Assinaturas</h2><div class="sig"><div><img src="${o.client_signature||""}"><center>Cliente</center></div><div><img src="${o.tech_signature||""}"><center>Técnico</center></div></div><script>window.onload=()=>setTimeout(()=>window.print(),400)<\/script></body></html>`);w.document.close()}
+
+async function renderTeam(){const {data,error}=await supabase.from("memberships").select("id,user_id,display_name,role,active,created_at").eq("organization_id",org.id).order("created_at");if(error)return;$("#teamList").innerHTML=(data||[]).map(m=>`<div class="item"><div><strong>${esc(m.display_name||"Usuário")}</strong><small>${esc(m.role)} • ${m.active?"Ativo":"Inativo"}</small></div>${["owner","admin"].includes(membership.role)&&m.user_id!==user.id?`<select onchange="window.changeRole('${m.id}',this.value)"><option ${m.role==="technician"?"selected":""} value="technician">Técnico</option><option ${m.role==="admin"?"selected":""} value="admin">Administrador</option></select>`:""}</div>`).join("")}
+window.changeRole=async(id,role)=>{const {error}=await supabase.from("memberships").update({role}).eq("id",id);if(error)alert(error.message);else renderTeam()}
+$("#exportBtn").onclick=()=>{const data={exportedAt:new Date().toISOString(),organization:org,clients,orders};const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));a.download="W_Pinho_Backup_"+today()+".json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+
+const {data:{session}}=await supabase.auth.getSession();
+if(session)boot();else $("#authView").classList.remove("hidden");
+</script>
+</body></html>
