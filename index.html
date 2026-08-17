@@ -350,3 +350,1031 @@ W.Pinho Serviços PRO
 </p>
 </div>
 </div>
+<div id="appView" class="hidden">
+<header class="top">
+  <div class="toprow">
+    <div class="brand">
+      <div class="mark">WP</div>
+      <div>
+        <b>W.Pinho Serviços PRO</b>
+        <small>Elétrica • Refrigeração • Climatização • PMOC</small>
+      </div>
+    </div>
+    <button class="menuBtn" id="menuBtn">☰</button>
+  </div>
+</header>
+
+<div class="shell" id="shell">
+<aside>
+<nav id="nav">
+  <button data-go="dashboard" class="active">▦ Painel</button>
+  <button data-go="clients">👥 Clientes</button>
+  <button data-go="orders">🛠 Ordens de serviço</button>
+  <button data-go="newOrder">＋ Nova OS</button>
+  <button data-go="users" data-admin>🔐 Usuários</button>
+  <button data-go="plans" data-admin>💳 Planos mensais</button>
+  <button data-go="backup">💾 Backup</button>
+  <button id="logoutBtn">↪ Sair</button>
+</nav>
+</aside>
+
+<main class="main">
+
+<section id="dashboard" class="section active">
+  <div class="head">
+    <div>
+      <h1>Painel</h1>
+      <div class="muted" id="welcome"></div>
+    </div>
+    <button class="btn primary" data-go="newOrder">＋ Nova OS</button>
+  </div>
+
+  <div class="grid">
+    <div class="card stat">
+      <b id="statClients">0</b>
+      <span>Clientes</span>
+    </div>
+    <div class="card stat">
+      <b id="statOrders">0</b>
+      <span>Ordens de serviço</span>
+    </div>
+    <div class="card stat">
+      <b id="statOpen">0</b>
+      <span>Em andamento</span>
+    </div>
+    <div class="card stat">
+      <b id="statDone">0</b>
+      <span>Concluídas</span>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h2>Últimos atendimentos</h2>
+    <div id="recentOrders" class="list"></div>
+  </div>
+</section>
+
+<section id="clients" class="section">
+  <div class="head">
+    <div>
+      <h1>Clientes</h1>
+      <div class="muted">Cadastro e histórico dos seus clientes.</div>
+    </div>
+    <input id="clientSearch" class="search" placeholder="Pesquisar cliente...">
+  </div>
+
+  <div class="card">
+    <h2 id="clientFormTitle">Novo cliente</h2>
+
+    <form id="clientForm" class="form">
+      <input type="hidden" id="clientId">
+
+      <label>
+        Nome / Razão social
+        <input id="clientName" required>
+      </label>
+
+      <label>
+        Telefone
+        <input id="clientPhone">
+      </label>
+
+      <label>
+        CPF/CNPJ
+        <input id="clientDoc">
+      </label>
+
+      <label>
+        E-mail
+        <input id="clientEmail" type="email">
+      </label>
+
+      <label class="full">
+        Endereço
+        <textarea id="clientAddress" rows="2"></textarea>
+      </label>
+
+      <label class="full">
+        Observações
+        <textarea id="clientNotes" rows="2"></textarea>
+      </label>
+
+      <div class="full row">
+        <button class="btn primary" type="submit">Salvar cliente</button>
+        <button class="btn hidden" id="cancelClientEdit" type="button">
+          Cancelar edição
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h2>Clientes cadastrados</h2>
+    <div id="clientList" class="list"></div>
+  </div>
+</section>
+
+<section id="orders" class="section">
+  <div class="head">
+    <div>
+      <h1>Ordens de serviço</h1>
+      <div class="muted">
+        Serviços, fotos, GPS, assinaturas e PDF.
+      </div>
+    </div>
+    <input id="orderSearch" class="search" placeholder="Pesquisar OS...">
+  </div>
+
+  <div id="orderList" class="list"></div>
+</section>
+
+<section id="newOrder" class="section">
+  <div class="head">
+    <div>
+      <h1 id="orderFormHeading">Nova ordem de serviço</h1>
+      <div class="muted">Registre o atendimento completo.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <form id="orderForm" class="form">
+      <input id="orderId" type="hidden">
+
+      <label>
+        Cliente
+        <select id="orderClient" required></select>
+      </label>
+
+      <label>
+        Técnico
+        <input id="orderTech" required>
+      </label>
+
+      <label>
+        Tipo de serviço
+        <select id="orderType">
+          <option>PMOC / Preventiva</option>
+          <option>Corretiva</option>
+          <option>Instalação</option>
+          <option>Higienização</option>
+          <option>Inspeção</option>
+          <option>Elétrica</option>
+        </select>
+      </label>
+
+      <label>
+        Status
+        <select id="orderStatus">
+          <option>Em andamento</option>
+          <option>Pendente</option>
+          <option>Concluída</option>
+        </select>
+      </label>      <label>
+        Data do atendimento
+        <input id="orderDate" type="date" required>
+      </label>
+
+      <label>
+        Valor do serviço (R$)
+        <input id="orderValue" type="number" min="0" step="0.01" placeholder="0,00">
+      </label>
+
+      <label class="full">
+        Equipamento / Local
+        <input id="orderEquipment" placeholder="Ex.: Split 12.000 BTU - Sala">
+      </label>
+
+      <label class="full">
+        Defeito / Solicitação
+        <textarea id="orderProblem" rows="3"></textarea>
+      </label>
+
+      <label class="full">
+        Serviço executado
+        <textarea id="orderService" rows="4"></textarea>
+      </label>
+
+      <label class="full">
+        Materiais utilizados
+        <textarea id="orderMaterials" rows="3"></textarea>
+      </label>
+
+      <label class="full">
+        Observações
+        <textarea id="orderNotes" rows="3"></textarea>
+      </label>
+
+      <div class="full">
+        <h2>Fotos do serviço</h2>
+        <p class="muted">
+          As fotos podem registrar automaticamente data, hora e localização.
+        </p>
+
+        <div class="row">
+          <label class="btn">
+            📷 Adicionar foto
+            <input id="photoInput" type="file" accept="image/*" capture="environment" hidden>
+          </label>
+
+          <button class="btn" id="getLocationBtn" type="button">
+            📍 Obter localização
+          </button>
+        </div>
+
+        <div id="locationInfo" class="footerNote"></div>
+        <div id="photoPreview" class="photoGrid" style="margin-top:12px"></div>
+      </div>
+
+      <div class="full">
+        <h2>Assinatura do cliente</h2>
+        <canvas id="clientSignature" class="canvas"></canvas>
+        <div class="row" style="margin-top:8px">
+          <button type="button" class="btn small" data-clear-sign="clientSignature">
+            Limpar assinatura
+          </button>
+        </div>
+      </div>
+
+      <div class="full">
+        <h2>Assinatura do técnico</h2>
+        <canvas id="techSignature" class="canvas"></canvas>
+        <div class="row" style="margin-top:8px">
+          <button type="button" class="btn small" data-clear-sign="techSignature">
+            Limpar assinatura
+          </button>
+        </div>
+      </div>
+
+      <div class="full row">
+        <button class="btn primary" type="submit">💾 Salvar ordem de serviço</button>
+        <button class="btn" id="cancelOrderEdit" type="button">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="users" class="section">
+  <div class="head">
+    <div>
+      <h1>Usuários</h1>
+      <div class="muted">Controle quem pode acessar o sistema.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Novo usuário</h2>
+    <form id="userForm" class="form">
+      <label>
+        Nome
+        <input id="userName" required>
+      </label>
+
+      <label>
+        E-mail
+        <input id="userEmail" type="email" required>
+      </label>
+
+      <label>
+        Senha
+        <input id="userPassword" type="password" minlength="4" required>
+      </label>
+
+      <label>
+        Perfil
+        <select id="userRole">
+          <option value="tecnico">Técnico</option>
+          <option value="admin">Administrador</option>
+        </select>
+      </label>
+
+      <div class="full">
+        <button class="btn primary" type="submit">Criar usuário</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h2>Usuários cadastrados</h2>
+    <div id="userList" class="list"></div>
+  </div>
+</section>
+
+<section id="plans" class="section">
+  <div class="head">
+    <div>
+      <h1>Planos mensais</h1>
+      <div class="muted">Estrutura preparada para comercialização do sistema.</div>
+    </div>
+  </div>
+
+  <div class="notice">
+    Nesta versão, os planos são controlados no próprio aplicativo.
+    A cobrança automática online poderá ser conectada posteriormente.
+  </div>
+
+  <div class="planGrid" style="margin-top:14px">
+    <div class="plan" data-plan="Grátis">
+      <h2>Grátis</h2>
+      <div class="price">R$ 0</div>
+      <p>Teste e demonstração.</p>
+      <button class="btn choosePlan" data-plan="Grátis">Selecionar</button>
+    </div>
+
+    <div class="plan" data-plan="Básico">
+      <h2>Básico</h2>
+      <div class="price">R$ 29,90</div>
+      <p>Para profissional autônomo.</p>
+      <button class="btn choosePlan" data-plan="Básico">Selecionar</button>
+    </div>
+
+    <div class="plan" data-plan="PRO">
+      <h2>PRO</h2>
+      <div class="price">R$ 59,90</div>
+      <p>Clientes, OS, fotos, assinaturas e PDF.</p>
+      <button class="btn primary choosePlan" data-plan="PRO">Selecionar</button>
+    </div>
+
+    <div class="plan" data-plan="Empresa">
+      <h2>Empresa</h2>
+      <div class="price">R$ 99,90</div>
+      <p>Preparado para equipes e expansão.</p>
+      <button class="btn choosePlan" data-plan="Empresa">Selecionar</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <h2>Plano atual</h2>
+    <div id="currentPlan"></div>
+  </div>
+</section>
+
+<section id="backup" class="section">
+  <div class="head">
+    <div>
+      <h1>Backup</h1>
+      <div class="muted">Proteja os dados cadastrados no aparelho.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Exportar e restaurar</h2>
+    <div class="row">
+      <button id="exportBackup" class="btn primary">⬇ Exportar backup</button>
+
+      <label class="btn">
+        ⬆ Restaurar backup
+        <input id="importBackup" type="file" accept=".json,application/json" hidden>
+      </label>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+</div>
+
+<script>
+const KEY = "wpinho_servicos_pro_v11";
+
+let db = {
+  users: [],
+  clients: [],
+  orders: [],
+  plan: "PRO"
+};
+
+let currentUser = null;
+let currentPhotos = [];
+let currentLocation = null;
+
+function loadDB(){
+  try{
+    const saved = localStorage.getItem(KEY);
+    if(saved) db = {...db, ...JSON.parse(saved)};
+  }catch(e){}
+}
+
+function saveDB(){
+  localStorage.setItem(KEY, JSON.stringify(db));
+}
+
+function id(){
+  return Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+}
+
+function esc(v=""){
+  return String(v)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;");
+}
+
+function money(v){
+  return Number(v || 0).toLocaleString("pt-BR",{
+    style:"currency",
+    currency:"BRL"
+  });
+}
+
+function today(){
+  return new Date().toISOString().slice(0,10);
+}function showApp(){
+  document.getElementById("loginView").classList.add("hidden");
+  document.getElementById("appView").classList.remove("hidden");
+
+  document.getElementById("welcome").textContent =
+    "Olá, " + (currentUser?.name || "Usuário");
+
+  document.querySelectorAll("[data-admin]").forEach(el=>{
+    el.classList.toggle("hidden", currentUser?.role !== "admin");
+  });
+
+  renderAll();
+}
+
+function showLogin(){
+  document.getElementById("appView").classList.add("hidden");
+  document.getElementById("loginView").classList.remove("hidden");
+}
+
+document.getElementById("firstAccountBtn").onclick = async ()=>{
+  if(db.users.length){
+    alert("Já existe uma conta cadastrada.");
+    return;
+  }
+
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const password = document.getElementById("loginPassword").value;
+
+  if(!email || password.length < 4){
+    alert("Digite um e-mail e uma senha com pelo menos 4 caracteres.");
+    return;
+  }
+
+  const name = prompt("Nome do proprietário:", "Warllen Pinho") || "Proprietário";
+
+  db.users.push({
+    id:id(),
+    name,
+    email,
+    password,
+    role:"admin",
+    active:true
+  });
+
+  saveDB();
+
+  alert("Conta criada. Agora toque em Entrar.");
+};
+
+document.getElementById("loginForm").onsubmit = e=>{
+  e.preventDefault();
+
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const password = document.getElementById("loginPassword").value;
+
+  const user = db.users.find(u =>
+    u.email === email &&
+    u.password === password &&
+    u.active !== false
+  );
+
+  if(!user){
+    alert("E-mail ou senha inválidos.");
+    return;
+  }
+
+  currentUser = user;
+  sessionStorage.setItem("wp_user", user.id);
+  showApp();
+};
+
+document.getElementById("logoutBtn").onclick = ()=>{
+  sessionStorage.removeItem("wp_user");
+  currentUser = null;
+  location.reload();
+};
+
+function go(section){
+  document.querySelectorAll(".section").forEach(s=>{
+    s.classList.toggle("active", s.id === section);
+  });
+
+  document.querySelectorAll("[data-go]").forEach(b=>{
+    b.classList.toggle("active", b.dataset.go === section);
+  });
+
+  document.getElementById("shell").classList.remove("menuOpen");
+
+  if(section === "newOrder"){
+    prepareNewOrder();
+  }
+
+  window.scrollTo(0,0);
+}
+
+document.addEventListener("click", e=>{
+  const btn = e.target.closest("[data-go]");
+  if(btn) go(btn.dataset.go);
+});
+
+document.getElementById("menuBtn").onclick = ()=>{
+  document.getElementById("shell").classList.toggle("menuOpen");
+};
+
+function renderDashboard(){
+  const orders = db.orders;
+
+  document.getElementById("statClients").textContent = db.clients.length;
+  document.getElementById("statOrders").textContent = orders.length;
+
+  document.getElementById("statOpen").textContent =
+    orders.filter(o=>o.status !== "Concluída").length;
+
+  document.getElementById("statDone").textContent =
+    orders.filter(o=>o.status === "Concluída").length;
+
+  const recent = orders
+    .slice()
+    .sort((a,b)=>b.createdAt-a.createdAt)
+    .slice(0,5);
+
+  document.getElementById("recentOrders").innerHTML =
+    recent.map(orderCard).join("") ||
+    '<div class="muted">Nenhuma ordem de serviço cadastrada.</div>';
+}
+
+function clientName(clientId){
+  return db.clients.find(c=>c.id===clientId)?.name || "Cliente não encontrado";
+}
+
+function orderCard(o){
+  return `
+  <div class="item">
+    <div class="info">
+      <strong>OS #${esc(o.number)} • ${esc(clientName(o.clientId))}</strong>
+      <small>${esc(o.type)} • ${esc(o.date || "")}</small>
+      <small>${esc(o.equipment || "")}</small>
+      <span class="badge ${o.status==="Concluída" ? "ok" : "warn"}">
+        ${esc(o.status)}
+      </span>
+    </div>
+
+    <div class="row">
+      <button class="btn small" onclick="editOrder('${o.id}')">
+        Editar
+      </button>
+
+      <button class="btn small" onclick="printOrder('${o.id}')">
+        PDF
+      </button>
+
+      <button class="btn small danger" onclick="deleteOrder('${o.id}')">
+        Excluir
+      </button>
+    </div>
+  </div>`;
+}
+
+document.getElementById("clientForm").onsubmit = e=>{
+  e.preventDefault();
+
+  const cid = document.getElementById("clientId").value || id();
+
+  const client = {
+    id:cid,
+    name:document.getElementById("clientName").value.trim(),
+    phone:document.getElementById("clientPhone").value.trim(),
+    doc:document.getElementById("clientDoc").value.trim(),
+    email:document.getElementById("clientEmail").value.trim(),
+    address:document.getElementById("clientAddress").value.trim(),
+    notes:document.getElementById("clientNotes").value.trim(),
+    createdAt:Date.now()
+  };
+
+  const index = db.clients.findIndex(c=>c.id===cid);
+
+  if(index >= 0){
+    client.createdAt = db.clients[index].createdAt;
+    db.clients[index] = client;
+  }else{
+    db.clients.push(client);
+  }
+
+  saveDB();
+  resetClientForm();
+  renderAll();
+
+  alert("Cliente salvo com sucesso.");
+};
+
+function resetClientForm(){
+  document.getElementById("clientForm").reset();
+  document.getElementById("clientId").value = "";
+  document.getElementById("clientFormTitle").textContent = "Novo cliente";
+  document.getElementById("cancelClientEdit").classList.add("hidden");
+}
+
+document.getElementById("cancelClientEdit").onclick = resetClientForm;
+
+function editClient(cid){
+  const c = db.clients.find(x=>x.id===cid);
+  if(!c) return;
+
+  go("clients");
+
+  document.getElementById("clientId").value = c.id;
+  document.getElementById("clientName").value = c.name || "";
+  document.getElementById("clientPhone").value = c.phone || "";
+  document.getElementById("clientDoc").value = c.doc || "";
+  document.getElementById("clientEmail").value = c.email || "";
+  document.getElementById("clientAddress").value = c.address || "";
+  document.getElementById("clientNotes").value = c.notes || "";
+
+  document.getElementById("clientFormTitle").textContent = "Editar cliente";
+  document.getElementById("cancelClientEdit").classList.remove("hidden");
+}
+
+function deleteClient(cid){
+  if(db.orders.some(o=>o.clientId===cid)){
+    alert("Esse cliente possui ordem de serviço cadastrada.");
+    return;
+  }
+
+  if(confirm("Excluir este cliente?")){
+    db.clients = db.clients.filter(c=>c.id!==cid);
+    saveDB();
+    renderAll();
+  }
+}
+
+function renderClients(){
+  const q = document.getElementById("clientSearch").value.toLowerCase();
+
+  const list = db.clients.filter(c =>
+    JSON.stringify(c).toLowerCase().includes(q)
+  );
+
+  document.getElementById("clientList").innerHTML =
+    list.map(c=>`
+      <div class="item">
+        <div class="info">
+          <strong>${esc(c.name)}</strong>
+          <small>${esc(c.phone || "Sem telefone")}</small>
+          <small>${esc(c.address || "")}</small>
+        </div>
+
+        <div class="row">
+          <button class="btn small" onclick="editClient('${c.id}')">
+            Editar
+          </button>
+
+          <button class="btn small danger" onclick="deleteClient('${c.id}')">
+            Excluir
+          </button>
+        </div>
+      </div>
+    `).join("") ||
+    '<div class="muted">Nenhum cliente cadastrado.</div>';
+
+  renderClientSelect();
+}
+
+document.getElementById("clientSearch").oninput = renderClients;
+
+function renderClientSelect(){
+  const select = document.getElementById("orderClient");
+  const old = select.value;
+
+  select.innerHTML =
+    '<option value="">Selecione o cliente...</option>' +
+    db.clients.map(c=>
+      `<option value="${c.id}">${esc(c.name)}</option>`
+    ).join("");
+
+  if(db.clients.some(c=>c.id===old)){
+    select.value = old;
+  }
+}
+
+function nextOrderNumber(){
+  const max = db.orders.reduce((m,o)=>Math.max(m,Number(o.number)||0),0);
+  return String(max+1).padStart(5,"0");
+}
+
+function prepareNewOrder(){
+  if(document.getElementById("orderId").value) return;
+
+  document.getElementById("orderDate").value = today();
+
+  if(currentUser){
+    document.getElementById("orderTech").value = currentUser.name || "";
+  }
+
+  renderClientSelect();
+}
+
+document.getElementById("getLocationBtn").onclick = ()=>{
+  if(!navigator.geolocation){
+    alert("GPS não disponível neste aparelho.");
+    return;
+  }
+
+  document.getElementById("locationInfo").textContent =
+    "Buscando localização...";
+
+  navigator.geolocation.getCurrentPosition(
+    pos=>{
+      currentLocation = {
+        lat:pos.coords.latitude.toFixed(6),
+        lon:pos.coords.longitude.toFixed(6),
+        accuracy:Math.round(pos.coords.accuracy)
+      };
+
+      document.getElementById("locationInfo").textContent =
+        `GPS: ${currentLocation.lat}, ${currentLocation.lon} • precisão aproximada ${currentLocation.accuracy} m`;
+    },
+    ()=>{
+      document.getElementById("locationInfo").textContent =
+        "Não foi possível obter a localização. Autorize o GPS.";
+    },
+    {
+      enableHighAccuracy:true,
+      timeout:15000
+    }
+  );
+};
+
+document.getElementById("photoInput").onchange = async e=>{
+  const file = e.target.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = ()=>{
+    currentPhotos.push({
+      id:id(),
+      data:reader.result,
+      date:new Date().toLocaleString("pt-BR"),
+      location:currentLocation ? {...currentLocation} : null
+    });
+
+    renderPhotoPreview();
+  };
+
+  reader.readAsDataURL(file);
+  e.target.value = "";
+};
+
+function renderPhotoPreview(){
+  document.getElementById("photoPreview").innerHTML =
+    currentPhotos.map((p,i)=>`
+      <div class="photo">
+        <img src="${p.data}">
+        <div>
+          ${esc(p.date)}
+          <br>
+          ${p.location
+            ? `GPS: ${p.location.lat}, ${p.location.lon}`
+            : "Sem GPS"}
+          <br><br>
+          <button type="button"
+            class="btn small danger"
+            onclick="removePhoto(${i})">
+            Remover
+          </button>
+        </div>
+      </div>
+    `).join("");
+}
+
+function removePhoto(i){
+  currentPhotos.splice(i,1);
+  renderPhotoPreview();
+}
+
+function setupSignature(canvasId){
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = 700;
+  canvas.height = 180;
+
+  ctx.lineWidth = 3;
+  ctx.lineCap = "round";
+
+  let drawing = false;
+
+  function position(e){
+    const r = canvas.getBoundingClientRect();
+    const p = e.touches ? e.touches[0] : e;
+
+    return {
+      x:(p.clientX-r.left) * canvas.width/r.width,
+      y:(p.clientY-r.top) * canvas.height/r.height
+    };
+  }
+
+  function start(e){
+    drawing = true;
+    const p = position(e);
+    ctx.beginPath();
+    ctx.moveTo(p.x,p.y);
+    e.preventDefault();
+  }
+
+  function move(e){
+    if(!drawing) return;
+
+    const p = position(e);
+    ctx.lineTo(p.x,p.y);
+    ctx.stroke();
+    e.preventDefault();
+  }
+
+  function stop(){
+    drawing = false;
+  }
+
+  canvas.addEventListener("mousedown",start);
+  canvas.addEventListener("mousemove",move);
+  window.addEventListener("mouseup",stop);
+
+  canvas.addEventListener("touchstart",start,{passive:false});
+  canvas.addEventListener("touchmove",move,{passive:false});
+  canvas.addEventListener("touchend",stop);
+}
+
+function clearSignature(canvasId){
+  const canvas = document.getElementById(canvasId);
+  canvas.getContext("2d").clearRect(0,0,canvas.width,canvas.height);
+}
+
+document.querySelectorAll("[data-clear-sign]").forEach(btn=>{
+  btn.onclick = ()=>clearSignature(btn.dataset.clearSign);
+});
+
+function signatureData(canvasId){
+  return document.getElementById(canvasId).toDataURL("image/png");
+}
+
+setupSignature("clientSignature");
+setupSignature("techSignature");document.getElementById("orderForm").onsubmit = e=>{
+  e.preventDefault();
+
+  const clientId = document.getElementById("orderClient").value;
+
+  if(!clientId){
+    alert("Selecione um cliente.");
+    return;
+  }
+
+  const oid = document.getElementById("orderId").value || id();
+  const existing = db.orders.find(o=>o.id===oid);
+
+  const order = {
+    id:oid,
+    number:existing?.number || nextOrderNumber(),
+    clientId,
+    technician:document.getElementById("orderTech").value.trim(),
+    type:document.getElementById("orderType").value,
+    status:document.getElementById("orderStatus").value,
+    date:document.getElementById("orderDate").value,
+    value:document.getElementById("orderValue").value,
+    equipment:document.getElementById("orderEquipment").value.trim(),
+    problem:document.getElementById("orderProblem").value.trim(),
+    service:document.getElementById("orderService").value.trim(),
+    materials:document.getElementById("orderMaterials").value.trim(),
+    notes:document.getElementById("orderNotes").value.trim(),
+    photos:currentPhotos,
+    location:currentLocation,
+    clientSignature:signatureData("clientSignature"),
+    techSignature:signatureData("techSignature"),
+    createdAt:existing?.createdAt || Date.now(),
+    updatedAt:Date.now()
+  };
+
+  const index = db.orders.findIndex(o=>o.id===oid);
+
+  if(index >= 0){
+    db.orders[index] = order;
+  }else{
+    db.orders.push(order);
+  }
+
+  saveDB();
+  resetOrderForm();
+  renderAll();
+
+  alert("Ordem de serviço salva com sucesso.");
+  go("orders");
+};
+
+function resetOrderForm(){
+  document.getElementById("orderForm").reset();
+  document.getElementById("orderId").value = "";
+  document.getElementById("orderFormHeading").textContent =
+    "Nova ordem de serviço";
+
+  currentPhotos = [];
+  currentLocation = null;
+
+  renderPhotoPreview();
+
+  document.getElementById("locationInfo").textContent = "";
+
+  clearSignature("clientSignature");
+  clearSignature("techSignature");
+
+  document.getElementById("orderDate").value = today();
+
+  if(currentUser){
+    document.getElementById("orderTech").value =
+      currentUser.name || "";
+  }
+
+  renderClientSelect();
+}
+
+document.getElementById("cancelOrderEdit").onclick = ()=>{
+  resetOrderForm();
+  go("orders");
+};
+
+function editOrder(oid){
+  const o = db.orders.find(x=>x.id===oid);
+  if(!o) return;
+
+  go("newOrder");
+
+  document.getElementById("orderId").value = o.id;
+  document.getElementById("orderClient").value = o.clientId;
+  document.getElementById("orderTech").value = o.technician || "";
+  document.getElementById("orderType").value = o.type || "Corretiva";
+  document.getElementById("orderStatus").value = o.status || "Em andamento";
+  document.getElementById("orderDate").value = o.date || today();
+  document.getElementById("orderValue").value = o.value || "";
+  document.getElementById("orderEquipment").value = o.equipment || "";
+  document.getElementById("orderProblem").value = o.problem || "";
+  document.getElementById("orderService").value = o.service || "";
+  document.getElementById("orderMaterials").value = o.materials || "";
+  document.getElementById("orderNotes").value = o.notes || "";
+
+  currentPhotos = o.photos ? [...o.photos] : [];
+  currentLocation = o.location || null;
+
+  renderPhotoPreview();
+
+  document.getElementById("locationInfo").textContent =
+    currentLocation
+      ? `GPS: ${currentLocation.lat}, ${currentLocation.lon}`
+      : "";
+
+  document.getElementById("orderFormHeading").textContent =
+    "Editar OS #" + o.number;
+}
+
+function deleteOrder(oid){
+  if(!confirm("Deseja realmente excluir esta ordem de serviço?")){
+    return;
+  }
+
+  db.orders = db.orders.filter(o=>o.id!==oid);
+
+  saveDB();
+  renderAll();
+
+  alert("Ordem de serviço excluída.");
+}
+
+function renderOrders(){
+  const q = document.getElementById("orderSearch").value.toLowerCase();
+
+  const arr = db.orders
+    .slice()
+    .sort((a,b)=>b.createdAt-a.createdAt)
+    .filter(o=>{
+      const c = clientName(o.clientId).toLowerCase();
+
+      return JSON.stringify(o).toLowerCase().includes(q) ||
+             c.includes(q);
+    });
+
+  document.getElementById("orderList").innerHTML =
+    arr.map(orderCard).join("") ||
+    '<div class="card muted">Nenhuma ordem de serviço cadastrada.</div>';
+}
+
+document.getElementById("orderSearch").oninput = renderOrders;
+
+function printOrder(oid){
+  const o = db.orders.find(x=>x.id===oid);
+  if(!o) return;
+
+  const c = db.clients.find(x=>x.id===o.clientId);
+
+  const photos = (o.photos || []).map(p=>`
+    <div style="margin:10px 0">
+      <img src="${p.data}"
+          
