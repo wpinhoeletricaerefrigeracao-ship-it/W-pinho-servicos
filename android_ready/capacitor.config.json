@@ -1,8 +1,13 @@
 {
-  "appId": "com.wpinho.servicos",
-  "appName": "W.Pinho Serviços PRO",
+  "appId": "br.com.wpinho.servicos",
+  "appName": "W.Pinho Serviços",
   "webDir": "www",
   "server": {
+    "url": "https://w-pinho-servicos-pro.onrender.com",
+    "cleartext": false,
     "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false
   }
 }
