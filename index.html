@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#075aa8">
+
+  <title>W.Pinho Serviços PRO</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #eef3f8;
+      color: #1f2937;
+    }
+
+    header {
+      background: #075aa8;
+      color: white;
+      padding: 24px 15px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 25px;
+    }
+
+    header p {
+      margin: 7px 0 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      padding: 18px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      margin-bottom: 15px;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.08);
+    }
+
+    .card h2 {
+      margin-top: 0;
+      color: #075aa8;
+      font-size: 20px;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      background: #075aa8;
+      color: white;
+      padding: 15px;
+      margin-top: 8px;
+      border-radius: 9px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:active {
+      background: #034b8c;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 13px;
+      margin: 6px 0 10px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+
+    .status {
+      background: #e8f5e9;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 12px;
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #64748b;
+      font-size: 13px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>W.Pinho Serviços PRO</h1>
+  <p>Elétrica • Refrigeração • Climatização • PMOC</p>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <h2>Novo Cliente</h2>
+
+    <input id="cliente" placeholder="Nome do cliente">
+    <input id="telefone" placeholder="Telefone">
+    <input id="endereco" placeholder="Endereço">
+
+    <button onclick="salvarCliente()">Salvar Cliente</button>
+
+    <div id="clienteStatus" class="status">
+      Cliente salvo com sucesso!
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Ordem de Serviço</h2>
+
+    <select id="tipo">
+      <option>Refrigeração</option>
+      <option>Climatização</option>
+      <option>Elétrica</option>
+      <option>PMOC</option>
+      <option>Manutenção Preventiva</option>
+      <option>Manutenção Corretiva</option>
+    </select>
+
+    <textarea id="servico" placeholder="Descreva o serviço realizado"></textarea>
+
+    <button onclick="registrarHorario()">Registrar horário</button>
+    <button onclick="pegarLocalizacao()">Registrar localização</button>
+  </div>
+
+  <div class="card">
+    <h2>Fotos do Serviço</h2>
+
+    <input type="file" accept="image/*" capture="environment" multiple>
+
+    <p>
+      Pelo celular, toque acima para tirar ou selecionar fotos do serviço.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>Informações Registradas</h2>
+
+    <p><strong>Data/Hora:</strong></p>
+    <div id="horario">Ainda não registrado.</div>
+
+    <p><strong>Localização:</strong></p>
+    <div id="localizacao">Ainda não registrada.</div>
+  </div>
+
+</div>
+
+<footer>
+  W.Pinho Serviços PRO<br>
+  Sistema de gerenciamento de serviços
+</footer>
+
+<script>
+
+function salvarCliente() {
+  const cliente = document.getElementById("cliente").value;
+  const telefone = document.getElementById("telefone").value;
+  const endereco = document.getElementById("endereco").value;
+
+  localStorage.setItem("cliente", cliente);
+  localStorage.setItem("telefone", telefone);
+  localStorage.setItem("endereco", endereco);
+
+  document.getElementById("clienteStatus").style.display = "block";
+}
+
+function registrarHorario() {
+  const agora = new Date();
+
+  document.getElementById("horario").innerText =
+    agora.toLocaleString("pt-BR");
+}
+
+function pegarLocalizacao() {
+
+  if (!navigator.geolocation) {
+    document.getElementById("localizacao").innerText =
+      "Localização não disponível neste aparelho.";
+    return;
+  }
+
+  document.getElementById("localizacao").innerText =
+    "Obtendo localização...";
+
+  navigator.geolocation.getCurrentPosition(
+
+    function(posicao) {
+
+      const latitude = posicao.coords.latitude;
+      const longitude = posicao.coords.longitude;
+
+      document.getElementById("localizacao").innerHTML =
+        "Latitude: " + latitude +
+        "<br>Longitude: " + longitude;
+    },
+
+    function() {
+      document.getElementById("localizacao").innerText =
+        "Não foi possível obter a localização. Verifique a permissão do navegador.";
+    }
+  );
+}
+
+</script>
+
+</body>
+  </html>
