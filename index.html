@@ -97,7 +97,7 @@ button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{po
 </section>
 
 <section id="clients" class="section">
-<div class="head"><div><h1>Clientes</h1><div class="muted">Compartilhados com a equipe.</div></div><input id="clientSearch" class="search" placeholder="Pesquisar..."></div>
+<div class="head"><div><h1>Clientes / Empresas</h1><div class="muted">Cadastre a empresa atendida e, dentro dela, todos os locais e equipamentos.</div></div><input id="clientSearch" class="search" placeholder="Pesquisar..."></div>
 <div class="card"><h2 id="clientTitle">Novo cliente</h2><form id="clientForm" class="form">
 <input id="clientId" type="hidden">
 <label>Nome / Razão social<input id="clientName" required></label>
@@ -110,13 +110,17 @@ button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{po
 <div id="clientList" class="list"></div>
 </section>
 
+<section id="clientDetail" class="section">
+  <div id="clientDetailContent"></div>
+</section>
+
 <section id="locations" class="section">
 <div class="head"><div><h1>Locais / Unidades</h1><div class="muted">Organize os equipamentos por cliente e local.</div></div></div>
 <div class="card"><h2 id="locationTitle">Novo local</h2><form id="locationForm" class="form"><input id="locationId" type="hidden"><label>Cliente<select id="locationClient" required></select></label><label>Nome do local<input id="locationName" placeholder="Ex.: Loja Centro, Sala 01" required></label><label class="full">Endereço<textarea id="locationAddress" rows="2"></textarea></label><div class="full row"><button class="btn primary">Salvar local</button><button type="button" id="cancelLocation" class="btn hidden">Cancelar</button></div></form></div><div id="locationList" class="list"></div>
 </section>
 
 <section id="assets" class="section">
-<div class="head"><div><h1>Equipamentos / Ativos</h1><div class="muted">Cadastro técnico, histórico e QR Code individual.</div></div><input id="assetSearch" class="search" placeholder="Pesquisar equipamento..."></div>
+<div class="head"><div><h1>Equipamentos / Ativos</h1><div class="muted">Cada equipamento pertence a um cliente/empresa e pode ter local, histórico, QR Code e PMOC próprios.</div></div><input id="assetSearch" class="search" placeholder="Pesquisar equipamento..."></div>
 <div class="card"><h2 id="assetTitle">Novo equipamento</h2><form id="assetForm" class="form"><input id="assetId" type="hidden">
 <label>Cliente<select id="assetClient" required></select></label><label>Local / Unidade<select id="assetLocation"></select></label>
 <label>Tipo<select id="assetType"><option>Split Hi-Wall</option><option>Split Cassete</option><option>Split Piso-Teto</option><option>Multi Split</option><option>VRF/VRV</option><option>Chiller</option><option>Self Contained</option><option>Fan Coil</option><option>ACJ</option><option>Câmara Fria</option><option>Freezer</option><option>Geladeira</option><option>Outro</option></select></label>
@@ -246,8 +250,41 @@ function clientName(id){return clients.find(c=>c.id===id)?.name||"Cliente"}
 function orderCard(o){return `<div class="item"><div><strong>OS #${esc(o.number)} • ${esc(clientName(o.client_id))}</strong><small>${esc(o.service_type)} • ${esc(o.service_date||"")}</small><span class="badge ${o.status==="Concluída"?"ok":"warn"}">${esc(o.status)}</span></div><div class="row"><button class="btn small" onclick="window.editOrder('${o.id}')">Editar</button><button class="btn small" onclick="window.printOrder('${o.id}')">PDF</button><button class="btn small danger" onclick="window.deleteOrder('${o.id}')">Excluir</button></div></div>`}
 
 $("#clientForm").onsubmit=async e=>{e.preventDefault();const id=$("#clientId").value;const row={organization_id:org.id,name:$("#clientName").value.trim(),phone:$("#clientPhone").value.trim(),document:$("#clientDoc").value.trim(),email:$("#clientEmail").value.trim(),address:$("#clientAddress").value.trim(),updated_at:new Date().toISOString()};let r=id?await supabase.from("clients").update(row).eq("id",id):await supabase.from("clients").insert(row);if(r.error)return alert(r.error.message);resetClient();await loadAll()}
-function renderClients(){const q=$("#clientSearch").value.toLowerCase();$("#clientList").innerHTML=clients.filter(c=>JSON.stringify(c).toLowerCase().includes(q)).map(c=>`<div class="item"><div><strong>${esc(c.name)}</strong><small>${esc(c.phone||"")} • ${esc(c.document||"")}</small><small>${esc(c.address||"")}</small></div><div class="row"><button class="btn small" onclick="window.editClient('${c.id}')">Editar</button><button class="btn small danger" onclick="window.deleteClient('${c.id}')">Excluir</button></div></div>`).join("")||'<div class="muted">Nenhum cliente.</div>'}
+function renderClients(){const q=$("#clientSearch").value.toLowerCase();$("#clientList").innerHTML=clients.filter(c=>JSON.stringify(c).toLowerCase().includes(q)).map(c=>{const ca=assets.filter(a=>a.client_id===c.id),cl=locations.filter(l=>l.client_id===c.id),co=orders.filter(o=>o.client_id===c.id);return `<div class="item"><div><strong>${esc(c.name)}</strong><small>${esc(c.phone||"")} • ${esc(c.document||"")}</small><small>${esc(c.address||"")}</small><small><b>${ca.length}</b> equipamento(s) • <b>${cl.length}</b> local(is) • <b>${co.length}</b> OS</small></div><div class="row"><button class="btn small primary" onclick="window.viewClient('${c.id}')">Abrir empresa</button><button class="btn small" onclick="window.newAssetForClient('${c.id}')">＋ Equipamento</button><button class="btn small" onclick="window.editClient('${c.id}')">Editar</button><button class="btn small danger" onclick="window.deleteClient('${c.id}')">Excluir</button></div></div>`}).join("")||'<div class="muted">Nenhum cliente.</div>'}
 $("#clientSearch").oninput=renderClients;
+
+window.viewClient=id=>{
+ const c=clients.find(x=>x.id===id);if(!c)return;
+ const ca=assets.filter(a=>a.client_id===id);
+ const cl=locations.filter(l=>l.client_id===id);
+ const co=orders.filter(o=>o.client_id===id);
+ const cp=pmocPlans.filter(p=>p.client_id===id&&p.active!==false);
+ go("clientDetail");
+ $("#clientDetailContent").innerHTML=`
+ <div class="head"><div><h1>${esc(c.name)}</h1><div class="muted">Cliente / empresa atendida</div></div>
+ <div class="row"><button class="btn primary" onclick="newAssetForClient('${c.id}')">＋ Cadastrar equipamento</button><button class="btn" onclick="newLocationForClient('${c.id}')">＋ Cadastrar local</button><button class="btn" onclick="editClient('${c.id}')">Editar cliente</button></div></div>
+ <div class="grid">
+  <div class="card"><h2>Equipamentos</h2><b style="font-size:28px">${ca.length}</b></div>
+  <div class="card"><h2>Locais / unidades</h2><b style="font-size:28px">${cl.length}</b></div>
+  <div class="card"><h2>Ordens de serviço</h2><b style="font-size:28px">${co.length}</b></div>
+  <div class="card"><h2>Planos PMOC</h2><b style="font-size:28px">${cp.length}</b></div>
+ </div>
+ <div class="card" style="margin-top:14px"><h2>Dados da empresa</h2><p><b>Documento:</b> ${esc(c.document||"-")}<br><b>Telefone:</b> ${esc(c.phone||"-")}<br><b>E-mail:</b> ${esc(c.email||"-")}<br><b>Endereço:</b> ${esc(c.address||"-")}</p></div>
+ <div class="card" style="margin-top:14px"><div class="head"><div><h2>Equipamentos desta empresa</h2><div class="muted">Cada equipamento possui ficha, histórico, QR Code e PMOC próprios.</div></div><button class="btn primary" onclick="newAssetForClient('${c.id}')">＋ Novo equipamento</button></div>
+ <div class="list">${ca.map(a=>`<div class="item"><div><strong>${esc(a.tag||a.type||"Equipamento")} • ${esc(a.brand||"")} ${esc(a.model||"")}</strong><small>${esc(locationName(a.location_id)||a.environment||"Sem local definido")}</small><small>${esc(a.capacity||"")} ${a.refrigerant?"• "+esc(a.refrigerant):""} • ${esc(a.status||"Ativo")}</small></div><div class="row"><button class="btn small primary" onclick="viewAsset('${a.id}')">Ficha / QR</button><button class="btn small" onclick="newOrderForAsset('${a.id}')">＋ OS</button><button class="btn small" onclick="editAsset('${a.id}')">Editar</button></div></div>`).join("")||'<span class="muted">Nenhum equipamento cadastrado para esta empresa.</span>'}</div></div>
+ <div class="card" style="margin-top:14px"><h2>Locais / unidades</h2><div class="list">${cl.map(l=>`<div class="item"><div><strong>${esc(l.name)}</strong><small>${esc(l.address||"")}</small></div><div class="row"><button class="btn small" onclick="editLocation('${l.id}')">Editar</button></div></div>`).join("")||'<span class="muted">Nenhum local cadastrado.</span>'}</div></div>
+ <div class="card" style="margin-top:14px"><h2>Últimas ordens de serviço</h2><div class="list">${co.slice(0,10).map(orderCard).join("")||'<span class="muted">Nenhuma OS para esta empresa.</span>'}</div></div>`;
+};
+
+window.newAssetForClient=id=>{
+ const c=clients.find(x=>x.id===id);if(!c)return;
+ go("assets");resetAsset();clientOptions("#assetClient");$("#assetClient").value=id;fillLocationSelect("#assetLocation",id);$("#assetTitle").textContent="Novo equipamento • "+c.name;window.scrollTo(0,0);
+};
+
+window.newLocationForClient=id=>{
+ const c=clients.find(x=>x.id===id);if(!c)return;
+ go("locations");resetLocation();clientOptions("#locationClient");$("#locationClient").value=id;$("#locationTitle").textContent="Novo local • "+c.name;window.scrollTo(0,0);
+};
 window.editClient=id=>{const c=clients.find(x=>x.id===id);if(!c)return;go("clients");$("#clientId").value=c.id;$("#clientName").value=c.name||"";$("#clientPhone").value=c.phone||"";$("#clientDoc").value=c.document||"";$("#clientEmail").value=c.email||"";$("#clientAddress").value=c.address||"";$("#clientTitle").textContent="Editar cliente";$("#cancelClient").classList.remove("hidden")}
 window.deleteClient=async id=>{if(!confirm("Excluir cliente?"))return;const {error}=await supabase.from("clients").delete().eq("id",id);if(error)alert(error.message)}
 function resetClient(){$("#clientForm").reset();$("#clientId").value="";$("#clientTitle").textContent="Novo cliente";$("#cancelClient").classList.add("hidden")}
