@@ -53,6 +53,20 @@ button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{po
 </div>
 </div>
 
+<div id="recoveryView" class="login hidden">
+<div class="loginCard">
+<div class="mark">WP</div>
+<h1 style="margin-top:12px">Redefinir senha</h1>
+<p class="muted">Digite uma nova senha para sua conta.</p>
+<form id="recoveryForm" class="form">
+<label class="full">Nova senha<input id="newPassword" type="password" minlength="6" required></label>
+<label class="full">Confirmar nova senha<input id="confirmPassword" type="password" minlength="6" required></label>
+<div class="full"><button class="btn primary" type="submit">Salvar nova senha</button></div>
+</form>
+<div id="recoveryMsg" class="muted" style="margin-top:10px"></div>
+</div>
+</div>
+
 <div id="appView" class="hidden">
 <header class="top"><div class="toprow"><div class="brand"><div class="mark">WP</div><div><b>W.Pinho Serviços PRO</b><small id="companyLabel">Online • Multiusuário</small></div></div><button id="menuBtn" class="menu">☰</button></div></header>
 <div id="shell" class="shell"><aside><nav>
@@ -160,6 +174,11 @@ $("#signupMode").onchange=()=>{const join=$("#signupMode").value==="join";$("#in
 $("#loginForm").onsubmit=async e=>{e.preventDefault();msg("Entrando...");const {error}=await supabase.auth.signInWithPassword({email:$("#loginEmail").value.trim(),password:$("#loginPass").value});if(error)return msg(error.message);await boot()}
 $("#signupForm").onsubmit=async e=>{e.preventDefault();msg("Criando conta...");const name=$("#signupName").value.trim(),email=$("#signupEmail").value.trim(),password=$("#signupPass").value;const {data,error}=await supabase.auth.signUp({email,password,options:{data:{name}}});if(error)return msg(error.message);if(!data.session){msg("Conta criada. Confirme seu e-mail e depois entre.");return}user=data.user;const mode=$("#signupMode").value;if(mode==="owner"){const company=$("#companyName").value.trim();if(!company)return msg("Digite o nome da empresa.");const {error:e2}=await supabase.rpc("create_organization",{company_name:company});if(e2)return msg(e2.message)}else{const code=$("#inviteCode").value.trim().toUpperCase();const {error:e2}=await supabase.rpc("join_organization",{company_code:code});if(e2)return msg(e2.message)}await boot()}
 
+let recoveryMode = new URLSearchParams(location.hash.replace(/^#/,"")).get("type") === "recovery" || new URLSearchParams(location.search).get("type") === "recovery";
+function showRecovery(){recoveryMode=true;$("#authView").classList.add("hidden");$("#appView").classList.add("hidden");$("#setupView").classList.add("hidden");$("#recoveryView").classList.remove("hidden");}
+$("#recoveryForm").onsubmit=async e=>{e.preventDefault();const p1=$("#newPassword").value,p2=$("#confirmPassword").value,box=$("#recoveryMsg");if(p1.length<6){box.textContent="Use uma senha com pelo menos 6 caracteres.";return}if(p1!==p2){box.textContent="As senhas não são iguais.";return}box.textContent="Salvando nova senha...";const {error}=await supabase.auth.updateUser({password:p1});if(error){box.textContent=error.message;return}box.textContent="Senha alterada com sucesso. Você já pode entrar.";await supabase.auth.signOut();history.replaceState({},document.title,location.pathname);setTimeout(()=>location.reload(),1200)};
+supabase.auth.onAuthStateChange((event,session)=>{if(event==="PASSWORD_RECOVERY")showRecovery()});
+
 async function getContext(){
  const {data:{user:u}}=await supabase.auth.getUser();user=u;if(!user)return false;
  const {data:m,error}=await supabase.from("memberships").select("id,organization_id,display_name,role,active").eq("user_id",user.id).eq("active",true).limit(1).maybeSingle();
@@ -227,6 +246,6 @@ window.changeRole=async(id,role)=>{const {error}=await supabase.from("membership
 $("#exportBtn").onclick=()=>{const data={exportedAt:new Date().toISOString(),organization:org,clients,orders};const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));a.download="W_Pinho_Backup_"+today()+".json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 
 const {data:{session}}=await supabase.auth.getSession();
-if(session)boot();else $("#authView").classList.remove("hidden");
+if(recoveryMode){showRecovery()}else if(session)boot();else $("#authView").classList.remove("hidden");
 </script>
 </body></html>
