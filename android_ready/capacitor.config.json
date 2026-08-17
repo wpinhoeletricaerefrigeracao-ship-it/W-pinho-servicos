@@ -1,0 +1,8 @@
+{
+  "appId": "com.wpinho.servicos",
+  "appName": "W.Pinho Serviços PRO",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
