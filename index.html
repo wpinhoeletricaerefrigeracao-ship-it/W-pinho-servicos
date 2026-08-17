@@ -1,227 +1,352 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#075aa8">
-
-  <title>W.Pinho Serviços PRO</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #eef3f8;
-      color: #1f2937;
-    }
-
-    header {
-      background: #075aa8;
-      color: white;
-      padding: 24px 15px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 25px;
-    }
-
-    header p {
-      margin: 7px 0 0;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: auto;
-      padding: 18px;
-    }
-
-    .card {
-      background: white;
-      padding: 20px;
-      margin-bottom: 15px;
-      border-radius: 14px;
-      box-shadow: 0 3px 12px rgba(0,0,0,.08);
-    }
-
-    .card h2 {
-      margin-top: 0;
-      color: #075aa8;
-      font-size: 20px;
-    }
-
-    button {
-      width: 100%;
-      border: none;
-      background: #075aa8;
-      color: white;
-      padding: 15px;
-      margin-top: 8px;
-      border-radius: 9px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:active {
-      background: #034b8c;
-    }
-
-    input, textarea, select {
-      width: 100%;
-      padding: 13px;
-      margin: 6px 0 10px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 16px;
-    }
-
-    textarea {
-      min-height: 100px;
-    }
-
-    .status {
-      background: #e8f5e9;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 12px;
-      display: none;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #64748b;
-      font-size: 13px;
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b5fb3">
+<title>W.Pinho Serviços PRO</title>
+<style>
+:root{
+--blue:#0b5fb3;
+--blue2:#073d75;
+--bg:#f2f6fa;
+--card:#fff;
+--text:#182230;
+--muted:#657386;
+--line:#dbe4ed;
+--ok:#16854b;
+--warn:#b56a00;
+--danger:#bd2d2d;
+--shadow:0 8px 28px rgba(20,50,80,.08)
+}
+*{box-sizing:border-box}
+body{
+margin:0;
+font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+background:var(--bg);
+color:var(--text)
+}
+button,input,select,textarea{font:inherit}
+.hidden{display:none!important}
+.top{
+position:sticky;
+top:0;
+z-index:20;
+background:linear-gradient(135deg,var(--blue2),var(--blue));
+color:white;
+padding:14px 16px;
+box-shadow:0 3px 12px #0002
+}
+.brand{display:flex;align-items:center;gap:10px}
+.mark{
+width:42px;
+height:42px;
+border-radius:12px;
+background:white;
+color:var(--blue);
+font-weight:900;
+display:grid;
+place-items:center
+}
+.brand b{display:block;font-size:17px}
+.brand small{opacity:.88}
+.toprow{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px
+}
+.menuBtn{
+border:0;
+background:#ffffff20;
+color:white;
+border-radius:10px;
+padding:10px 12px;
+font-size:20px
+}
+.shell{
+display:grid;
+grid-template-columns:240px 1fr;
+min-height:calc(100vh - 70px)
+}
+aside{
+background:#0c2741;
+color:white;
+padding:16px 10px
+}
+nav button{
+width:100%;
+border:0;
+background:transparent;
+color:#dce9f4;
+text-align:left;
+padding:12px 13px;
+border-radius:10px;
+margin:2px 0;
+cursor:pointer
+}
+nav button.active,nav button:hover{
+background:#ffffff18;
+color:white
+}
+.main{
+padding:20px;
+max-width:1250px;
+width:100%;
+margin:auto
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:14px
+}
+.card{
+background:var(--card);
+border:1px solid var(--line);
+border-radius:16px;
+padding:18px;
+box-shadow:var(--shadow)
+}
+.stat b{
+font-size:30px;
+display:block;
+color:var(--blue)
+}
+.stat span{color:var(--muted)}
+h1{font-size:25px;margin:0 0 4px}
+h2{font-size:18px;margin:0 0 12px}
+.head{
+display:flex;
+justify-content:space-between;
+gap:12px;
+align-items:center;
+margin-bottom:16px
+}
+.muted{color:var(--muted)}
+.btn{
+border:1px solid var(--line);
+background:white;
+color:var(--text);
+padding:10px 13px;
+border-radius:10px;
+cursor:pointer;
+font-weight:650
+}
+.btn.primary{
+background:var(--blue);
+border-color:var(--blue);
+color:white
+}
+.btn.danger{
+color:var(--danger);
+border-color:#f1caca
+}
+.btn.ok{
+background:var(--ok);
+border-color:var(--ok);
+color:white
+}
+.btn.small{padding:7px 10px;font-size:13px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.form{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px
+}
+.form label{
+display:flex;
+flex-direction:column;
+gap:6px;
+font-size:13px;
+font-weight:650
+}
+.form .full{grid-column:1/-1}
+input,select,textarea{
+width:100%;
+border:1px solid #cdd9e5;
+border-radius:10px;
+padding:11px;
+background:white;
+color:var(--text)
+}
+textarea{resize:vertical}
+.list{display:grid;gap:9px}
+.item{
+border:1px solid var(--line);
+border-radius:12px;
+padding:12px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+background:white
+}
+.item .info{min-width:0}
+.item strong{display:block}
+.item small{
+display:block;
+color:var(--muted);
+white-space:normal
+}
+.badge{
+display:inline-block;
+padding:4px 8px;
+border-radius:999px;
+background:#eaf3fb;
+color:var(--blue2);
+font-size:12px;
+font-weight:700
+}
+.badge.ok{background:#e8f6ee;color:var(--ok)}
+.badge.warn{background:#fff4df;color:var(--warn)}
+.section{display:none}
+.section.active{display:block}
+.loginWrap{
+min-height:100vh;
+background:linear-gradient(135deg,#062b50,#0b6bc5);
+display:grid;
+place-items:center;
+padding:20px
+}
+.loginCard{
+background:white;
+width:min(460px,100%);
+padding:24px;
+border-radius:20px;
+box-shadow:0 18px 60px #0004
+}
+.loginLogo{
+width:72px;
+height:72px;
+background:var(--blue);
+color:white;
+border-radius:18px;
+display:grid;
+place-items:center;
+font-size:24px;
+font-weight:900;
+margin-bottom:16px
+}
+.canvas{
+width:100%;
+height:150px;
+border:1px dashed #9db0c1;
+border-radius:12px;
+background:white;
+touch-action:none
+}
+.photoGrid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px
+}
+.photo{
+border:1px solid var(--line);
+border-radius:12px;
+overflow:hidden;
+background:white
+}
+.photo img{
+width:100%;
+height:160px;
+object-fit:cover;
+display:block
+}
+.photo div{padding:8px;font-size:12px}
+.planGrid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:12px
+}
+.plan{
+border:1px solid var(--line);
+border-radius:16px;
+background:white;
+padding:16px
+}
+.plan.selected{outline:3px solid #8ac0ef}
+.price{
+font-size:26px;
+font-weight:800;
+color:var(--blue)
+}
+.notice{
+padding:12px;
+border-radius:12px;
+background:#fff7e8;
+border:1px solid #f3d49a;
+color:#6f4a00
+}
+.table{width:100%;border-collapse:collapse}
+.table th,.table td{
+padding:10px;
+border-bottom:1px solid var(--line);
+text-align:left;
+font-size:13px
+}
+.search{max-width:300px}
+.footerNote{
+font-size:12px;
+color:var(--muted);
+margin-top:16px
+}
+@media(max-width:900px){
+.shell{grid-template-columns:1fr}
+aside{
+display:none;
+position:fixed;
+top:70px;
+left:0;
+right:0;
+z-index:15;
+max-height:calc(100vh - 70px);
+overflow:auto
+}
+.menuOpen aside{display:block}
+.grid{grid-template-columns:1fr 1fr}
+.planGrid{grid-template-columns:1fr 1fr}
+.photoGrid{grid-template-columns:1fr 1fr}
+.main{padding:14px}
+.form{grid-template-columns:1fr}
+.form .full{grid-column:auto}
+}
+@media(max-width:560px){
+.grid,.planGrid,.photoGrid{grid-template-columns:1fr}
+.head{align-items:flex-start;flex-direction:column}
+.card{padding:14px}
+.item{align-items:flex-start;flex-direction:column}
+}
+</style>
 </head>
-
 <body>
 
-<header>
-  <h1>W.Pinho Serviços PRO</h1>
-  <p>Elétrica • Refrigeração • Climatização • PMOC</p>
-</header>
+<div id="loginView" class="loginWrap">
+<div class="loginCard">
+<div class="loginLogo">WP</div>
+<h1>W.Pinho Serviços PRO</h1>
+<p class="muted">Acesse seu sistema de serviços.</p>
 
-<div class="container">
+<form id="loginForm" class="form">
+<label class="full">
+E-mail
+<input id="loginEmail" type="email" required>
+</label>
 
-  <div class="card">
-    <h2>Novo Cliente</h2>
+<label class="full">
+Senha
+<input id="loginPassword" type="password" required minlength="4">
+</label>
 
-    <input id="cliente" placeholder="Nome do cliente">
-    <input id="telefone" placeholder="Telefone">
-    <input id="endereco" placeholder="Endereço">
-
-    <button onclick="salvarCliente()">Salvar Cliente</button>
-
-    <div id="clienteStatus" class="status">
-      Cliente salvo com sucesso!
-    </div>
-  </div>
-
-  <div class="card">
-    <h2>Ordem de Serviço</h2>
-
-    <select id="tipo">
-      <option>Refrigeração</option>
-      <option>Climatização</option>
-      <option>Elétrica</option>
-      <option>PMOC</option>
-      <option>Manutenção Preventiva</option>
-      <option>Manutenção Corretiva</option>
-    </select>
-
-    <textarea id="servico" placeholder="Descreva o serviço realizado"></textarea>
-
-    <button onclick="registrarHorario()">Registrar horário</button>
-    <button onclick="pegarLocalizacao()">Registrar localização</button>
-  </div>
-
-  <div class="card">
-    <h2>Fotos do Serviço</h2>
-
-    <input type="file" accept="image/*" capture="environment" multiple>
-
-    <p>
-      Pelo celular, toque acima para tirar ou selecionar fotos do serviço.
-    </p>
-  </div>
-
-  <div class="card">
-    <h2>Informações Registradas</h2>
-
-    <p><strong>Data/Hora:</strong></p>
-    <div id="horario">Ainda não registrado.</div>
-
-    <p><strong>Localização:</strong></p>
-    <div id="localizacao">Ainda não registrada.</div>
-  </div>
-
+<div class="full row">
+<button class="btn primary" type="submit">Entrar</button>
+<button class="btn" type="button" id="firstAccountBtn">
+Criar primeira conta
+</button>
 </div>
+</form>
 
-<footer>
-  W.Pinho Serviços PRO<br>
-  Sistema de gerenciamento de serviços
-</footer>
-
-<script>
-
-function salvarCliente() {
-  const cliente = document.getElementById("cliente").value;
-  const telefone = document.getElementById("telefone").value;
-  const endereco = document.getElementById("endereco").value;
-
-  localStorage.setItem("cliente", cliente);
-  localStorage.setItem("telefone", telefone);
-  localStorage.setItem("endereco", endereco);
-
-  document.getElementById("clienteStatus").style.display = "block";
-}
-
-function registrarHorario() {
-  const agora = new Date();
-
-  document.getElementById("horario").innerText =
-    agora.toLocaleString("pt-BR");
-}
-
-function pegarLocalizacao() {
-
-  if (!navigator.geolocation) {
-    document.getElementById("localizacao").innerText =
-      "Localização não disponível neste aparelho.";
-    return;
-  }
-
-  document.getElementById("localizacao").innerText =
-    "Obtendo localização...";
-
-  navigator.geolocation.getCurrentPosition(
-
-    function(posicao) {
-
-      const latitude = posicao.coords.latitude;
-      const longitude = posicao.coords.longitude;
-
-      document.getElementById("localizacao").innerHTML =
-        "Latitude: " + latitude +
-        "<br>Longitude: " + longitude;
-    },
-
-    function() {
-      document.getElementById("localizacao").innerText =
-        "Não foi possível obter a localização. Verifique a permissão do navegador.";
-    }
-  );
-}
-
-</script>
-
-</body>
-  </html>
+<p class="footerNote">
+W.Pinho Serviços PRO
+</p>
+</div>
+</div>
