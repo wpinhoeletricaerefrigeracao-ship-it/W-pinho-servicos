@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b5fb3">
+<title>W.Pinho Serviços PRO</title>
+<style>
+:root{--b:#0b5fb3;--b2:#073d75;--bg:#f3f7fb;--card:#fff;--tx:#172434;--mut:#68798a;--line:#dbe5ee;--ok:#16854b;--warn:#aa6800;--danger:#b92d2d}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--tx)}
+button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,var(--b2),var(--b));color:#fff;padding:13px 15px}.toprow{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{display:flex;align-items:center;gap:10px}.mark{width:42px;height:42px;border-radius:12px;background:#fff;color:var(--b);display:grid;place-items:center;font-weight:900}.brand b{display:block}.brand small{opacity:.9}.menu{border:0;background:#ffffff22;color:#fff;border-radius:10px;padding:9px 12px;font-size:20px}.shell{display:grid;grid-template-columns:235px 1fr;min-height:calc(100vh - 68px)}aside{background:#0c2741;padding:14px 9px}nav button{width:100%;border:0;background:transparent;color:#dce9f4;text-align:left;padding:12px;border-radius:10px;margin:2px 0}nav button.active,nav button:hover{background:#ffffff18;color:#fff}.main{width:100%;max-width:1250px;margin:auto;padding:18px}.section{display:none}.section.active{display:block}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}h1{font-size:24px;margin:0}h2{font-size:18px;margin:0 0 10px}.muted{color:var(--mut)}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:16px;margin-bottom:13px;box-shadow:0 7px 25px #163d5f0d}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat b{display:block;font-size:29px;color:var(--b)}.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer}.btn.primary{background:var(--b);border-color:var(--b);color:#fff}.btn.danger{color:var(--danger);border-color:#edc7c7}.btn.small{padding:7px 9px;font-size:12px}.row{display:flex;gap:9px;flex-wrap:wrap}.form{display:grid;grid-template-columns:1fr 1fr;gap:11px}.form label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:700}.form .full{grid-column:1/-1}input,select,textarea{width:100%;padding:11px;border:1px solid #cdd9e5;border-radius:10px;background:#fff}.list{display:grid;gap:9px}.item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;justify-content:space-between;gap:12px;align-items:center}.item strong{display:block}.item small{display:block;color:var(--mut)}.badge{display:inline-block;margin-top:5px;padding:4px 8px;border-radius:99px;font-size:12px;font-weight:700;background:#eaf3fb;color:var(--b2)}.badge.ok{background:#e9f7ef;color:var(--ok)}.badge.warn{background:#fff4df;color:var(--warn)}
+.login{min-height:100vh;display:grid;place-items:center;padding:18px;background:linear-gradient(135deg,#062b50,#0b6bc5)}.loginCard{width:min(470px,100%);background:#fff;border-radius:20px;padding:23px;box-shadow:0 18px 60px #0004}.tabs{display:flex;gap:6px;margin:12px 0}.tabs button{flex:1}.notice{background:#fff7e8;border:1px solid #f3d49a;border-radius:10px;padding:11px;color:#6c4900}.canvas{width:100%;height:145px;border:1px dashed #9eb0c0;border-radius:10px;background:#fff;touch-action:none}.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.photo{border:1px solid var(--line);border-radius:10px;overflow:hidden}.photo img{width:100%;height:150px;object-fit:cover;display:block}.photo div{padding:7px;font-size:11px}.search{max-width:300px}
+.selectionBar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:12px;padding:12px;background:#eef6ff;border:1px solid #cfe1f3;border-radius:12px}
+.assetHint{margin-top:6px;padding:9px 10px;border-radius:9px;background:#eef6ff;color:#073d75;font-size:12px}
+.orderCheck{width:auto;transform:scale(1.15)}
+.permissionBox{margin-top:8px;padding:9px 10px;border-radius:9px;background:#fff7e8;border:1px solid #f3d49a;font-size:12px}
+@media(max-width:900px){.shell{grid-template-columns:1fr}aside{display:none;position:fixed;top:68px;left:0;right:0;z-index:15;max-height:calc(100vh - 68px);overflow:auto}.menuOpen aside{display:block}.grid{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}.form .full{grid-column:auto}.photos{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.main{padding:12px}.grid,.photos{grid-template-columns:1fr}.head,.item{align-items:flex-start;flex-direction:column}.item .row{width:100%}.item .row button{flex:1}}
+</style>
+</head>
+<body>
+
+<div id="setupView" class="login hidden">
+<div class="loginCard">
+<div class="mark">WP</div>
+<h1 style="margin-top:12px">Configuração online</h1>
+<p class="muted">Esta versão usa Supabase para sincronizar clientes, ordens, fotos e usuários entre vários celulares.</p>
+<div class="notice">Abra o arquivo <b>config.js</b> e coloque a URL e a Publishable/Anon Key do seu projeto Supabase. Depois recarregue.</div>
+</div>
+</div>
+
+<div id="authView" class="login hidden">
+<div class="loginCard">
+<div class="mark">WP</div><h1 style="margin-top:12px">W.Pinho Serviços PRO</h1>
+<p class="muted">Sistema multiusuário online.</p>
+<div class="tabs">
+<button class="btn primary" id="tabLogin">Entrar</button>
+<button class="btn" id="tabSignup">Criar conta</button>
+</div>
+<form id="loginForm" class="form">
+<label class="full">E-mail<input id="loginEmail" type="email" required></label>
+<label class="full">Senha<input id="loginPass" type="password" minlength="6" required></label>
+<div class="full"><button class="btn primary" type="submit">Entrar</button></div>
+</form>
+<form id="signupForm" class="form hidden">
+<label class="full">Seu nome<input id="signupName" required></label>
+<label class="full">E-mail<input id="signupEmail" type="email" required></label>
+<label class="full">Senha<input id="signupPass" type="password" minlength="6" required></label>
+<label class="full">Como deseja começar?
+<select id="signupMode"><option value="owner">Criar minha empresa</option><option value="join">Entrar em uma empresa existente</option></select>
+</label>
+<label class="full" id="companyNameWrap">Nome da empresa<input id="companyName" placeholder="Ex.: W.Pinho Elétrica e Refrigeração"></label>
+<label class="full hidden" id="inviteWrap">Código da empresa<input id="inviteCode" placeholder="Ex.: WP-AB12CD"></label>
+<div class="full"><button class="btn primary" type="submit">Criar conta</button></div>
+</form>
+<div id="authMsg" class="muted" style="margin-top:10px"></div>
+</div>
+</div>
+
+<div id="recoveryView" class="login hidden">
+<div class="loginCard">
+<div class="mark">WP</div>
+<h1 style="margin-top:12px">Redefinir senha</h1>
+<p class="muted">Digite uma nova senha para sua conta.</p>
+<form id="recoveryForm" class="form">
+<label class="full">Nova senha<input id="newPassword" type="password" minlength="6" required></label>
+<label class="full">Confirmar nova senha<input id="confirmPassword" type="password" minlength="6" required></label>
+<div class="full"><button class="btn primary" type="submit">Salvar nova senha</button></div>
+</form>
+<div id="recoveryMsg" class="muted" style="margin-top:10px"></div>
+</div>
+</div>
+
+<div id="appView" class="hidden">
+<header class="top"><div class="toprow"><div class="brand"><div class="mark">WP</div><div><b>W.Pinho Serviços PRO</b><small id="companyLabel">Online • Multiusuário</small></div></div><button id="menuBtn" class="menu">☰</button></div></header>
+<div id="shell" class="shell"><aside><nav>
+<button data-go="dash" class="active">▦ Painel</button>
+<button data-go="clients">👥 Clientes</button>
+<button data-go="locations">📍 Locais</button>
+<button data-go="assets">❄ Equipamentos</button>
+<button data-go="pmoc">📋 PMOC</button>
+<button data-go="orders">🛠 Ordens de serviço</button>
+<button data-go="newOrder">＋ Nova OS</button>
+<button data-go="gallery">🖼 Galeria de fotos</button>
+<button data-go="team">👤 Equipe</button>
+<button data-go="backup">💾 Backup</button>
+<button id="logoutBtn">↪ Sair</button>
+</nav></aside>
+<main class="main">
+
+<section id="dash" class="section active">
+<div class="head"><div><h1>Painel</h1><div class="muted" id="welcome"></div></div><button class="btn primary" data-go="newOrder">＋ Nova OS</button></div>
+<div class="grid">
+<div class="card stat"><b id="sClients">0</b><span>Clientes</span></div>
+<div class="card stat"><b id="sOrders">0</b><span>Ordens</span></div>
+<div class="card stat"><b id="sOpen">0</b><span>Em andamento</span></div>
+<div class="card stat"><b id="sDone">0</b><span>Concluídas</span></div>
+<div class="card stat"><b id="sAssets">0</b><span>Equipamentos</span></div>
+<div class="card stat"><b id="sPmoc">0</b><span>PMOC ativos</span></div>
+</div>
+<div class="card"><h2>Últimos atendimentos</h2><div id="recentOrders" class="list"></div></div>
+</section>
+
+<section id="clients" class="section">
+<div class="head"><div><h1>Clientes / Empresas</h1><div class="muted">Cadastre a empresa atendida e, dentro dela, todos os locais e equipamentos.</div></div><input id="clientSearch" class="search" placeholder="Pesquisar..."></div>
+<div class="card"><h2 id="clientTitle">Novo cliente</h2><form id="clientForm" class="form">
+<input id="clientId" type="hidden">
+<label>Nome / Razão social<input id="clientName" required></label>
+<label>Telefone<input id="clientPhone"></label>
+<label>CPF/CNPJ<input id="clientDoc"></label>
+<label>E-mail<input id="clientEmail" type="email"></label>
+<label class="full">Endereço<textarea id="clientAddress" rows="2"></textarea></label>
+<div class="full row"><button class="btn primary">Salvar cliente</button><button id="cancelClient" type="button" class="btn hidden">Cancelar</button></div>
+</form></div>
+<div id="clientList" class="list"></div>
+</section>
+
+<section id="clientDetail" class="section">
+  <div id="clientDetailContent"></div>
+</section>
+
+<section id="locations" class="section">
+<div class="head"><div><h1>Locais / Unidades</h1><div class="muted">Organize os equipamentos por cliente e local.</div></div></div>
+<div class="card"><h2 id="locationTitle">Novo local</h2><form id="locationForm" class="form"><input id="locationId" type="hidden"><label>Cliente<select id="locationClient" required></select></label><label>Nome do local<input id="locationName" placeholder="Ex.: Loja Centro, Sala 01" required></label><label class="full">Endereço<textarea id="locationAddress" rows="2"></textarea></label><div class="full row"><button class="btn primary">Salvar local</button><button type="button" id="cancelLocation" class="btn hidden">Cancelar</button></div></form></div><div id="locationList" class="list"></div>
+</section>
+
+<section id="assets" class="section">
+<div class="head"><div><h1>Equipamentos / Ativos</h1><div class="muted">Cada equipamento pertence a um cliente/empresa e pode ter local, histórico, QR Code e PMOC próprios.</div></div><input id="assetSearch" class="search" placeholder="Pesquisar equipamento..."></div>
+<div class="card"><h2 id="assetTitle">Novo equipamento</h2><form id="assetForm" class="form"><input id="assetId" type="hidden">
+<label>Cliente<select id="assetClient" required></select></label><label>Local / Unidade<select id="assetLocation"></select></label>
+<label>Tipo<select id="assetType"><option>Split Hi-Wall</option><option>Split Cassete</option><option>Split Piso-Teto</option><option>Multi Split</option><option>VRF/VRV</option><option>Chiller</option><option>Self Contained</option><option>Fan Coil</option><option>ACJ</option><option>Câmara Fria</option><option>Freezer</option><option>Geladeira</option><option>Outro</option></select></label>
+<label>Identificação / TAG<input id="assetTag" placeholder="Ex.: AC-001"></label><label>Marca<input id="assetBrand"></label><label>Modelo<input id="assetModel"></label><label>Nº de série<input id="assetSerial"></label><label>Capacidade<input id="assetCapacity" placeholder="Ex.: 12.000 BTU/h ou 5 TR"></label><label>Tensão<input id="assetVoltage" placeholder="Ex.: 220 V"></label><label>Fluido refrigerante<input id="assetRefrigerant" placeholder="Ex.: R-32"></label><label>Ambiente<input id="assetEnvironment" placeholder="Ex.: Recepção"></label><label>Data de instalação<input id="assetInstallDate" type="date"></label><label>Status<select id="assetStatus"><option>Ativo</option><option>Em manutenção</option><option>Inativo</option><option>Substituído</option></select></label><label class="full">Observações<textarea id="assetNotes" rows="2"></textarea></label><div class="full row"><button class="btn primary">Salvar equipamento</button><button type="button" id="cancelAsset" class="btn hidden">Cancelar</button></div></form></div><div id="assetList" class="list"></div>
+</section>
+
+<section id="assetDetail" class="section"><div id="assetDetailContent"></div></section>
+
+<section id="pmoc" class="section">
+<div class="head"><div><h1>PMOC</h1><div class="muted">Planos preventivos, periodicidade e checklists por equipamento.</div></div></div>
+<div class="card"><h2 id="pmocTitle">Novo plano PMOC</h2><form id="pmocForm" class="form"><input id="pmocId" type="hidden"><label>Cliente<select id="pmocClient" required></select></label><label>Equipamento<select id="pmocAsset" required></select></label><label>Periodicidade<select id="pmocFrequency"><option value="30">Mensal</option><option value="60">Bimestral</option><option value="90">Trimestral</option><option value="180">Semestral</option><option value="365">Anual</option></select></label><label>Próxima manutenção<input id="pmocNextDate" type="date" required></label><label>Responsável técnico<input id="pmocResponsible"></label><label>Registro profissional<input id="pmocRegistry" placeholder="CRT/CREA/CFT"></label><label class="full">Observações<textarea id="pmocNotes" rows="2"></textarea></label><div class="full"><b>Checklist padrão</b><div id="pmocChecklist" style="margin-top:8px;display:grid;gap:7px"></div></div><div class="full row"><button class="btn primary">Salvar plano PMOC</button><button type="button" id="cancelPmoc" class="btn hidden">Cancelar</button></div></form></div><div id="pmocList" class="list"></div>
+</section>
+
+<section id="orders" class="section">
+<div class="head"><div><h1>Ordens de serviço</h1><div class="muted">Atualizadas em todos os celulares.</div></div><input id="orderSearch" class="search" placeholder="Pesquisar..."></div>
+<div class="selectionBar">
+<label style="display:flex;flex-direction:row;align-items:center;gap:8px;font-weight:700"><input id="selectAllOrders" class="orderCheck" type="checkbox"> Selecionar todas</label>
+<button id="exportSelectedOrders" class="btn primary" type="button">📄 Exportar OS selecionadas / PMOC</button>
+<span id="selectedOrdersCount" class="muted">0 selecionada(s)</span>
+</div>
+<div id="orderList" class="list"></div>
+</section>
+
+<section id="newOrder" class="section">
+<div class="head"><div><h1 id="orderTitle">Nova ordem de serviço</h1><div class="muted">Fotos, GPS e assinaturas ficam vinculados à empresa.</div></div></div>
+<div class="card"><form id="orderForm" class="form">
+<input id="orderId" type="hidden">
+<label>Cliente<select id="orderClient" required></select></label>
+<label>Técnico<input id="orderTech" required></label>
+<label>Tipo<select id="orderType"><option>PMOC / Preventiva</option><option>Corretiva</option><option>Instalação</option><option>Higienização</option><option>Inspeção</option><option>Elétrica</option></select></label>
+<label>Status<select id="orderStatus"><option>Em andamento</option><option>Pendente</option><option>Concluída</option></select></label>
+<label>Data<input id="orderDate" type="date" required></label>
+<label>Valor (R$)<input id="orderValue" type="number" min="0" step=".01"></label>
+<label>Local / Unidade<select id="orderLocation"></select></label><label>Equipamento<select id="orderAsset"></select><div id="orderAssetHint" class="assetHint">Selecione o cliente e o equipamento para ver a identificação completa.</div></label><label class="full">Equipamento / local (texto complementar)<input id="orderEquipment"></label><div class="full"><b>Checklist do atendimento</b><div id="orderChecklist" style="margin-top:8px;display:grid;gap:7px"></div></div>
+<label class="full">Defeito / solicitação<textarea id="orderProblem" rows="3"></textarea></label>
+<label class="full">Serviço executado<textarea id="orderService" rows="4"></textarea></label>
+<label class="full">Materiais<textarea id="orderMaterials" rows="2"></textarea></label>
+<label class="full">Observações<textarea id="orderNotes" rows="2"></textarea></label>
+<div class="full card" style="box-shadow:none"><h2>📍 Localização</h2><div id="gpsText" class="muted">Ainda não capturada.</div><div id="gpsPermissionInfo" class="permissionBox">Ao tocar em “Capturar GPS”, permita o acesso à localização quando o celular solicitar.</div><button id="gpsBtn" class="btn" type="button" style="margin-top:8px">Capturar GPS</button></div>
+<div class="full card" style="box-shadow:none"><h2>📷 Fotos do atendimento</h2><div class="muted">Ao tirar ou adicionar uma foto, o sistema grava na própria imagem a cidade/localização, coordenadas GPS, data e hora.</div><div class="row" style="margin-top:10px"><label class="btn primary">📸 Tirar foto<input id="cameraInput" type="file" accept="image/*" capture="environment" hidden></label><label class="btn">🖼 Adicionar da galeria<input id="galleryInput" type="file" accept="image/*" multiple hidden></label><button id="refreshPhotoGps" type="button" class="btn">📍 Atualizar GPS</button></div><div id="photoSaveStatus" class="muted" style="margin-top:8px"></div><div id="photoPreview" class="photos" style="margin-top:10px"></div></div>
+<div class="full"><h2>Assinaturas</h2><div class="form"><div><b>Cliente</b><canvas id="sigClient" class="canvas" width="700" height="220"></canvas><button class="btn small" type="button" data-clear="sigClient">Limpar</button></div><div><b>Técnico</b><canvas id="sigTech" class="canvas" width="700" height="220"></canvas><button class="btn small" type="button" data-clear="sigTech">Limpar</button></div></div></div>
+<div class="full row"><button class="btn primary">Salvar OS</button><button id="cancelOrder" class="btn" type="button">Cancelar</button></div>
+</form></div>
+</section>
+
+<section id="gallery" class="section">
+<div class="head"><div><h1>Galeria de fotos</h1><div class="muted">Todas as fotos salvas nas ordens de serviço, com empresa, equipamento, data/hora e localização.</div></div><button id="refreshGallery" class="btn">↻ Atualizar</button></div>
+<div class="card"><div class="form"><label>Filtrar por cliente<select id="galleryClient"><option value="">Todos</option></select></label><label>Pesquisar<input id="gallerySearch" placeholder="OS, equipamento, cliente..."></label></div></div>
+<div id="galleryGrid" class="photos"></div>
+</section>
+
+<section id="team" class="section">
+<div class="head"><div><h1>Equipe</h1><div class="muted">Acesso remoto para vários celulares.</div></div></div>
+<div class="card"><h2>Código para entrar na empresa</h2><div class="notice"><b id="teamCode">—</b><br><small>O funcionário cria uma conta e escolhe “Entrar em uma empresa existente”, usando este código.</small></div></div>
+<div class="card"><h2>Usuários da empresa</h2><div id="teamList" class="list"></div></div>
+</section>
+
+<section id="backup" class="section">
+<div class="head"><div><h1>Backup</h1><div class="muted">Os dados principais já ficam online. Você também pode baixar uma cópia JSON.</div></div></div>
+<div class="card"><button id="exportBtn" class="btn primary">Baixar cópia JSON</button></div>
+</section>
+
+</main></div></div>
+
+<script>
+window.WPINHO_SUPABASE = {
+  url: "https://iadxzqozsyzelvqhtvot.supabase.co",
+  key: "sb_publishable_2pR9V3QSFUPqucO1iZpLDA_YXraMc3F"
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const cfg=window.WPINHO_SUPABASE||{};
+if(!cfg.url||!cfg.key||cfg.url.includes("COLE_AQUI")){$("#setupView").classList.remove("hidden");throw new Error("Supabase não configurado");}
+const supabase=createClient(cfg.url,cfg.key);
+
+let user=null, membership=null, org=null, clients=[], locations=[], assets=[], pmocPlans=[], orders=[], servicePhotos=[], pendingPhotos=[], savedOrderPhotos=[], gps=null;
+const photoUrlCache=new Map();
+
+function esc(s=""){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function money(v){return Number(v||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+function today(){return new Date().toISOString().slice(0,10)}
+function msg(t){$("#authMsg").textContent=t||""}
+function uuid(){return crypto.randomUUID()}
+
+$("#tabLogin").onclick=()=>{$("#loginForm").classList.remove("hidden");$("#signupForm").classList.add("hidden");$("#tabLogin").classList.add("primary");$("#tabSignup").classList.remove("primary")}
+$("#tabSignup").onclick=()=>{$("#signupForm").classList.remove("hidden");$("#loginForm").classList.add("hidden");$("#tabSignup").classList.add("primary");$("#tabLogin").classList.remove("primary")}
+$("#signupMode").onchange=()=>{const join=$("#signupMode").value==="join";$("#inviteWrap").classList.toggle("hidden",!join);$("#companyNameWrap").classList.toggle("hidden",join)}
+
+$("#loginForm").onsubmit=async e=>{e.preventDefault();msg("Entrando...");const {error}=await supabase.auth.signInWithPassword({email:$("#loginEmail").value.trim(),password:$("#loginPass").value});if(error)return msg(error.message);await boot()}
+$("#signupForm").onsubmit=async e=>{e.preventDefault();msg("Criando conta...");const name=$("#signupName").value.trim(),email=$("#signupEmail").value.trim(),password=$("#signupPass").value;const {data,error}=await supabase.auth.signUp({email,password,options:{data:{name}}});if(error)return msg(error.message);if(!data.session){msg("Conta criada. Confirme seu e-mail e depois entre.");return}user=data.user;const mode=$("#signupMode").value;if(mode==="owner"){const company=$("#companyName").value.trim();if(!company)return msg("Digite o nome da empresa.");const {error:e2}=await supabase.rpc("create_organization",{company_name:company});if(e2)return msg(e2.message)}else{const code=$("#inviteCode").value.trim().toUpperCase();const {error:e2}=await supabase.rpc("join_organization",{company_code:code});if(e2)return msg(e2.message)}await boot()}
+
+let recoveryMode = new URLSearchParams(location.hash.replace(/^#/,"")).get("type") === "recovery" || new URLSearchParams(location.search).get("type") === "recovery";
+function showRecovery(){recoveryMode=true;$("#authView").classList.add("hidden");$("#appView").classList.add("hidden");$("#setupView").classList.add("hidden");$("#recoveryView").classList.remove("hidden");}
+$("#recoveryForm").onsubmit=async e=>{e.preventDefault();const p1=$("#newPassword").value,p2=$("#confirmPassword").value,box=$("#recoveryMsg");if(p1.length<6){box.textContent="Use uma senha com pelo menos 6 caracteres.";return}if(p1!==p2){box.textContent="As senhas não são iguais.";return}box.textContent="Salvando nova senha...";const {error}=await supabase.auth.updateUser({password:p1});if(error){box.textContent=error.message;return}box.textContent="Senha alterada com sucesso. Você já pode entrar.";await supabase.auth.signOut();history.replaceState({},document.title,location.pathname);setTimeout(()=>location.reload(),1200)};
+supabase.auth.onAuthStateChange((event,session)=>{if(event==="PASSWORD_RECOVERY")showRecovery()});
+
+async function getContext(){
+ const {data:{user:u}}=await supabase.auth.getUser();user=u;if(!user)return false;
+ const {data:m,error}=await supabase.from("memberships").select("id,organization_id,display_name,role,active").eq("user_id",user.id).eq("active",true).limit(1).maybeSingle();
+ if(error)throw error;if(!m){await supabase.auth.signOut();msg("Esta conta ainda não pertence a uma empresa.");return false} membership=m;
+ const {data:o,error:e2}=await supabase.from("organizations").select("*").eq("id",m.organization_id).single();if(e2)throw e2;org=o;return true
+}
+async function boot(){
+ try{if(!(await getContext())){$("#authView").classList.remove("hidden");return}
+ $("#authView").classList.add("hidden");$("#setupView").classList.add("hidden");$("#appView").classList.remove("hidden");$("#companyLabel").textContent=org.name+" • Online";$("#welcome").textContent=`Olá, ${membership.display_name||user.email} • ${membership.role}`;$("#teamCode").textContent=org.invite_code;$("#orderTech").value=membership.display_name||user.email;$("#orderDate").value=today();await loadAll();listenRealtime()}catch(e){console.error(e);alert("Erro ao carregar: "+e.message)}
+}
+async function loadAll(){
+ const [cr,lr,ar,pr,orr,phr]=await Promise.all([
+  supabase.from("clients").select("*").eq("organization_id",org.id).order("created_at",{ascending:false}),
+  supabase.from("locations").select("*").eq("organization_id",org.id).order("created_at",{ascending:false}),
+  supabase.from("assets").select("*").eq("organization_id",org.id).order("created_at",{ascending:false}),
+  supabase.from("pmoc_plans").select("*").eq("organization_id",org.id).order("created_at",{ascending:false}),
+  supabase.from("orders").select("*").eq("organization_id",org.id).order("created_at",{ascending:false}),
+  supabase.from("service_photos").select("*").eq("organization_id",org.id).order("captured_at",{ascending:false})
+ ]);
+ for(const r of [cr,lr,ar,pr,orr,phr])if(r.error)throw r.error;
+ clients=cr.data||[];locations=lr.data||[];assets=ar.data||[];pmocPlans=pr.data||[];orders=orr.data||[];servicePhotos=phr.data||[];renderAll();await renderTeam();openAssetFromUrl()
+}
+function listenRealtime(){
+ supabase.channel("wpinho-"+org.id)
+ .on("postgres_changes",{event:"*",schema:"public",table:"clients",filter:`organization_id=eq.${org.id}`},()=>loadAll())
+ .on("postgres_changes",{event:"*",schema:"public",table:"locations",filter:`organization_id=eq.${org.id}`},()=>loadAll())
+ .on("postgres_changes",{event:"*",schema:"public",table:"assets",filter:`organization_id=eq.${org.id}`},()=>loadAll())
+ .on("postgres_changes",{event:"*",schema:"public",table:"pmoc_plans",filter:`organization_id=eq.${org.id}`},()=>loadAll())
+ .on("postgres_changes",{event:"*",schema:"public",table:"orders",filter:`organization_id=eq.${org.id}`},()=>loadAll())
+ .on("postgres_changes",{event:"*",schema:"public",table:"service_photos",filter:`organization_id=eq.${org.id}`},()=>loadAll())
+ .subscribe()
+}
+$("#logoutBtn").onclick=async()=>{await supabase.auth.signOut();location.reload()}
+$("#menuBtn").onclick=()=>$("#shell").classList.toggle("menuOpen");
+document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)})
+let currentSection="dash", navigatingHistory=false;
+function go(id,fromHistory=false){
+ if(!document.getElementById(id))return;
+ if(!fromHistory && currentSection!==id){
+   history.pushState({wpSection:id},"","#"+id);
+ }
+ currentSection=id;
+ $$(".section").forEach(s=>s.classList.toggle("active",s.id===id));
+ $$("nav [data-go]").forEach(b=>b.classList.toggle("active",b.dataset.go===id));
+ $("#shell").classList.remove("menuOpen");
+ if(id==="newOrder"&&!$("#orderId").value)resetOrder();
+ window.scrollTo(0,0);
+}
+window.addEventListener("popstate",e=>{
+ const id=e.state?.wpSection || (location.hash||"#dash").slice(1) || "dash";
+ go(document.getElementById(id)?id:"dash",true);
+});
+if(!history.state?.wpSection)history.replaceState({wpSection:"dash"},"",location.pathname+location.search+"#dash");
+
+function renderAll(){renderDash();renderClients();renderLocations();renderAssets();renderPmoc();renderOrders();renderClientSelect();renderOrderRelations();renderGalleryFilters();renderGallery()}
+function renderDash(){$("#sClients").textContent=clients.length;$("#sOrders").textContent=orders.length;$("#sOpen").textContent=orders.filter(o=>o.status!=="Concluída").length;$("#sDone").textContent=orders.filter(o=>o.status==="Concluída").length;$("#sAssets").textContent=assets.length;$("#sPmoc").textContent=pmocPlans.filter(p=>p.active!==false).length;$("#recentOrders").innerHTML=orders.slice(0,5).map(orderCard).join("")||'<div class="muted">Nenhuma OS.</div>'}
+function clientName(id){return clients.find(c=>c.id===id)?.name||"Cliente"}
+function orderCard(o){return `<div class="item"><div style="display:flex;gap:10px;align-items:flex-start"><input class="orderCheck orderSelector" type="checkbox" value="${o.id}" onchange="window.updateSelectedOrders()"><div><strong>OS #${esc(o.number)} • ${esc(clientName(o.client_id))}</strong><small>${esc(locationName(o.location_id)||"Sem local")} • ${esc(assetName(o.asset_id)||o.equipment||"Sem equipamento")}</small><small>${esc(o.service_type)} • ${esc(o.service_date||"")}</small><span class="badge ${o.status==="Concluída"?"ok":"warn"}">${esc(o.status)}</span></div></div><div class="row"><button class="btn small" onclick="window.editOrder('${o.id}')">Editar</button><button class="btn small" onclick="window.printOrder('${o.id}')">PDF</button><button class="btn small danger" onclick="window.deleteOrder('${o.id}')">Excluir</button></div></div>`}
+
+$("#clientForm").onsubmit=async e=>{e.preventDefault();const id=$("#clientId").value;const row={organization_id:org.id,name:$("#clientName").value.trim(),phone:$("#clientPhone").value.trim(),document:$("#clientDoc").value.trim(),email:$("#clientEmail").value.trim(),address:$("#clientAddress").value.trim(),updated_at:new Date().toISOString()};let r=id?await supabase.from("clients").update(row).eq("id",id):await supabase.from("clients").insert(row);if(r.error)return alert(r.error.message);resetClient();await loadAll()}
+function renderClients(){const q=$("#clientSearch").value.toLowerCase();$("#clientList").innerHTML=clients.filter(c=>JSON.stringify(c).toLowerCase().includes(q)).map(c=>{const ca=assets.filter(a=>a.client_id===c.id),cl=locations.filter(l=>l.client_id===c.id),co=orders.filter(o=>o.client_id===c.id);return `<div class="item"><div><strong>${esc(c.name)}</strong><small>${esc(c.phone||"")} • ${esc(c.document||"")}</small><small>${esc(c.address||"")}</small><small><b>${ca.length}</b> equipamento(s) • <b>${cl.length}</b> local(is) • <b>${co.length}</b> OS</small></div><div class="row"><button class="btn small primary" onclick="window.viewClient('${c.id}')">Abrir empresa</button><button class="btn small" onclick="window.newAssetForClient('${c.id}')">＋ Equipamento</button><button class="btn small" onclick="window.editClient('${c.id}')">Editar</button><button class="btn small danger" onclick="window.deleteClient('${c.id}')">Excluir</button></div></div>`}).join("")||'<div class="muted">Nenhum cliente.</div>'}
+$("#clientSearch").oninput=renderClients;
+
+window.viewClient=id=>{
+ const c=clients.find(x=>x.id===id);if(!c)return;
+ const ca=assets.filter(a=>a.client_id===id);
+ const cl=locations.filter(l=>l.client_id===id);
+ const co=orders.filter(o=>o.client_id===id);
+ const cp=pmocPlans.filter(p=>p.client_id===id&&p.active!==false);
+ go("clientDetail");
+ $("#clientDetailContent").innerHTML=`
+ <div class="head"><div><h1>${esc(c.name)}</h1><div class="muted">Cliente / empresa atendida</div></div>
+ <div class="row"><button class="btn primary" onclick="newAssetForClient('${c.id}')">＋ Cadastrar equipamento</button><button class="btn" onclick="newLocationForClient('${c.id}')">＋ Cadastrar local</button><button class="btn" onclick="editClient('${c.id}')">Editar cliente</button></div></div>
+ <div class="grid">
+  <div class="card"><h2>Equipamentos</h2><b style="font-size:28px">${ca.length}</b></div>
+  <div class="card"><h2>Locais / unidades</h2><b style="font-size:28px">${cl.length}</b></div>
+  <div class="card"><h2>Ordens de serviço</h2><b style="font-size:28px">${co.length}</b></div>
+  <div class="card"><h2>Planos PMOC</h2><b style="font-size:28px">${cp.length}</b></div>
+ </div>
+ <div class="card" style="margin-top:14px"><h2>Dados da empresa</h2><p><b>Documento:</b> ${esc(c.document||"-")}<br><b>Telefone:</b> ${esc(c.phone||"-")}<br><b>E-mail:</b> ${esc(c.email||"-")}<br><b>Endereço:</b> ${esc(c.address||"-")}</p></div>
+ <div class="card" style="margin-top:14px"><div class="head"><div><h2>Equipamentos desta empresa</h2><div class="muted">Cada equipamento possui ficha, histórico, QR Code e PMOC próprios.</div></div><button class="btn primary" onclick="newAssetForClient('${c.id}')">＋ Novo equipamento</button></div>
+ <div class="list">${ca.map(a=>`<div class="item"><div><strong>${esc(a.tag||a.type||"Equipamento")} • ${esc(a.brand||"")} ${esc(a.model||"")}</strong><small>${esc(locationName(a.location_id)||a.environment||"Sem local definido")}</small><small>${esc(a.capacity||"")} ${a.refrigerant?"• "+esc(a.refrigerant):""} • ${esc(a.status||"Ativo")}</small></div><div class="row"><button class="btn small primary" onclick="viewAsset('${a.id}')">Ficha / QR</button><button class="btn small" onclick="newOrderForAsset('${a.id}')">＋ OS</button><button class="btn small" onclick="editAsset('${a.id}')">Editar</button></div></div>`).join("")||'<span class="muted">Nenhum equipamento cadastrado para esta empresa.</span>'}</div></div>
+ <div class="card" style="margin-top:14px"><h2>Locais / unidades</h2><div class="list">${cl.map(l=>`<div class="item"><div><strong>${esc(l.name)}</strong><small>${esc(l.address||"")}</small></div><div class="row"><button class="btn small" onclick="editLocation('${l.id}')">Editar</button></div></div>`).join("")||'<span class="muted">Nenhum local cadastrado.</span>'}</div></div>
+ <div class="card" style="margin-top:14px"><h2>Últimas ordens de serviço</h2><div class="list">${co.slice(0,10).map(orderCard).join("")||'<span class="muted">Nenhuma OS para esta empresa.</span>'}</div></div>`;
+};
+
+window.newAssetForClient=id=>{
+ const c=clients.find(x=>x.id===id);if(!c)return;
+ go("assets");resetAsset();clientOptions("#assetClient");$("#assetClient").value=id;fillLocationSelect("#assetLocation",id);$("#assetTitle").textContent="Novo equipamento • "+c.name;window.scrollTo(0,0);
+};
+
+window.newLocationForClient=id=>{
+ const c=clients.find(x=>x.id===id);if(!c)return;
+ go("locations");resetLocation();clientOptions("#locationClient");$("#locationClient").value=id;$("#locationTitle").textContent="Novo local • "+c.name;window.scrollTo(0,0);
+};
+window.editClient=id=>{const c=clients.find(x=>x.id===id);if(!c)return;go("clients");$("#clientId").value=c.id;$("#clientName").value=c.name||"";$("#clientPhone").value=c.phone||"";$("#clientDoc").value=c.document||"";$("#clientEmail").value=c.email||"";$("#clientAddress").value=c.address||"";$("#clientTitle").textContent="Editar cliente";$("#cancelClient").classList.remove("hidden")}
+window.deleteClient=async id=>{if(!confirm("Excluir cliente?"))return;const {error}=await supabase.from("clients").delete().eq("id",id);if(error)alert(error.message)}
+function resetClient(){$("#clientForm").reset();$("#clientId").value="";$("#clientTitle").textContent="Novo cliente";$("#cancelClient").classList.add("hidden")}
+$("#cancelClient").onclick=resetClient;
+function renderClientSelect(){const v=$("#orderClient").value;$("#orderClient").innerHTML='<option value="">Selecione...</option>'+clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");if(clients.some(c=>c.id===v))$("#orderClient").value=v}
+function clientOptions(sel){const v=$(sel)?.value;if(!$(sel))return;$(sel).innerHTML='<option value="">Selecione...</option>'+clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');if(clients.some(c=>c.id===v))$(sel).value=v}
+function locationName(id){return locations.find(x=>x.id===id)?.name||''}
+function assetName(id){const a=assets.find(x=>x.id===id);return a?`${a.tag||a.type||'Equipamento'}${a.brand?' • '+a.brand:''}${a.model?' '+a.model:''}`:''}
+function assetFullName(a){
+ if(!a)return "";
+ const loc=locationName(a.location_id)||a.environment||"Sem local";
+ return `${a.tag||a.type||"Equipamento"} • ${a.brand||""} ${a.model||""} — ${clientName(a.client_id)} — ${loc}`.replace(/\s+/g," ").trim();
+}
+function updateOrderAssetHint(){
+ const a=assets.find(x=>x.id===$("#orderAsset").value);
+ $("#orderAssetHint").textContent=a
+   ? `Cliente: ${clientName(a.client_id)} | Local: ${locationName(a.location_id)||a.environment||"Sem local"} | Equipamento: ${a.tag||a.type||"-"} | ${a.brand||""} ${a.model||""}`
+   : "Selecione o cliente e o equipamento para ver a identificação completa.";
+}
+function renderLocations(){clientOptions('#locationClient');const q='';$('#locationList').innerHTML=locations.map(l=>`<div class="item"><div><strong>${esc(l.name)}</strong><small>${esc(clientName(l.client_id))}</small><small>${esc(l.address||'')}</small></div><div class="row"><button class="btn small" onclick="editLocation('${l.id}')">Editar</button><button class="btn small danger" onclick="deleteLocation('${l.id}')">Excluir</button></div></div>`).join('')||'<div class="muted">Nenhum local cadastrado.</div>'}
+$('#locationForm').onsubmit=async e=>{e.preventDefault();const id=$('#locationId').value,row={organization_id:org.id,client_id:$('#locationClient').value,name:$('#locationName').value.trim(),address:$('#locationAddress').value.trim(),updated_at:new Date().toISOString()};const r=id?await supabase.from('locations').update(row).eq('id',id):await supabase.from('locations').insert(row);if(r.error)return alert(r.error.message);resetLocation();await loadAll()};
+function resetLocation(){$('#locationForm').reset();$('#locationId').value='';$('#locationTitle').textContent='Novo local';$('#cancelLocation').classList.add('hidden');clientOptions('#locationClient')};$('#cancelLocation').onclick=resetLocation;
+window.editLocation=id=>{const l=locations.find(x=>x.id===id);if(!l)return;go('locations');$('#locationId').value=l.id;clientOptions('#locationClient');$('#locationClient').value=l.client_id;$('#locationName').value=l.name||'';$('#locationAddress').value=l.address||'';$('#locationTitle').textContent='Editar local';$('#cancelLocation').classList.remove('hidden')};window.deleteLocation=async id=>{if(!confirm('Excluir este local?'))return;const r=await supabase.from('locations').delete().eq('id',id);if(r.error)alert(r.error.message)};
+function filteredLocations(clientId){return locations.filter(l=>!clientId||l.client_id===clientId)}
+function fillLocationSelect(sel,clientId){if(!$(sel))return;const v=$(sel).value;$(sel).innerHTML='<option value="">Sem local específico</option>'+filteredLocations(clientId).map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');if(filteredLocations(clientId).some(l=>l.id===v))$(sel).value=v}
+function fillAssetSelect(sel,clientId,locationId){
+ if(!$(sel))return;
+ const v=$(sel).value;
+ const arr=assets.filter(a=>(!clientId||a.client_id===clientId)&&(!locationId||a.location_id===locationId));
+ $(sel).innerHTML='<option value="">Selecione...</option>'+arr.map(a=>`<option value="${a.id}">${esc(assetFullName(a))}</option>`).join('');
+ if(arr.some(a=>a.id===v))$(sel).value=v;
+ if(sel==="#orderAsset")updateOrderAssetHint();
+}
+function renderAssets(){clientOptions('#assetClient');fillLocationSelect('#assetLocation',$('#assetClient').value);const q=($('#assetSearch').value||'').toLowerCase();$('#assetList').innerHTML=assets.filter(a=>JSON.stringify(a).toLowerCase().includes(q)||clientName(a.client_id).toLowerCase().includes(q)).map(a=>`<div class="item"><div><strong>${esc(a.tag||a.type||'Equipamento')} • ${esc(a.brand||'')} ${esc(a.model||'')}</strong><small>${esc(clientName(a.client_id))}${a.location_id?' • '+esc(locationName(a.location_id)):''}</small><small>${esc(a.capacity||'')} ${a.refrigerant?'• '+esc(a.refrigerant):''} • ${esc(a.status||'Ativo')}</small></div><div class="row"><button class="btn small primary" onclick="viewAsset('${a.id}')">Ficha / QR</button><button class="btn small" onclick="editAsset('${a.id}')">Editar</button><button class="btn small danger" onclick="deleteAsset('${a.id}')">Excluir</button></div></div>`).join('')||'<div class="muted">Nenhum equipamento cadastrado.</div>'};$('#assetSearch').oninput=renderAssets;$('#assetClient').onchange=()=>fillLocationSelect('#assetLocation',$('#assetClient').value);
+$('#assetForm').onsubmit=async e=>{e.preventDefault();const id=$('#assetId').value,row={organization_id:org.id,client_id:$('#assetClient').value,location_id:$('#assetLocation').value||null,type:$('#assetType').value,tag:$('#assetTag').value.trim(),brand:$('#assetBrand').value.trim(),model:$('#assetModel').value.trim(),serial_number:$('#assetSerial').value.trim(),capacity:$('#assetCapacity').value.trim(),voltage:$('#assetVoltage').value.trim(),refrigerant:$('#assetRefrigerant').value.trim(),environment:$('#assetEnvironment').value.trim(),install_date:$('#assetInstallDate').value||null,status:$('#assetStatus').value,notes:$('#assetNotes').value.trim(),updated_at:new Date().toISOString()};const r=id?await supabase.from('assets').update(row).eq('id',id):await supabase.from('assets').insert(row);if(r.error)return alert(r.error.message);resetAsset();await loadAll()};
+function resetAsset(){$('#assetForm').reset();$('#assetId').value='';$('#assetTitle').textContent='Novo equipamento';$('#cancelAsset').classList.add('hidden');clientOptions('#assetClient');fillLocationSelect('#assetLocation','')};$('#cancelAsset').onclick=resetAsset;
+window.editAsset=id=>{const a=assets.find(x=>x.id===id);if(!a)return;go('assets');$('#assetId').value=a.id;clientOptions('#assetClient');$('#assetClient').value=a.client_id;fillLocationSelect('#assetLocation',a.client_id);$('#assetLocation').value=a.location_id||'';$('#assetType').value=a.type||'Outro';$('#assetTag').value=a.tag||'';$('#assetBrand').value=a.brand||'';$('#assetModel').value=a.model||'';$('#assetSerial').value=a.serial_number||'';$('#assetCapacity').value=a.capacity||'';$('#assetVoltage').value=a.voltage||'';$('#assetRefrigerant').value=a.refrigerant||'';$('#assetEnvironment').value=a.environment||'';$('#assetInstallDate').value=a.install_date||'';$('#assetStatus').value=a.status||'Ativo';$('#assetNotes').value=a.notes||'';$('#assetTitle').textContent='Editar equipamento';$('#cancelAsset').classList.remove('hidden')};window.deleteAsset=async id=>{if(!confirm('Excluir este equipamento e seus vínculos?'))return;const r=await supabase.from('assets').delete().eq('id',id);if(r.error)alert(r.error.message)};
+function qrUrl(id){const u=new URL(location.href);u.searchParams.set('asset',id);return u.toString()}
+window.viewAsset=id=>{const a=assets.find(x=>x.id===id);if(!a)return;const hist=orders.filter(o=>o.asset_id===id);go('assetDetail');$('#assetDetailContent').innerHTML=`<div class="head"><div><h1>${esc(a.tag||a.type||'Equipamento')}</h1><div class="muted">${esc(clientName(a.client_id))} • ${esc(locationName(a.location_id)||'Sem local')}</div></div><div class="row"><button class="btn primary" onclick="newOrderForAsset('${a.id}')">＋ Nova OS</button><button class="btn" onclick="go('assets')">Voltar</button></div></div><div class="grid"><div class="card"><h2>Identificação</h2>${esc(a.type||'-')}<br>${esc(a.brand||'')} ${esc(a.model||'')}<br>Série: ${esc(a.serial_number||'-')}<br>Status: ${esc(a.status||'-')}</div><div class="card"><h2>Dados técnicos</h2>Capacidade: ${esc(a.capacity||'-')}<br>Tensão: ${esc(a.voltage||'-')}<br>Fluido: ${esc(a.refrigerant||'-')}<br>Ambiente: ${esc(a.environment||'-')}</div><div class="card"><h2>QR Code</h2><div id="assetQr"></div><small>Escaneie para abrir esta ficha.</small><br><button class="btn small" style="margin-top:8px" onclick="printQr('${a.id}')">Imprimir QR</button></div><div class="card"><h2>Histórico</h2><b>${hist.length}</b> atendimento(s)<br>Último: ${esc(hist[0]?.service_date||'-')}</div></div><div class="card"><h2>Histórico de manutenção</h2><div class="list">${hist.map(o=>orderCard(o)).join('')||'<span class="muted">Sem atendimentos.</span>'}</div></div>`;setTimeout(()=>new QRCode(document.getElementById('assetQr'),{text:qrUrl(id),width:150,height:150}),50)};
+window.printQr=id=>{const a=assets.find(x=>x.id===id);if(!a)return;const w=window.open('','_blank');w.document.write(`<html><body style="font-family:Arial;text-align:center;padding:30px"><h2>W.Pinho Serviços PRO</h2><h3>${esc(a.tag||a.type)}</h3><div id="q"></div><p>${esc(a.brand||'')} ${esc(a.model||'')}<br>${esc(clientName(a.client_id))}</p><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"><\/script><script>new QRCode(document.getElementById('q'),{text:${JSON.stringify(qrUrl(id))},width:240,height:240});setTimeout(()=>print(),700)<\/script></body></html>`);w.document.close()};
+window.newOrderForAsset=id=>{const a=assets.find(x=>x.id===id);if(!a)return;go('newOrder');$('#orderClient').value=a.client_id;renderOrderRelations();$('#orderLocation').value=a.location_id||'';fillAssetSelect('#orderAsset',a.client_id,a.location_id||'');$('#orderAsset').value=a.id;$('#orderEquipment').value=assetName(a.id)};
+function openAssetFromUrl(){const id=new URLSearchParams(location.search).get('asset');if(id&&assets.some(a=>a.id===id)){history.replaceState({},document.title,location.pathname);viewAsset(id)}}
+const PMOC_ITEMS=['Limpeza de filtros','Limpeza e inspeção da evaporadora','Limpeza e inspeção da condensadora','Verificar bandeja e dreno','Verificar serpentinas e aletas','Verificar conexões elétricas','Medição de tensão e corrente','Verificar temperatura de insuflamento/retorno','Verificar ruídos e vibrações','Verificar isolamento das tubulações','Verificar fixações e suportes','Inspeção visual de vazamentos','Registrar fotos antes/depois','Registrar não conformidades'];
+function checklistHtml(prefix,selected=[]){return PMOC_ITEMS.map((x,i)=>`<label style="display:flex;flex-direction:row;align-items:center;gap:8px;font-weight:500"><input style="width:auto" type="checkbox" data-${prefix}-check="${i}" ${selected.includes(x)?'checked':''}> ${esc(x)}</label>`).join('')}
+function renderPmoc(){clientOptions('#pmocClient');fillAssetSelect('#pmocAsset',$('#pmocClient').value,'');if(!$('#pmocChecklist').innerHTML)$('#pmocChecklist').innerHTML=checklistHtml('pmoc');$('#pmocList').innerHTML=pmocPlans.map(p=>{const a=assets.find(x=>x.id===p.asset_id);const late=p.next_service_date&&p.next_service_date<today();return `<div class="item"><div><strong>${esc(assetName(p.asset_id)||'Equipamento')}</strong><small>${esc(clientName(p.client_id))} • a cada ${p.frequency_days} dias</small><span class="badge ${late?'warn':'ok'}">Próxima: ${esc(p.next_service_date||'-')}</span></div><div class="row"><button class="btn small primary" onclick="newPmocOrder('${p.id}')">Gerar OS</button><button class="btn small" onclick="editPmoc('${p.id}')">Editar</button><button class="btn small danger" onclick="deletePmoc('${p.id}')">Excluir</button></div></div>`}).join('')||'<div class="muted">Nenhum plano PMOC.</div>'};$('#pmocClient').onchange=()=>fillAssetSelect('#pmocAsset',$('#pmocClient').value,'');
+$('#pmocForm').onsubmit=async e=>{e.preventDefault();const checks=[...document.querySelectorAll('[data-pmoc-check]:checked')].map(x=>PMOC_ITEMS[Number(x.dataset.pmocCheck)]),id=$('#pmocId').value,row={organization_id:org.id,client_id:$('#pmocClient').value,asset_id:$('#pmocAsset').value,frequency_days:Number($('#pmocFrequency').value),next_service_date:$('#pmocNextDate').value,responsible_technician:$('#pmocResponsible').value.trim(),professional_registry:$('#pmocRegistry').value.trim(),checklist:checks,notes:$('#pmocNotes').value.trim(),active:true,updated_at:new Date().toISOString()};const r=id?await supabase.from('pmoc_plans').update(row).eq('id',id):await supabase.from('pmoc_plans').insert(row);if(r.error)return alert(r.error.message);resetPmoc();await loadAll()};
+function resetPmoc(){$('#pmocForm').reset();$('#pmocId').value='';$('#pmocTitle').textContent='Novo plano PMOC';$('#cancelPmoc').classList.add('hidden');$('#pmocNextDate').value=today();$('#pmocChecklist').innerHTML=checklistHtml('pmoc');clientOptions('#pmocClient');fillAssetSelect('#pmocAsset','','')};$('#cancelPmoc').onclick=resetPmoc;
+window.editPmoc=id=>{const p=pmocPlans.find(x=>x.id===id);if(!p)return;go('pmoc');$('#pmocId').value=p.id;clientOptions('#pmocClient');$('#pmocClient').value=p.client_id;fillAssetSelect('#pmocAsset',p.client_id,'');$('#pmocAsset').value=p.asset_id;$('#pmocFrequency').value=String(p.frequency_days);$('#pmocNextDate').value=p.next_service_date||today();$('#pmocResponsible').value=p.responsible_technician||'';$('#pmocRegistry').value=p.professional_registry||'';$('#pmocNotes').value=p.notes||'';$('#pmocChecklist').innerHTML=checklistHtml('pmoc',p.checklist||[]);$('#pmocTitle').textContent='Editar plano PMOC';$('#cancelPmoc').classList.remove('hidden')};window.deletePmoc=async id=>{if(!confirm('Excluir este plano PMOC?'))return;const r=await supabase.from('pmoc_plans').delete().eq('id',id);if(r.error)alert(r.error.message)};
+window.newPmocOrder=id=>{const p=pmocPlans.find(x=>x.id===id),a=assets.find(x=>x.id===p?.asset_id);if(!p||!a)return;newOrderForAsset(a.id);$('#orderType').value='PMOC / Preventiva';$('#orderChecklist').innerHTML=checklistHtml('order',p.checklist||PMOC_ITEMS)};
+function renderOrderRelations(){clientOptions('#orderClient');fillLocationSelect('#orderLocation',$('#orderClient').value);fillAssetSelect('#orderAsset',$('#orderClient').value,$('#orderLocation').value);if(!$('#orderChecklist').innerHTML)$('#orderChecklist').innerHTML=checklistHtml('order')}
+$('#orderClient').onchange=()=>{fillLocationSelect('#orderLocation',$('#orderClient').value);fillAssetSelect('#orderAsset',$('#orderClient').value,'')};$('#orderLocation').onchange=()=>fillAssetSelect('#orderAsset',$('#orderClient').value,$('#orderLocation').value);$('#orderAsset').onchange=()=>{if($('#orderAsset').value)$('#orderEquipment').value=assetName($('#orderAsset').value);updateOrderAssetHint()};
+
+
+async function captureGPS(show=true){
+ if(!navigator.geolocation){if(show)alert("GPS indisponível neste aparelho ou navegador.");return null}
+ if(show)$("#gpsText").textContent="Capturando...";
+ return new Promise(resolve=>navigator.geolocation.getCurrentPosition(p=>{gps={lat:p.coords.latitude,lon:p.coords.longitude,accuracy:p.coords.accuracy};$("#gpsText").textContent=`${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)} • ±${Math.round(gps.accuracy)} m`;resolve({...gps})},err=>{
+      const texts={1:"Permissão de localização negada. Abra as informações do app e permita Localização.",2:"Localização indisponível. Ative o GPS do celular.",3:"Tempo esgotado ao buscar GPS. Tente novamente em local aberto."};
+      const text=texts[err?.code]||"Não foi possível capturar a localização.";
+      $("#gpsText").textContent=text;
+      $("#gpsPermissionInfo").textContent=text;
+      if(show && err?.code===1) alert(text);
+      resolve(null)
+    },{enableHighAccuracy:true,timeout:12000,maximumAge:0}))
+}
+$("#gpsBtn").onclick=()=>captureGPS(true);
+$("#refreshPhotoGps").onclick=()=>captureGPS(true);
+function fileData(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
+
+async function reverseGeocode(pos){
+ if(!pos?.lat||!pos?.lon)return {label:"Localização GPS não disponível",city:"",state:""};
+ try{
+  const url=`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${encodeURIComponent(pos.lat)}&longitude=${encodeURIComponent(pos.lon)}&localityLanguage=pt`;
+  const r=await fetch(url,{cache:"no-store"});
+  if(!r.ok)throw new Error("Falha ao consultar cidade");
+  const d=await r.json();
+  const city=d.city||d.locality||d.localityInfo?.administrative?.[2]?.name||d.principalSubdivisionCode?.split("-").pop()||"";
+  const state=d.principalSubdivision||"";
+  const country=d.countryName||"";
+  const label=[city,state].filter(Boolean).join(" - ")||country||"Localização GPS";
+  return {label,city,state,country};
+ }catch(e){
+  console.warn("Não foi possível identificar a cidade:",e);
+  return {label:"Localização GPS",city:"",state:""};
+ }
+}
+
+function photoDateText(v){
+ try{return new Date(v).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"})}
+ catch{return v||""}
+}
+
+async function stampPhoto(file,pos,capturedAt,place){
+ const data=await fileData(file);
+ const img=await new Promise((res,rej)=>{const im=new Image();im.onload=()=>res(im);im.onerror=rej;im.src=data});
+ const maxW=1920;
+ const scale=Math.min(1,maxW/img.naturalWidth);
+ const w=Math.max(1,Math.round(img.naturalWidth*scale)),h=Math.max(1,Math.round(img.naturalHeight*scale));
+ const c=document.createElement("canvas");c.width=w;c.height=h;
+ const ctx=c.getContext("2d");
+ ctx.drawImage(img,0,0,w,h);
+
+ const pad=Math.max(16,Math.round(w*0.018));
+ const font=Math.max(22,Math.round(w*0.022));
+ const small=Math.max(18,Math.round(w*0.018));
+ const line=Math.round(font*1.35);
+ const barH=Math.max(150,line*4+pad*2);
+ const y0=h-barH;
+
+ ctx.fillStyle="rgba(0,0,0,.72)";
+ ctx.fillRect(0,y0,w,barH);
+ ctx.textBaseline="top";
+ ctx.fillStyle="#fff";
+ ctx.font=`700 ${font}px Arial, sans-serif`;
+ ctx.fillText("W.Pinho Serviços PRO",pad,y0+pad);
+
+ ctx.font=`700 ${small}px Arial, sans-serif`;
+ const loc=place?.label||"Localização GPS";
+ ctx.fillText(`LOCAL: ${loc}`,pad,y0+pad+line);
+
+ ctx.font=`${small}px Arial, sans-serif`;
+ const gpsText=pos?.lat!=null&&pos?.lon!=null
+   ? `GPS: ${Number(pos.lat).toFixed(6)}, ${Number(pos.lon).toFixed(6)}`
+   : "GPS: não disponível";
+ ctx.fillText(gpsText,pad,y0+pad+line*2);
+ ctx.fillText(`DATA/HORA: ${photoDateText(capturedAt)}`,pad,y0+pad+line*3);
+
+ const blob=await new Promise(res=>c.toBlob(res,"image/jpeg",0.90));
+ if(!blob)throw new Error("Não foi possível preparar a foto.");
+ const base=(file.name||"foto").replace(/\.[^.]+$/,"");
+ const stampedFile=new File([blob],`${base}_WP.jpg`,{type:"image/jpeg",lastModified:Date.now()});
+ const preview=URL.createObjectURL(blob);
+ return {file:stampedFile,preview};
+}
+
+async function addPhotos(files,source){
+ if(!files?.length)return;
+ $("#photoSaveStatus").textContent="Capturando GPS, cidade, data e hora...";
+ const pos=await captureGPS(false);
+ const finalPos=pos||gps||null;
+ const capturedAt=new Date().toISOString();
+ $("#photoSaveStatus").textContent=finalPos?"Identificando a cidade e gravando os dados dentro da foto...":"Gravando data e hora dentro da foto...";
+ const place=await reverseGeocode(finalPos);
+
+ let ok=0;
+ for(const f of [...files]){
+  try{
+   const stamped=await stampPhoto(f,finalPos,capturedAt,place);
+   pendingPhotos.push({
+    file:stamped.file,
+    preview:stamped.preview,
+    capturedAt,
+    lat:finalPos?.lat??null,
+    lon:finalPos?.lon??null,
+    accuracy:finalPos?.accuracy??null,
+    place:place?.label||"",
+    source
+   });
+   ok++;
+  }catch(e){
+   console.error(e);
+   const data=await fileData(f);
+   pendingPhotos.push({file:f,preview:data,capturedAt,lat:finalPos?.lat??null,lon:finalPos?.lon??null,accuracy:finalPos?.accuracy??null,place:place?.label||"",source});
+  }
+ }
+ renderPhotos();
+ $("#photoSaveStatus").textContent=`${files.length} foto(s) pronta(s). Local/cidade, GPS e data/hora foram gravados na própria imagem. Salve a OS para enviar para a nuvem.`;
+}
+$("#cameraInput").onchange=async e=>{await addPhotos(e.target.files,"Câmera");e.target.value=""};
+$("#galleryInput").onchange=async e=>{await addPhotos(e.target.files,"Galeria");e.target.value=""};
+function fmtPhotoDate(v){try{return new Date(v).toLocaleString("pt-BR")}catch{return v||"-"}}
+function renderPhotos(){
+ const remote=savedOrderPhotos.map(p=>`<div class="photo"><img src="${p.url||""}"><div><b>Salva na nuvem</b><br>${esc(fmtPhotoDate(p.captured_at))}<br>📍 ${p.latitude!=null?`${Number(p.latitude).toFixed(6)}, ${Number(p.longitude).toFixed(6)}`:"Sem GPS"}<br><button type="button" class="btn small danger" onclick="window.deleteSavedPhoto('${p.id}')">Excluir foto</button></div></div>`).join("");
+ const local=pendingPhotos.map((p,i)=>`<div class="photo"><img src="${p.preview}"><div><b>${esc(p.source||"Foto")}</b> • aguardando salvar OS<br>${esc(fmtPhotoDate(p.capturedAt))}<br>📍 ${esc(p.place||"")} ${p.lat!=null?`<br>${Number(p.lat).toFixed(6)}, ${Number(p.lon).toFixed(6)}`:"<br>Sem GPS"}<br><button type="button" class="btn small danger" onclick="window.removePhoto(${i})">Remover</button></div></div>`).join("");
+ $("#photoPreview").innerHTML=remote+local||'<span class="muted">Nenhuma foto adicionada.</span>';
+}
+window.removePhoto=i=>{pendingPhotos.splice(i,1);renderPhotos()};
+async function signedPhotoUrl(path){if(!path)return"";const cached=photoUrlCache.get(path);if(cached&&cached.exp>Date.now())return cached.url;const {data,error}=await supabase.storage.from("service-photos").createSignedUrl(path,3600);if(error)return"";photoUrlCache.set(path,{url:data.signedUrl,exp:Date.now()+3500*1000});return data.signedUrl}
+async function loadOrderPhotos(orderId){const rows=servicePhotos.filter(p=>p.order_id===orderId);savedOrderPhotos=await Promise.all(rows.map(async p=>({...p,url:await signedPhotoUrl(p.storage_path)})));renderPhotos()}
+window.deleteSavedPhoto=async id=>{const p=servicePhotos.find(x=>x.id===id)||savedOrderPhotos.find(x=>x.id===id);if(!p||!confirm("Excluir esta foto definitivamente?"))return;const delStorage=await supabase.storage.from("service-photos").remove([p.storage_path]);if(delStorage.error)return alert(delStorage.error.message);const {error}=await supabase.from("service_photos").delete().eq("id",id);if(error)return alert(error.message);savedOrderPhotos=savedOrderPhotos.filter(x=>x.id!==id);servicePhotos=servicePhotos.filter(x=>x.id!==id);renderPhotos();renderGallery()};
+function renderGalleryFilters(){const v=$("#galleryClient")?.value||"";if(!$("#galleryClient"))return;$("#galleryClient").innerHTML='<option value="">Todos</option>'+clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");$("#galleryClient").value=v}
+async function renderGallery(){if(!$("#galleryGrid"))return;const clientId=$("#galleryClient").value,q=$("#gallerySearch").value.toLowerCase();const rows=servicePhotos.filter(p=>{const o=orders.find(x=>x.id===p.order_id),c=clients.find(x=>x.id===o?.client_id),a=assets.find(x=>x.id===o?.asset_id);if(clientId&&o?.client_id!==clientId)return false;return !q||`${o?.number||""} ${c?.name||""} ${a?.tag||""} ${a?.brand||""} ${a?.model||""}`.toLowerCase().includes(q)});$("#galleryGrid").innerHTML='<div class="muted">Carregando fotos...</div>';const cards=await Promise.all(rows.map(async p=>{const o=orders.find(x=>x.id===p.order_id),c=clients.find(x=>x.id===o?.client_id),a=assets.find(x=>x.id===o?.asset_id),url=await signedPhotoUrl(p.storage_path);return `<div class="photo"><img src="${url}"><div><b>${esc(c?.name||"Cliente")}</b><br>OS ${esc(o?.number||"-")} ${a?`• ${esc(a.tag||a.type||"Equipamento")}`:""}<br>🕒 ${esc(fmtPhotoDate(p.captured_at))}<br>📍 ${p.latitude!=null?`${Number(p.latitude).toFixed(6)}, ${Number(p.longitude).toFixed(6)}`:"Sem GPS"}</div></div>`}));$("#galleryGrid").innerHTML=cards.join("")||'<div class="muted">Nenhuma foto salva.</div>'}
+$("#galleryClient").onchange=renderGallery;$("#gallerySearch").oninput=renderGallery;$("#refreshGallery").onclick=async()=>{await loadAll();renderGallery()};
+
+function setupCanvas(id){const c=$("#"+id),ctx=c.getContext("2d");ctx.lineWidth=3;ctx.lineCap="round";let d=false,last;const pos=e=>{const r=c.getBoundingClientRect(),p=e.touches?e.touches[0]:e;return{x:(p.clientX-r.left)*c.width/r.width,y:(p.clientY-r.top)*c.height/r.height}};const start=e=>{d=true;last=pos(e);e.preventDefault()},move=e=>{if(!d)return;const p=pos(e);ctx.beginPath();ctx.moveTo(last.x,last.y);ctx.lineTo(p.x,p.y);ctx.stroke();last=p;e.preventDefault()},end=()=>d=false;c.addEventListener("mousedown",start);c.addEventListener("mousemove",move);window.addEventListener("mouseup",end);c.addEventListener("touchstart",start,{passive:false});c.addEventListener("touchmove",move,{passive:false});c.addEventListener("touchend",end)}
+function clearCanvas(id){const c=$("#"+id);c.getContext("2d").clearRect(0,0,c.width,c.height)}
+function canvasData(id){return $("#"+id).toDataURL("image/png")}
+$$("[data-clear]").forEach(b=>b.onclick=()=>clearCanvas(b.dataset.clear));setupCanvas("sigClient");setupCanvas("sigTech");
+
+async function nextNumber(){
+ const y=new Date().getFullYear();
+ const {data,error}=await supabase.from("orders").select("number").eq("organization_id",org.id);
+ if(error)throw error;
+ let max=0;
+ for(const r of (data||[])){
+   const m=String(r.number||"").match(/(?:^|-)0*(\d+)$/);
+   if(m)max=Math.max(max,Number(m[1])||0);
+ }
+ return `${y}-${String(max+1).padStart(5,"0")}`;
+}
+$("#orderForm").onsubmit=async e=>{e.preventDefault();if(!$("#orderClient").value)return alert("Selecione o cliente.");const id=$("#orderId").value;const existing=orders.find(o=>o.id===id);const orderId=id||uuid();const row={id:orderId,organization_id:org.id,number:existing?.number||await nextNumber(),client_id:$("#orderClient").value,technician:$("#orderTech").value.trim(),service_type:$("#orderType").value,status:$("#orderStatus").value,service_date:$("#orderDate").value,value:Number($("#orderValue").value||0),location_id:$("#orderLocation").value||null,asset_id:$("#orderAsset").value||null,equipment:$("#orderEquipment").value.trim(),checklist:[...document.querySelectorAll("[data-order-check]")].map(x=>({item:PMOC_ITEMS[Number(x.dataset.orderCheck)],done:x.checked})),problem:$("#orderProblem").value.trim(),service_done:$("#orderService").value.trim(),materials:$("#orderMaterials").value.trim(),notes:$("#orderNotes").value.trim(),latitude:gps?.lat||existing?.latitude||null,longitude:gps?.lon||existing?.longitude||null,client_signature:canvasData("sigClient"),tech_signature:canvasData("sigTech"),updated_at:new Date().toISOString()};const r=id?await supabase.from("orders").update(row).eq("id",id):await supabase.from("orders").insert(row);if(r.error)return alert(r.error.message);for(const p of pendingPhotos){const ext=(p.file.name.split(".").pop()||"jpg").replace(/[^a-z0-9]/gi,"");const path=`${org.id}/${orderId}/${uuid()}.${ext}`;const up=await supabase.storage.from("service-photos").upload(path,p.file,{upsert:false,contentType:p.file.type||"image/jpeg"});if(up.error){alert("A OS foi salva, mas uma foto não foi enviada: "+up.error.message);continue}const pr=await supabase.from("service_photos").insert({organization_id:org.id,order_id:orderId,storage_path:path,captured_at:p.capturedAt||new Date().toISOString(),latitude:p.lat??gps?.lat??null,longitude:p.lon??gps?.lon??null});if(pr.error)alert("Foto enviada, mas o registro falhou: "+pr.error.message)}pendingPhotos=[];savedOrderPhotos=[];resetOrder();await loadAll();go("orders")}
+function resetOrder(){$("#orderForm").reset();$("#orderId").value="";$("#orderTitle").textContent="Nova ordem de serviço";$("#orderDate").value=today();$("#orderTech").value=membership?.display_name||user?.email||"";pendingPhotos=[];savedOrderPhotos=[];gps=null;renderPhotos();$("#gpsText").textContent="Ainda não capturada.";clearCanvas("sigClient");clearCanvas("sigTech");renderClientSelect();renderOrderRelations();$("#orderChecklist").innerHTML=checklistHtml("order")}
+$("#cancelOrder").onclick=()=>{resetOrder();go("orders")}
+function renderOrders(){const q=$("#orderSearch").value.toLowerCase();$("#orderList").innerHTML=orders.filter(o=>JSON.stringify(o).toLowerCase().includes(q)||clientName(o.client_id).toLowerCase().includes(q)).map(orderCard).join("")||'<div class="muted">Nenhuma OS.</div>';window.updateSelectedOrders?.()}
+$("#orderSearch").oninput=renderOrders;
+window.editOrder=async id=>{const o=orders.find(x=>x.id===id);if(!o)return;go("newOrder");$("#orderId").value=o.id;$("#orderClient").value=o.client_id;$("#orderTech").value=o.technician||"";$("#orderType").value=o.service_type;$("#orderStatus").value=o.status;$("#orderDate").value=o.service_date||today();$("#orderValue").value=o.value||"";renderOrderRelations();$("#orderLocation").value=o.location_id||"";fillAssetSelect("#orderAsset",o.client_id,o.location_id||"");$("#orderAsset").value=o.asset_id||"";$("#orderEquipment").value=o.equipment||"";$("#orderChecklist").innerHTML=checklistHtml("order",(o.checklist||[]).filter(x=>x.done).map(x=>x.item));$("#orderProblem").value=o.problem||"";$("#orderService").value=o.service_done||"";$("#orderMaterials").value=o.materials||"";$("#orderNotes").value=o.notes||"";gps=o.latitude?{lat:o.latitude,lon:o.longitude}:null;$("#gpsText").textContent=gps?`${Number(gps.lat).toFixed(6)}, ${Number(gps.lon).toFixed(6)}`:"Ainda não capturada.";$("#orderTitle").textContent="Editar OS #"+o.number;await loadOrderPhotos(o.id)}
+window.deleteOrder=async id=>{if(!confirm("Excluir esta OS?"))return;const {error}=await supabase.from("orders").delete().eq("id",id);if(error)alert(error.message)}
+window.printOrder=async id=>{const o=orders.find(x=>x.id===id),c=clients.find(x=>x.id===o?.client_id);if(!o)return;const a=assets.find(x=>x.id===o.asset_id),ph=servicePhotos.filter(p=>p.order_id===id);const photoHtml=(await Promise.all(ph.map(async p=>`<div class="photo"><img src="${await signedPhotoUrl(p.storage_path)}"><small>${esc(fmtPhotoDate(p.captured_at))}<br>GPS: ${p.latitude!=null?`${Number(p.latitude).toFixed(6)}, ${Number(p.longitude).toFixed(6)}`:"-"}</small></div>`))).join("");const w=window.open("","_blank");w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>OS ${esc(o.number)}</title><style>@page{size:A4;margin:12mm}body{font-family:Arial;color:#172434;font-size:12px}h1,h2{color:#0b5fb3}.box{border:1px solid #ccd8e3;padding:10px;margin:8px 0;border-radius:7px}.sig{display:grid;grid-template-columns:1fr 1fr;gap:18px}.sig img{width:100%;height:100px;object-fit:contain;border-bottom:1px solid #444}.photos{display:grid;grid-template-columns:1fr 1fr;gap:8px}.photo{border:1px solid #ddd;padding:5px}.photo img{width:100%;height:220px;object-fit:contain}.photo small{display:block}</style></head><body><h1>W.Pinho Serviços PRO</h1><b>${esc(org.name)} • OS ${esc(o.number)}</b><div class="box"><b>Cliente:</b> ${esc(c?.name||"-")}<br><b>Telefone:</b> ${esc(c?.phone||"-")}<br><b>Endereço:</b> ${esc(c?.address||"-")}</div><div class="box"><b>Data:</b> ${esc(o.service_date||"-")}<br><b>Técnico:</b> ${esc(o.technician||"-")}<br><b>Tipo:</b> ${esc(o.service_type)}<br><b>Status:</b> ${esc(o.status)}<br><b>Valor:</b> ${money(o.value)}</div><h2>Equipamento / local</h2><p>${esc(assetName(o.asset_id)||o.equipment||"-")}<br>${esc(locationName(o.location_id)||"")}</p><h2>Checklist</h2><p>${(o.checklist||[]).map(x=>`${x.done?"☑":"☐"} ${esc(x.item)}`).join("<br>")||"-"}</p><h2>Defeito / solicitação</h2><p>${esc(o.problem||"-").replace(/\n/g,"<br>")}</p><h2>Serviço executado</h2><p>${esc(o.service_done||"-").replace(/\n/g,"<br>")}</p><h2>Materiais</h2><p>${esc(o.materials||"-").replace(/\n/g,"<br>")}</p>${photoHtml?`<h2>Fotos do atendimento</h2><div class="photos">${photoHtml}</div>`:""}<h2>Assinaturas</h2><div class="sig"><div><img src="${o.client_signature||""}"><center>Cliente</center></div><div><img src="${o.tech_signature||""}"><center>Técnico</center></div></div><script>window.onload=()=>setTimeout(()=>window.print(),700)<\/script></body></html>`);w.document.close()}
+
+
+window.updateSelectedOrders=()=>{
+ const boxes=[...document.querySelectorAll(".orderSelector")];
+ const selected=boxes.filter(x=>x.checked);
+ if($("#selectedOrdersCount"))$("#selectedOrdersCount").textContent=`${selected.length} selecionada(s)`;
+ if($("#selectAllOrders"))$("#selectAllOrders").checked=boxes.length>0&&selected.length===boxes.length;
+};
+$("#selectAllOrders").onchange=e=>{
+ document.querySelectorAll(".orderSelector").forEach(x=>x.checked=e.target.checked);
+ window.updateSelectedOrders();
+};
+$("#exportSelectedOrders").onclick=async()=>{
+ const ids=[...document.querySelectorAll(".orderSelector:checked")].map(x=>x.value);
+ if(!ids.length)return alert("Selecione pelo menos uma OS.");
+ const selected=orders.filter(o=>ids.includes(o.id)).sort((a,b)=>String(a.number).localeCompare(String(b.number),undefined,{numeric:true}));
+ const blocks=[];
+ for(const o of selected){
+   const c=clients.find(x=>x.id===o.client_id),a=assets.find(x=>x.id===o.asset_id);
+   blocks.push(`<section class="os"><h2>OS ${esc(o.number)} — ${esc(c?.name||"Cliente")}</h2>
+   <div class="box"><b>Data:</b> ${esc(o.service_date||"-")} &nbsp; <b>Técnico:</b> ${esc(o.technician||"-")} &nbsp; <b>Status:</b> ${esc(o.status||"-")}</div>
+   <div class="box"><b>Local:</b> ${esc(locationName(o.location_id)||"-")}<br><b>Equipamento:</b> ${esc(assetFullName(a)||o.equipment||"-")}</div>
+   <div class="box"><b>Checklist</b><br>${(o.checklist||[]).map(x=>`${x.done?"☑":"☐"} ${esc(x.item)}`).join("<br>")||"-"}</div>
+   <div class="box"><b>Defeito / solicitação:</b><br>${esc(o.problem||"-").replace(/\n/g,"<br>")}<br><br><b>Serviço executado:</b><br>${esc(o.service_done||"-").replace(/\n/g,"<br>")}<br><br><b>Materiais:</b><br>${esc(o.materials||"-").replace(/\n/g,"<br>")}</div>
+   </section>`);
+ }
+ const w=window.open("","_blank");
+ w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Relatório PMOC</title><style>@page{size:A4;margin:12mm}body{font-family:Arial;color:#172434;font-size:12px}h1,h2{color:#0b5fb3}.box{border:1px solid #ccd8e3;padding:10px;margin:8px 0;border-radius:7px}.os{break-after:page}.os:last-child{break-after:auto}</style></head><body><h1>${esc(org.name)} — Relatório PMOC / Ordens de Serviço</h1><p>${selected.length} OS selecionada(s) • Gerado em ${new Date().toLocaleString("pt-BR")}</p>${blocks.join("")}<script>window.onload=()=>setTimeout(()=>window.print(),500)<\/script></body></html>`);
+ w.document.close();
+};
+
+async function renderTeam(){const {data,error}=await supabase.from("memberships").select("id,user_id,display_name,role,active,created_at").eq("organization_id",org.id).order("created_at");if(error)return;$("#teamList").innerHTML=(data||[]).map(m=>`<div class="item"><div><strong>${esc(m.display_name||"Usuário")}</strong><small>${esc(m.role)} • ${m.active?"Ativo":"Inativo"}</small></div>${["owner","admin"].includes(membership.role)&&m.user_id!==user.id?`<select onchange="window.changeRole('${m.id}',this.value)"><option ${m.role==="technician"?"selected":""} value="technician">Técnico</option><option ${m.role==="admin"?"selected":""} value="admin">Administrador</option></select>`:""}</div>`).join("")}
+window.changeRole=async(id,role)=>{const {error}=await supabase.from("memberships").update({role}).eq("id",id);if(error)alert(error.message);else renderTeam()}
+$("#exportBtn").onclick=()=>{const data={exportedAt:new Date().toISOString(),organization:org,clients,locations,assets,pmocPlans,orders};const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));a.download="W_Pinho_Backup_"+today()+".json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+
+const {data:{session}}=await supabase.auth.getSession();
+if(recoveryMode){showRecovery()}else if(session)boot();else $("#authView").classList.remove("hidden");
+</script>
+</body></html>
