@@ -156,7 +156,7 @@ button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{po
 <label class="full">Materiais<textarea id="orderMaterials" rows="2"></textarea></label>
 <label class="full">Observações<textarea id="orderNotes" rows="2"></textarea></label>
 <div class="full card" style="box-shadow:none"><h2>📍 Localização</h2><div id="gpsText" class="muted">Ainda não capturada.</div><button id="gpsBtn" class="btn" type="button" style="margin-top:8px">Capturar GPS</button></div>
-<div class="full card" style="box-shadow:none"><h2>📷 Fotos do atendimento</h2><div class="muted">Ao adicionar uma foto, o sistema registra automaticamente a data, a hora e tenta capturar a localização GPS naquele momento.</div><div class="row" style="margin-top:10px"><label class="btn primary">📸 Tirar foto<input id="cameraInput" type="file" accept="image/*" capture="environment" hidden></label><label class="btn">🖼 Adicionar da galeria<input id="galleryInput" type="file" accept="image/*" multiple hidden></label><button id="refreshPhotoGps" type="button" class="btn">📍 Atualizar GPS</button></div><div id="photoSaveStatus" class="muted" style="margin-top:8px"></div><div id="photoPreview" class="photos" style="margin-top:10px"></div></div>
+<div class="full card" style="box-shadow:none"><h2>📷 Fotos do atendimento</h2><div class="muted">Ao tirar ou adicionar uma foto, o sistema grava na própria imagem a cidade/localização, coordenadas GPS, data e hora.</div><div class="row" style="margin-top:10px"><label class="btn primary">📸 Tirar foto<input id="cameraInput" type="file" accept="image/*" capture="environment" hidden></label><label class="btn">🖼 Adicionar da galeria<input id="galleryInput" type="file" accept="image/*" multiple hidden></label><button id="refreshPhotoGps" type="button" class="btn">📍 Atualizar GPS</button></div><div id="photoSaveStatus" class="muted" style="margin-top:8px"></div><div id="photoPreview" class="photos" style="margin-top:10px"></div></div>
 <div class="full"><h2>Assinaturas</h2><div class="form"><div><b>Cliente</b><canvas id="sigClient" class="canvas" width="700" height="220"></canvas><button class="btn small" type="button" data-clear="sigClient">Limpar</button></div><div><b>Técnico</b><canvas id="sigTech" class="canvas" width="700" height="220"></canvas><button class="btn small" type="button" data-clear="sigTech">Limpar</button></div></div></div>
 <div class="full row"><button class="btn primary">Salvar OS</button><button id="cancelOrder" class="btn" type="button">Cancelar</button></div>
 </form></div>
@@ -337,20 +337,112 @@ async function captureGPS(show=true){
 $("#gpsBtn").onclick=()=>captureGPS(true);
 $("#refreshPhotoGps").onclick=()=>captureGPS(true);
 function fileData(f){return new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(f)})}
+
+async function reverseGeocode(pos){
+ if(!pos?.lat||!pos?.lon)return {label:"Localização GPS não disponível",city:"",state:""};
+ try{
+  const url=`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${encodeURIComponent(pos.lat)}&longitude=${encodeURIComponent(pos.lon)}&localityLanguage=pt`;
+  const r=await fetch(url,{cache:"no-store"});
+  if(!r.ok)throw new Error("Falha ao consultar cidade");
+  const d=await r.json();
+  const city=d.city||d.locality||d.localityInfo?.administrative?.[2]?.name||d.principalSubdivisionCode?.split("-").pop()||"";
+  const state=d.principalSubdivision||"";
+  const country=d.countryName||"";
+  const label=[city,state].filter(Boolean).join(" - ")||country||"Localização GPS";
+  return {label,city,state,country};
+ }catch(e){
+  console.warn("Não foi possível identificar a cidade:",e);
+  return {label:"Localização GPS",city:"",state:""};
+ }
+}
+
+function photoDateText(v){
+ try{return new Date(v).toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"})}
+ catch{return v||""}
+}
+
+async function stampPhoto(file,pos,capturedAt,place){
+ const data=await fileData(file);
+ const img=await new Promise((res,rej)=>{const im=new Image();im.onload=()=>res(im);im.onerror=rej;im.src=data});
+ const maxW=1920;
+ const scale=Math.min(1,maxW/img.naturalWidth);
+ const w=Math.max(1,Math.round(img.naturalWidth*scale)),h=Math.max(1,Math.round(img.naturalHeight*scale));
+ const c=document.createElement("canvas");c.width=w;c.height=h;
+ const ctx=c.getContext("2d");
+ ctx.drawImage(img,0,0,w,h);
+
+ const pad=Math.max(16,Math.round(w*0.018));
+ const font=Math.max(22,Math.round(w*0.022));
+ const small=Math.max(18,Math.round(w*0.018));
+ const line=Math.round(font*1.35);
+ const barH=Math.max(150,line*4+pad*2);
+ const y0=h-barH;
+
+ ctx.fillStyle="rgba(0,0,0,.72)";
+ ctx.fillRect(0,y0,w,barH);
+ ctx.textBaseline="top";
+ ctx.fillStyle="#fff";
+ ctx.font=`700 ${font}px Arial, sans-serif`;
+ ctx.fillText("W.Pinho Serviços PRO",pad,y0+pad);
+
+ ctx.font=`700 ${small}px Arial, sans-serif`;
+ const loc=place?.label||"Localização GPS";
+ ctx.fillText(`LOCAL: ${loc}`,pad,y0+pad+line);
+
+ ctx.font=`${small}px Arial, sans-serif`;
+ const gpsText=pos?.lat!=null&&pos?.lon!=null
+   ? `GPS: ${Number(pos.lat).toFixed(6)}, ${Number(pos.lon).toFixed(6)}`
+   : "GPS: não disponível";
+ ctx.fillText(gpsText,pad,y0+pad+line*2);
+ ctx.fillText(`DATA/HORA: ${photoDateText(capturedAt)}`,pad,y0+pad+line*3);
+
+ const blob=await new Promise(res=>c.toBlob(res,"image/jpeg",0.90));
+ if(!blob)throw new Error("Não foi possível preparar a foto.");
+ const base=(file.name||"foto").replace(/\.[^.]+$/,"");
+ const stampedFile=new File([blob],`${base}_WP.jpg`,{type:"image/jpeg",lastModified:Date.now()});
+ const preview=URL.createObjectURL(blob);
+ return {file:stampedFile,preview};
+}
+
 async function addPhotos(files,source){
  if(!files?.length)return;
- $("#photoSaveStatus").textContent="Registrando hora e localização das fotos...";
+ $("#photoSaveStatus").textContent="Capturando GPS, cidade, data e hora...";
  const pos=await captureGPS(false);
+ const finalPos=pos||gps||null;
  const capturedAt=new Date().toISOString();
- for(const f of [...files]){const data=await fileData(f);pendingPhotos.push({file:f,preview:data,capturedAt,lat:pos?.lat??gps?.lat??null,lon:pos?.lon??gps?.lon??null,accuracy:pos?.accuracy??gps?.accuracy??null,source})}
- renderPhotos();$("#photoSaveStatus").textContent=`${files.length} foto(s) pronta(s). Salve a OS para enviar definitivamente para a nuvem.`;
+ $("#photoSaveStatus").textContent=finalPos?"Identificando a cidade e gravando os dados dentro da foto...":"Gravando data e hora dentro da foto...";
+ const place=await reverseGeocode(finalPos);
+
+ let ok=0;
+ for(const f of [...files]){
+  try{
+   const stamped=await stampPhoto(f,finalPos,capturedAt,place);
+   pendingPhotos.push({
+    file:stamped.file,
+    preview:stamped.preview,
+    capturedAt,
+    lat:finalPos?.lat??null,
+    lon:finalPos?.lon??null,
+    accuracy:finalPos?.accuracy??null,
+    place:place?.label||"",
+    source
+   });
+   ok++;
+  }catch(e){
+   console.error(e);
+   const data=await fileData(f);
+   pendingPhotos.push({file:f,preview:data,capturedAt,lat:finalPos?.lat??null,lon:finalPos?.lon??null,accuracy:finalPos?.accuracy??null,place:place?.label||"",source});
+  }
+ }
+ renderPhotos();
+ $("#photoSaveStatus").textContent=`${files.length} foto(s) pronta(s). Local/cidade, GPS e data/hora foram gravados na própria imagem. Salve a OS para enviar para a nuvem.`;
 }
 $("#cameraInput").onchange=async e=>{await addPhotos(e.target.files,"Câmera");e.target.value=""};
 $("#galleryInput").onchange=async e=>{await addPhotos(e.target.files,"Galeria");e.target.value=""};
 function fmtPhotoDate(v){try{return new Date(v).toLocaleString("pt-BR")}catch{return v||"-"}}
 function renderPhotos(){
  const remote=savedOrderPhotos.map(p=>`<div class="photo"><img src="${p.url||""}"><div><b>Salva na nuvem</b><br>${esc(fmtPhotoDate(p.captured_at))}<br>📍 ${p.latitude!=null?`${Number(p.latitude).toFixed(6)}, ${Number(p.longitude).toFixed(6)}`:"Sem GPS"}<br><button type="button" class="btn small danger" onclick="window.deleteSavedPhoto('${p.id}')">Excluir foto</button></div></div>`).join("");
- const local=pendingPhotos.map((p,i)=>`<div class="photo"><img src="${p.preview}"><div><b>${esc(p.source||"Foto")}</b> • aguardando salvar OS<br>${esc(fmtPhotoDate(p.capturedAt))}<br>📍 ${p.lat!=null?`${Number(p.lat).toFixed(6)}, ${Number(p.lon).toFixed(6)}`:"Sem GPS"}<br><button type="button" class="btn small danger" onclick="window.removePhoto(${i})">Remover</button></div></div>`).join("");
+ const local=pendingPhotos.map((p,i)=>`<div class="photo"><img src="${p.preview}"><div><b>${esc(p.source||"Foto")}</b> • aguardando salvar OS<br>${esc(fmtPhotoDate(p.capturedAt))}<br>📍 ${esc(p.place||"")} ${p.lat!=null?`<br>${Number(p.lat).toFixed(6)}, ${Number(p.lon).toFixed(6)}`:"<br>Sem GPS"}<br><button type="button" class="btn small danger" onclick="window.removePhoto(${i})">Remover</button></div></div>`).join("");
  $("#photoPreview").innerHTML=remote+local||'<span class="muted">Nenhuma foto adicionada.</span>';
 }
 window.removePhoto=i=>{pendingPhotos.splice(i,1);renderPhotos()};
