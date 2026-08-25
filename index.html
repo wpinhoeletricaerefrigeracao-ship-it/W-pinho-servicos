@@ -10,6 +10,10 @@
 *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--tx)}
 button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,var(--b2),var(--b));color:#fff;padding:13px 15px}.toprow{display:flex;justify-content:space-between;align-items:center;gap:12px}.brand{display:flex;align-items:center;gap:10px}.mark{width:42px;height:42px;border-radius:12px;background:#fff;color:var(--b);display:grid;place-items:center;font-weight:900}.brand b{display:block}.brand small{opacity:.9}.menu{border:0;background:#ffffff22;color:#fff;border-radius:10px;padding:9px 12px;font-size:20px}.shell{display:grid;grid-template-columns:235px 1fr;min-height:calc(100vh - 68px)}aside{background:#0c2741;padding:14px 9px}nav button{width:100%;border:0;background:transparent;color:#dce9f4;text-align:left;padding:12px;border-radius:10px;margin:2px 0}nav button.active,nav button:hover{background:#ffffff18;color:#fff}.main{width:100%;max-width:1250px;margin:auto;padding:18px}.section{display:none}.section.active{display:block}.head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}h1{font-size:24px;margin:0}h2{font-size:18px;margin:0 0 10px}.muted{color:var(--mut)}.card{background:var(--card);border:1px solid var(--line);border-radius:15px;padding:16px;margin-bottom:13px;box-shadow:0 7px 25px #163d5f0d}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat b{display:block;font-size:29px;color:var(--b)}.btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 13px;font-weight:700;cursor:pointer}.btn.primary{background:var(--b);border-color:var(--b);color:#fff}.btn.danger{color:var(--danger);border-color:#edc7c7}.btn.small{padding:7px 9px;font-size:12px}.row{display:flex;gap:9px;flex-wrap:wrap}.form{display:grid;grid-template-columns:1fr 1fr;gap:11px}.form label{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:700}.form .full{grid-column:1/-1}input,select,textarea{width:100%;padding:11px;border:1px solid #cdd9e5;border-radius:10px;background:#fff}.list{display:grid;gap:9px}.item{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;justify-content:space-between;gap:12px;align-items:center}.item strong{display:block}.item small{display:block;color:var(--mut)}.badge{display:inline-block;margin-top:5px;padding:4px 8px;border-radius:99px;font-size:12px;font-weight:700;background:#eaf3fb;color:var(--b2)}.badge.ok{background:#e9f7ef;color:var(--ok)}.badge.warn{background:#fff4df;color:var(--warn)}
 .login{min-height:100vh;display:grid;place-items:center;padding:18px;background:linear-gradient(135deg,#062b50,#0b6bc5)}.loginCard{width:min(470px,100%);background:#fff;border-radius:20px;padding:23px;box-shadow:0 18px 60px #0004}.tabs{display:flex;gap:6px;margin:12px 0}.tabs button{flex:1}.notice{background:#fff7e8;border:1px solid #f3d49a;border-radius:10px;padding:11px;color:#6c4900}.canvas{width:100%;height:145px;border:1px dashed #9eb0c0;border-radius:10px;background:#fff;touch-action:none}.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.photo{border:1px solid var(--line);border-radius:10px;overflow:hidden}.photo img{width:100%;height:150px;object-fit:cover;display:block}.photo div{padding:7px;font-size:11px}.search{max-width:300px}
+.selectionBar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:12px;padding:12px;background:#eef6ff;border:1px solid #cfe1f3;border-radius:12px}
+.assetHint{margin-top:6px;padding:9px 10px;border-radius:9px;background:#eef6ff;color:#073d75;font-size:12px}
+.orderCheck{width:auto;transform:scale(1.15)}
+.permissionBox{margin-top:8px;padding:9px 10px;border-radius:9px;background:#fff7e8;border:1px solid #f3d49a;font-size:12px}
 @media(max-width:900px){.shell{grid-template-columns:1fr}aside{display:none;position:fixed;top:68px;left:0;right:0;z-index:15;max-height:calc(100vh - 68px);overflow:auto}.menuOpen aside{display:block}.grid{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}.form .full{grid-column:auto}.photos{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.main{padding:12px}.grid,.photos{grid-template-columns:1fr}.head,.item{align-items:flex-start;flex-direction:column}.item .row{width:100%}.item .row button{flex:1}}
 </style>
@@ -137,6 +141,11 @@ button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{po
 
 <section id="orders" class="section">
 <div class="head"><div><h1>Ordens de serviço</h1><div class="muted">Atualizadas em todos os celulares.</div></div><input id="orderSearch" class="search" placeholder="Pesquisar..."></div>
+<div class="selectionBar">
+<label style="display:flex;flex-direction:row;align-items:center;gap:8px;font-weight:700"><input id="selectAllOrders" class="orderCheck" type="checkbox"> Selecionar todas</label>
+<button id="exportSelectedOrders" class="btn primary" type="button">📄 Exportar OS selecionadas / PMOC</button>
+<span id="selectedOrdersCount" class="muted">0 selecionada(s)</span>
+</div>
 <div id="orderList" class="list"></div>
 </section>
 
@@ -150,12 +159,12 @@ button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{po
 <label>Status<select id="orderStatus"><option>Em andamento</option><option>Pendente</option><option>Concluída</option></select></label>
 <label>Data<input id="orderDate" type="date" required></label>
 <label>Valor (R$)<input id="orderValue" type="number" min="0" step=".01"></label>
-<label>Local / Unidade<select id="orderLocation"></select></label><label>Equipamento<select id="orderAsset"></select></label><label class="full">Equipamento / local (texto complementar)<input id="orderEquipment"></label><div class="full"><b>Checklist do atendimento</b><div id="orderChecklist" style="margin-top:8px;display:grid;gap:7px"></div></div>
+<label>Local / Unidade<select id="orderLocation"></select></label><label>Equipamento<select id="orderAsset"></select><div id="orderAssetHint" class="assetHint">Selecione o cliente e o equipamento para ver a identificação completa.</div></label><label class="full">Equipamento / local (texto complementar)<input id="orderEquipment"></label><div class="full"><b>Checklist do atendimento</b><div id="orderChecklist" style="margin-top:8px;display:grid;gap:7px"></div></div>
 <label class="full">Defeito / solicitação<textarea id="orderProblem" rows="3"></textarea></label>
 <label class="full">Serviço executado<textarea id="orderService" rows="4"></textarea></label>
 <label class="full">Materiais<textarea id="orderMaterials" rows="2"></textarea></label>
 <label class="full">Observações<textarea id="orderNotes" rows="2"></textarea></label>
-<div class="full card" style="box-shadow:none"><h2>📍 Localização</h2><div id="gpsText" class="muted">Ainda não capturada.</div><button id="gpsBtn" class="btn" type="button" style="margin-top:8px">Capturar GPS</button></div>
+<div class="full card" style="box-shadow:none"><h2>📍 Localização</h2><div id="gpsText" class="muted">Ainda não capturada.</div><div id="gpsPermissionInfo" class="permissionBox">Ao tocar em “Capturar GPS”, permita o acesso à localização quando o celular solicitar.</div><button id="gpsBtn" class="btn" type="button" style="margin-top:8px">Capturar GPS</button></div>
 <div class="full card" style="box-shadow:none"><h2>📷 Fotos do atendimento</h2><div class="muted">Ao tirar ou adicionar uma foto, o sistema grava na própria imagem a cidade/localização, coordenadas GPS, data e hora.</div><div class="row" style="margin-top:10px"><label class="btn primary">📸 Tirar foto<input id="cameraInput" type="file" accept="image/*" capture="environment" hidden></label><label class="btn">🖼 Adicionar da galeria<input id="galleryInput" type="file" accept="image/*" multiple hidden></label><button id="refreshPhotoGps" type="button" class="btn">📍 Atualizar GPS</button></div><div id="photoSaveStatus" class="muted" style="margin-top:8px"></div><div id="photoPreview" class="photos" style="margin-top:10px"></div></div>
 <div class="full"><h2>Assinaturas</h2><div class="form"><div><b>Cliente</b><canvas id="sigClient" class="canvas" width="700" height="220"></canvas><button class="btn small" type="button" data-clear="sigClient">Limpar</button></div><div><b>Técnico</b><canvas id="sigTech" class="canvas" width="700" height="220"></canvas><button class="btn small" type="button" data-clear="sigTech">Limpar</button></div></div></div>
 <div class="full row"><button class="btn primary">Salvar OS</button><button id="cancelOrder" class="btn" type="button">Cancelar</button></div>
@@ -252,12 +261,29 @@ function listenRealtime(){
 $("#logoutBtn").onclick=async()=>{await supabase.auth.signOut();location.reload()}
 $("#menuBtn").onclick=()=>$("#shell").classList.toggle("menuOpen");
 document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)})
-function go(id){$$(".section").forEach(s=>s.classList.toggle("active",s.id===id));$$("nav [data-go]").forEach(b=>b.classList.toggle("active",b.dataset.go===id));$("#shell").classList.remove("menuOpen");if(id==="newOrder"&&!$("#orderId").value)resetOrder();window.scrollTo(0,0)}
+let currentSection="dash", navigatingHistory=false;
+function go(id,fromHistory=false){
+ if(!document.getElementById(id))return;
+ if(!fromHistory && currentSection!==id){
+   history.pushState({wpSection:id},"","#"+id);
+ }
+ currentSection=id;
+ $$(".section").forEach(s=>s.classList.toggle("active",s.id===id));
+ $$("nav [data-go]").forEach(b=>b.classList.toggle("active",b.dataset.go===id));
+ $("#shell").classList.remove("menuOpen");
+ if(id==="newOrder"&&!$("#orderId").value)resetOrder();
+ window.scrollTo(0,0);
+}
+window.addEventListener("popstate",e=>{
+ const id=e.state?.wpSection || (location.hash||"#dash").slice(1) || "dash";
+ go(document.getElementById(id)?id:"dash",true);
+});
+if(!history.state?.wpSection)history.replaceState({wpSection:"dash"},"",location.pathname+location.search+"#dash");
 
 function renderAll(){renderDash();renderClients();renderLocations();renderAssets();renderPmoc();renderOrders();renderClientSelect();renderOrderRelations();renderGalleryFilters();renderGallery()}
 function renderDash(){$("#sClients").textContent=clients.length;$("#sOrders").textContent=orders.length;$("#sOpen").textContent=orders.filter(o=>o.status!=="Concluída").length;$("#sDone").textContent=orders.filter(o=>o.status==="Concluída").length;$("#sAssets").textContent=assets.length;$("#sPmoc").textContent=pmocPlans.filter(p=>p.active!==false).length;$("#recentOrders").innerHTML=orders.slice(0,5).map(orderCard).join("")||'<div class="muted">Nenhuma OS.</div>'}
 function clientName(id){return clients.find(c=>c.id===id)?.name||"Cliente"}
-function orderCard(o){return `<div class="item"><div><strong>OS #${esc(o.number)} • ${esc(clientName(o.client_id))}</strong><small>${esc(o.service_type)} • ${esc(o.service_date||"")}</small><span class="badge ${o.status==="Concluída"?"ok":"warn"}">${esc(o.status)}</span></div><div class="row"><button class="btn small" onclick="window.editOrder('${o.id}')">Editar</button><button class="btn small" onclick="window.printOrder('${o.id}')">PDF</button><button class="btn small danger" onclick="window.deleteOrder('${o.id}')">Excluir</button></div></div>`}
+function orderCard(o){return `<div class="item"><div style="display:flex;gap:10px;align-items:flex-start"><input class="orderCheck orderSelector" type="checkbox" value="${o.id}" onchange="window.updateSelectedOrders()"><div><strong>OS #${esc(o.number)} • ${esc(clientName(o.client_id))}</strong><small>${esc(locationName(o.location_id)||"Sem local")} • ${esc(assetName(o.asset_id)||o.equipment||"Sem equipamento")}</small><small>${esc(o.service_type)} • ${esc(o.service_date||"")}</small><span class="badge ${o.status==="Concluída"?"ok":"warn"}">${esc(o.status)}</span></div></div><div class="row"><button class="btn small" onclick="window.editOrder('${o.id}')">Editar</button><button class="btn small" onclick="window.printOrder('${o.id}')">PDF desta OS</button><button class="btn small primary" onclick="window.printClientOrders('${o.client_id}')">PDF todas da loja</button><button class="btn small danger" onclick="window.deleteOrder('${o.id}')">Excluir</button></div></div>`}
 
 $("#clientForm").onsubmit=async e=>{e.preventDefault();const id=$("#clientId").value;const row={organization_id:org.id,name:$("#clientName").value.trim(),phone:$("#clientPhone").value.trim(),document:$("#clientDoc").value.trim(),email:$("#clientEmail").value.trim(),address:$("#clientAddress").value.trim(),updated_at:new Date().toISOString()};let r=id?await supabase.from("clients").update(row).eq("id",id):await supabase.from("clients").insert(row);if(r.error)return alert(r.error.message);resetClient();await loadAll()}
 function renderClients(){const q=$("#clientSearch").value.toLowerCase();$("#clientList").innerHTML=clients.filter(c=>JSON.stringify(c).toLowerCase().includes(q)).map(c=>{const ca=assets.filter(a=>a.client_id===c.id),cl=locations.filter(l=>l.client_id===c.id),co=orders.filter(o=>o.client_id===c.id);return `<div class="item"><div><strong>${esc(c.name)}</strong><small>${esc(c.phone||"")} • ${esc(c.document||"")}</small><small>${esc(c.address||"")}</small><small><b>${ca.length}</b> equipamento(s) • <b>${cl.length}</b> local(is) • <b>${co.length}</b> OS</small></div><div class="row"><button class="btn small primary" onclick="window.viewClient('${c.id}')">Abrir empresa</button><button class="btn small" onclick="window.newAssetForClient('${c.id}')">＋ Equipamento</button><button class="btn small" onclick="window.editClient('${c.id}')">Editar</button><button class="btn small danger" onclick="window.deleteClient('${c.id}')">Excluir</button></div></div>`}).join("")||'<div class="muted">Nenhum cliente.</div>'}
@@ -272,7 +298,7 @@ window.viewClient=id=>{
  go("clientDetail");
  $("#clientDetailContent").innerHTML=`
  <div class="head"><div><h1>${esc(c.name)}</h1><div class="muted">Cliente / empresa atendida</div></div>
- <div class="row"><button class="btn primary" onclick="newAssetForClient('${c.id}')">＋ Cadastrar equipamento</button><button class="btn" onclick="newLocationForClient('${c.id}')">＋ Cadastrar local</button><button class="btn" onclick="editClient('${c.id}')">Editar cliente</button></div></div>
+ <div class="row"><button class="btn primary" onclick="newAssetForClient('${c.id}')">＋ Cadastrar equipamento</button><button class="btn" onclick="newLocationForClient('${c.id}')">＋ Cadastrar local</button><button class="btn" onclick="editClient('${c.id}')">Editar cliente</button><button class="btn primary" onclick="printClientOrders('${c.id}')">📄 PDF de todas as OS</button></div></div>
  <div class="grid">
   <div class="card"><h2>Equipamentos</h2><b style="font-size:28px">${ca.length}</b></div>
   <div class="card"><h2>Locais / unidades</h2><b style="font-size:28px">${cl.length}</b></div>
@@ -301,14 +327,33 @@ function resetClient(){$("#clientForm").reset();$("#clientId").value="";$("#clie
 $("#cancelClient").onclick=resetClient;
 function renderClientSelect(){const v=$("#orderClient").value;$("#orderClient").innerHTML='<option value="">Selecione...</option>'+clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join("");if(clients.some(c=>c.id===v))$("#orderClient").value=v}
 function clientOptions(sel){const v=$(sel)?.value;if(!$(sel))return;$(sel).innerHTML='<option value="">Selecione...</option>'+clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');if(clients.some(c=>c.id===v))$(sel).value=v}
-function locationName(id){return locations.find(x=>x.id===id)?.name||''} function assetName(id){const a=assets.find(x=>x.id===id);return a?`${a.tag||a.type||'Equipamento'}${a.brand?' • '+a.brand:''}${a.model?' '+a.model:''}`:''}
+function locationName(id){return locations.find(x=>x.id===id)?.name||''}
+function assetName(id){const a=assets.find(x=>x.id===id);return a?`${a.tag||a.type||'Equipamento'}${a.brand?' • '+a.brand:''}${a.model?' '+a.model:''}`:''}
+function assetFullName(a){
+ if(!a)return "";
+ const loc=locationName(a.location_id)||a.environment||"Sem local";
+ return `${a.tag||a.type||"Equipamento"} • ${a.brand||""} ${a.model||""} — ${clientName(a.client_id)} — ${loc}`.replace(/\s+/g," ").trim();
+}
+function updateOrderAssetHint(){
+ const a=assets.find(x=>x.id===$("#orderAsset").value);
+ $("#orderAssetHint").textContent=a
+   ? `Cliente: ${clientName(a.client_id)} | Local: ${locationName(a.location_id)||a.environment||"Sem local"} | Equipamento: ${a.tag||a.type||"-"} | ${a.brand||""} ${a.model||""}`
+   : "Selecione o cliente e o equipamento para ver a identificação completa.";
+}
 function renderLocations(){clientOptions('#locationClient');const q='';$('#locationList').innerHTML=locations.map(l=>`<div class="item"><div><strong>${esc(l.name)}</strong><small>${esc(clientName(l.client_id))}</small><small>${esc(l.address||'')}</small></div><div class="row"><button class="btn small" onclick="editLocation('${l.id}')">Editar</button><button class="btn small danger" onclick="deleteLocation('${l.id}')">Excluir</button></div></div>`).join('')||'<div class="muted">Nenhum local cadastrado.</div>'}
 $('#locationForm').onsubmit=async e=>{e.preventDefault();const id=$('#locationId').value,row={organization_id:org.id,client_id:$('#locationClient').value,name:$('#locationName').value.trim(),address:$('#locationAddress').value.trim(),updated_at:new Date().toISOString()};const r=id?await supabase.from('locations').update(row).eq('id',id):await supabase.from('locations').insert(row);if(r.error)return alert(r.error.message);resetLocation();await loadAll()};
 function resetLocation(){$('#locationForm').reset();$('#locationId').value='';$('#locationTitle').textContent='Novo local';$('#cancelLocation').classList.add('hidden');clientOptions('#locationClient')};$('#cancelLocation').onclick=resetLocation;
 window.editLocation=id=>{const l=locations.find(x=>x.id===id);if(!l)return;go('locations');$('#locationId').value=l.id;clientOptions('#locationClient');$('#locationClient').value=l.client_id;$('#locationName').value=l.name||'';$('#locationAddress').value=l.address||'';$('#locationTitle').textContent='Editar local';$('#cancelLocation').classList.remove('hidden')};window.deleteLocation=async id=>{if(!confirm('Excluir este local?'))return;const r=await supabase.from('locations').delete().eq('id',id);if(r.error)alert(r.error.message)};
 function filteredLocations(clientId){return locations.filter(l=>!clientId||l.client_id===clientId)}
 function fillLocationSelect(sel,clientId){if(!$(sel))return;const v=$(sel).value;$(sel).innerHTML='<option value="">Sem local específico</option>'+filteredLocations(clientId).map(l=>`<option value="${l.id}">${esc(l.name)}</option>`).join('');if(filteredLocations(clientId).some(l=>l.id===v))$(sel).value=v}
-function fillAssetSelect(sel,clientId,locationId){if(!$(sel))return;const v=$(sel).value;const arr=assets.filter(a=>(!clientId||a.client_id===clientId)&&(!locationId||a.location_id===locationId));$(sel).innerHTML='<option value="">Selecione...</option>'+arr.map(a=>`<option value="${a.id}">${esc(assetName(a.id))}</option>`).join('');if(arr.some(a=>a.id===v))$(sel).value=v}
+function fillAssetSelect(sel,clientId,locationId){
+ if(!$(sel))return;
+ const v=$(sel).value;
+ const arr=assets.filter(a=>(!clientId||a.client_id===clientId)&&(!locationId||a.location_id===locationId));
+ $(sel).innerHTML='<option value="">Selecione...</option>'+arr.map(a=>`<option value="${a.id}">${esc(assetFullName(a))}</option>`).join('');
+ if(arr.some(a=>a.id===v))$(sel).value=v;
+ if(sel==="#orderAsset")updateOrderAssetHint();
+}
 function renderAssets(){clientOptions('#assetClient');fillLocationSelect('#assetLocation',$('#assetClient').value);const q=($('#assetSearch').value||'').toLowerCase();$('#assetList').innerHTML=assets.filter(a=>JSON.stringify(a).toLowerCase().includes(q)||clientName(a.client_id).toLowerCase().includes(q)).map(a=>`<div class="item"><div><strong>${esc(a.tag||a.type||'Equipamento')} • ${esc(a.brand||'')} ${esc(a.model||'')}</strong><small>${esc(clientName(a.client_id))}${a.location_id?' • '+esc(locationName(a.location_id)):''}</small><small>${esc(a.capacity||'')} ${a.refrigerant?'• '+esc(a.refrigerant):''} • ${esc(a.status||'Ativo')}</small></div><div class="row"><button class="btn small primary" onclick="viewAsset('${a.id}')">Ficha / QR</button><button class="btn small" onclick="editAsset('${a.id}')">Editar</button><button class="btn small danger" onclick="deleteAsset('${a.id}')">Excluir</button></div></div>`).join('')||'<div class="muted">Nenhum equipamento cadastrado.</div>'};$('#assetSearch').oninput=renderAssets;$('#assetClient').onchange=()=>fillLocationSelect('#assetLocation',$('#assetClient').value);
 $('#assetForm').onsubmit=async e=>{e.preventDefault();const id=$('#assetId').value,row={organization_id:org.id,client_id:$('#assetClient').value,location_id:$('#assetLocation').value||null,type:$('#assetType').value,tag:$('#assetTag').value.trim(),brand:$('#assetBrand').value.trim(),model:$('#assetModel').value.trim(),serial_number:$('#assetSerial').value.trim(),capacity:$('#assetCapacity').value.trim(),voltage:$('#assetVoltage').value.trim(),refrigerant:$('#assetRefrigerant').value.trim(),environment:$('#assetEnvironment').value.trim(),install_date:$('#assetInstallDate').value||null,status:$('#assetStatus').value,notes:$('#assetNotes').value.trim(),updated_at:new Date().toISOString()};const r=id?await supabase.from('assets').update(row).eq('id',id):await supabase.from('assets').insert(row);if(r.error)return alert(r.error.message);resetAsset();await loadAll()};
 function resetAsset(){$('#assetForm').reset();$('#assetId').value='';$('#assetTitle').textContent='Novo equipamento';$('#cancelAsset').classList.add('hidden');clientOptions('#assetClient');fillLocationSelect('#assetLocation','')};$('#cancelAsset').onclick=resetAsset;
@@ -326,13 +371,20 @@ function resetPmoc(){$('#pmocForm').reset();$('#pmocId').value='';$('#pmocTitle'
 window.editPmoc=id=>{const p=pmocPlans.find(x=>x.id===id);if(!p)return;go('pmoc');$('#pmocId').value=p.id;clientOptions('#pmocClient');$('#pmocClient').value=p.client_id;fillAssetSelect('#pmocAsset',p.client_id,'');$('#pmocAsset').value=p.asset_id;$('#pmocFrequency').value=String(p.frequency_days);$('#pmocNextDate').value=p.next_service_date||today();$('#pmocResponsible').value=p.responsible_technician||'';$('#pmocRegistry').value=p.professional_registry||'';$('#pmocNotes').value=p.notes||'';$('#pmocChecklist').innerHTML=checklistHtml('pmoc',p.checklist||[]);$('#pmocTitle').textContent='Editar plano PMOC';$('#cancelPmoc').classList.remove('hidden')};window.deletePmoc=async id=>{if(!confirm('Excluir este plano PMOC?'))return;const r=await supabase.from('pmoc_plans').delete().eq('id',id);if(r.error)alert(r.error.message)};
 window.newPmocOrder=id=>{const p=pmocPlans.find(x=>x.id===id),a=assets.find(x=>x.id===p?.asset_id);if(!p||!a)return;newOrderForAsset(a.id);$('#orderType').value='PMOC / Preventiva';$('#orderChecklist').innerHTML=checklistHtml('order',p.checklist||PMOC_ITEMS)};
 function renderOrderRelations(){clientOptions('#orderClient');fillLocationSelect('#orderLocation',$('#orderClient').value);fillAssetSelect('#orderAsset',$('#orderClient').value,$('#orderLocation').value);if(!$('#orderChecklist').innerHTML)$('#orderChecklist').innerHTML=checklistHtml('order')}
-$('#orderClient').onchange=()=>{fillLocationSelect('#orderLocation',$('#orderClient').value);fillAssetSelect('#orderAsset',$('#orderClient').value,'')};$('#orderLocation').onchange=()=>fillAssetSelect('#orderAsset',$('#orderClient').value,$('#orderLocation').value);$('#orderAsset').onchange=()=>{if($('#orderAsset').value)$('#orderEquipment').value=assetName($('#orderAsset').value)};
+$('#orderClient').onchange=()=>{fillLocationSelect('#orderLocation',$('#orderClient').value);fillAssetSelect('#orderAsset',$('#orderClient').value,'')};$('#orderLocation').onchange=()=>fillAssetSelect('#orderAsset',$('#orderClient').value,$('#orderLocation').value);$('#orderAsset').onchange=()=>{if($('#orderAsset').value)$('#orderEquipment').value=assetName($('#orderAsset').value);updateOrderAssetHint()};
 
 
 async function captureGPS(show=true){
- if(!navigator.geolocation){if(show)alert("GPS indisponível.");return null}
+ if(!navigator.geolocation){if(show)alert("GPS indisponível neste aparelho ou navegador.");return null}
  if(show)$("#gpsText").textContent="Capturando...";
- return new Promise(resolve=>navigator.geolocation.getCurrentPosition(p=>{gps={lat:p.coords.latitude,lon:p.coords.longitude,accuracy:p.coords.accuracy};$("#gpsText").textContent=`${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)} • ±${Math.round(gps.accuracy)} m`;resolve({...gps})},()=>{if(show)$("#gpsText").textContent="Não foi possível capturar. Autorize a localização.";resolve(null)},{enableHighAccuracy:true,timeout:12000,maximumAge:0}))
+ return new Promise(resolve=>navigator.geolocation.getCurrentPosition(p=>{gps={lat:p.coords.latitude,lon:p.coords.longitude,accuracy:p.coords.accuracy};$("#gpsText").textContent=`${gps.lat.toFixed(6)}, ${gps.lon.toFixed(6)} • ±${Math.round(gps.accuracy)} m`;resolve({...gps})},err=>{
+      const texts={1:"Permissão de localização negada. Abra as informações do app e permita Localização.",2:"Localização indisponível. Ative o GPS do celular.",3:"Tempo esgotado ao buscar GPS. Tente novamente em local aberto."};
+      const text=texts[err?.code]||"Não foi possível capturar a localização.";
+      $("#gpsText").textContent=text;
+      $("#gpsPermissionInfo").textContent=text;
+      if(show && err?.code===1) alert(text);
+      resolve(null)
+    },{enableHighAccuracy:true,timeout:12000,maximumAge:0}))
 }
 $("#gpsBtn").onclick=()=>captureGPS(true);
 $("#refreshPhotoGps").onclick=()=>captureGPS(true);
@@ -458,15 +510,143 @@ function clearCanvas(id){const c=$("#"+id);c.getContext("2d").clearRect(0,0,c.wi
 function canvasData(id){return $("#"+id).toDataURL("image/png")}
 $$("[data-clear]").forEach(b=>b.onclick=()=>clearCanvas(b.dataset.clear));setupCanvas("sigClient");setupCanvas("sigTech");
 
-async function nextNumber(){const y=new Date().getFullYear();const {count}=await supabase.from("orders").select("*",{count:"exact",head:true}).eq("organization_id",org.id);return `${y}-${String((count||0)+1).padStart(5,"0")}`}
+async function nextNumber(){
+ const y=new Date().getFullYear();
+ const {data,error}=await supabase.from("orders").select("number").eq("organization_id",org.id);
+ if(error)throw error;
+ let max=0;
+ for(const r of (data||[])){
+   const m=String(r.number||"").match(/(?:^|-)0*(\d+)$/);
+   if(m)max=Math.max(max,Number(m[1])||0);
+ }
+ return `${y}-${String(max+1).padStart(5,"0")}`;
+}
 $("#orderForm").onsubmit=async e=>{e.preventDefault();if(!$("#orderClient").value)return alert("Selecione o cliente.");const id=$("#orderId").value;const existing=orders.find(o=>o.id===id);const orderId=id||uuid();const row={id:orderId,organization_id:org.id,number:existing?.number||await nextNumber(),client_id:$("#orderClient").value,technician:$("#orderTech").value.trim(),service_type:$("#orderType").value,status:$("#orderStatus").value,service_date:$("#orderDate").value,value:Number($("#orderValue").value||0),location_id:$("#orderLocation").value||null,asset_id:$("#orderAsset").value||null,equipment:$("#orderEquipment").value.trim(),checklist:[...document.querySelectorAll("[data-order-check]")].map(x=>({item:PMOC_ITEMS[Number(x.dataset.orderCheck)],done:x.checked})),problem:$("#orderProblem").value.trim(),service_done:$("#orderService").value.trim(),materials:$("#orderMaterials").value.trim(),notes:$("#orderNotes").value.trim(),latitude:gps?.lat||existing?.latitude||null,longitude:gps?.lon||existing?.longitude||null,client_signature:canvasData("sigClient"),tech_signature:canvasData("sigTech"),updated_at:new Date().toISOString()};const r=id?await supabase.from("orders").update(row).eq("id",id):await supabase.from("orders").insert(row);if(r.error)return alert(r.error.message);for(const p of pendingPhotos){const ext=(p.file.name.split(".").pop()||"jpg").replace(/[^a-z0-9]/gi,"");const path=`${org.id}/${orderId}/${uuid()}.${ext}`;const up=await supabase.storage.from("service-photos").upload(path,p.file,{upsert:false,contentType:p.file.type||"image/jpeg"});if(up.error){alert("A OS foi salva, mas uma foto não foi enviada: "+up.error.message);continue}const pr=await supabase.from("service_photos").insert({organization_id:org.id,order_id:orderId,storage_path:path,captured_at:p.capturedAt||new Date().toISOString(),latitude:p.lat??gps?.lat??null,longitude:p.lon??gps?.lon??null});if(pr.error)alert("Foto enviada, mas o registro falhou: "+pr.error.message)}pendingPhotos=[];savedOrderPhotos=[];resetOrder();await loadAll();go("orders")}
 function resetOrder(){$("#orderForm").reset();$("#orderId").value="";$("#orderTitle").textContent="Nova ordem de serviço";$("#orderDate").value=today();$("#orderTech").value=membership?.display_name||user?.email||"";pendingPhotos=[];savedOrderPhotos=[];gps=null;renderPhotos();$("#gpsText").textContent="Ainda não capturada.";clearCanvas("sigClient");clearCanvas("sigTech");renderClientSelect();renderOrderRelations();$("#orderChecklist").innerHTML=checklistHtml("order")}
 $("#cancelOrder").onclick=()=>{resetOrder();go("orders")}
-function renderOrders(){const q=$("#orderSearch").value.toLowerCase();$("#orderList").innerHTML=orders.filter(o=>JSON.stringify(o).toLowerCase().includes(q)||clientName(o.client_id).toLowerCase().includes(q)).map(orderCard).join("")||'<div class="muted">Nenhuma OS.</div>'}
+function renderOrders(){const q=$("#orderSearch").value.toLowerCase();$("#orderList").innerHTML=orders.filter(o=>JSON.stringify(o).toLowerCase().includes(q)||clientName(o.client_id).toLowerCase().includes(q)).map(orderCard).join("")||'<div class="muted">Nenhuma OS.</div>';window.updateSelectedOrders?.()}
 $("#orderSearch").oninput=renderOrders;
 window.editOrder=async id=>{const o=orders.find(x=>x.id===id);if(!o)return;go("newOrder");$("#orderId").value=o.id;$("#orderClient").value=o.client_id;$("#orderTech").value=o.technician||"";$("#orderType").value=o.service_type;$("#orderStatus").value=o.status;$("#orderDate").value=o.service_date||today();$("#orderValue").value=o.value||"";renderOrderRelations();$("#orderLocation").value=o.location_id||"";fillAssetSelect("#orderAsset",o.client_id,o.location_id||"");$("#orderAsset").value=o.asset_id||"";$("#orderEquipment").value=o.equipment||"";$("#orderChecklist").innerHTML=checklistHtml("order",(o.checklist||[]).filter(x=>x.done).map(x=>x.item));$("#orderProblem").value=o.problem||"";$("#orderService").value=o.service_done||"";$("#orderMaterials").value=o.materials||"";$("#orderNotes").value=o.notes||"";gps=o.latitude?{lat:o.latitude,lon:o.longitude}:null;$("#gpsText").textContent=gps?`${Number(gps.lat).toFixed(6)}, ${Number(gps.lon).toFixed(6)}`:"Ainda não capturada.";$("#orderTitle").textContent="Editar OS #"+o.number;await loadOrderPhotos(o.id)}
 window.deleteOrder=async id=>{if(!confirm("Excluir esta OS?"))return;const {error}=await supabase.from("orders").delete().eq("id",id);if(error)alert(error.message)}
 window.printOrder=async id=>{const o=orders.find(x=>x.id===id),c=clients.find(x=>x.id===o?.client_id);if(!o)return;const a=assets.find(x=>x.id===o.asset_id),ph=servicePhotos.filter(p=>p.order_id===id);const photoHtml=(await Promise.all(ph.map(async p=>`<div class="photo"><img src="${await signedPhotoUrl(p.storage_path)}"><small>${esc(fmtPhotoDate(p.captured_at))}<br>GPS: ${p.latitude!=null?`${Number(p.latitude).toFixed(6)}, ${Number(p.longitude).toFixed(6)}`:"-"}</small></div>`))).join("");const w=window.open("","_blank");w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>OS ${esc(o.number)}</title><style>@page{size:A4;margin:12mm}body{font-family:Arial;color:#172434;font-size:12px}h1,h2{color:#0b5fb3}.box{border:1px solid #ccd8e3;padding:10px;margin:8px 0;border-radius:7px}.sig{display:grid;grid-template-columns:1fr 1fr;gap:18px}.sig img{width:100%;height:100px;object-fit:contain;border-bottom:1px solid #444}.photos{display:grid;grid-template-columns:1fr 1fr;gap:8px}.photo{border:1px solid #ddd;padding:5px}.photo img{width:100%;height:220px;object-fit:contain}.photo small{display:block}</style></head><body><h1>W.Pinho Serviços PRO</h1><b>${esc(org.name)} • OS ${esc(o.number)}</b><div class="box"><b>Cliente:</b> ${esc(c?.name||"-")}<br><b>Telefone:</b> ${esc(c?.phone||"-")}<br><b>Endereço:</b> ${esc(c?.address||"-")}</div><div class="box"><b>Data:</b> ${esc(o.service_date||"-")}<br><b>Técnico:</b> ${esc(o.technician||"-")}<br><b>Tipo:</b> ${esc(o.service_type)}<br><b>Status:</b> ${esc(o.status)}<br><b>Valor:</b> ${money(o.value)}</div><h2>Equipamento / local</h2><p>${esc(assetName(o.asset_id)||o.equipment||"-")}<br>${esc(locationName(o.location_id)||"")}</p><h2>Checklist</h2><p>${(o.checklist||[]).map(x=>`${x.done?"☑":"☐"} ${esc(x.item)}`).join("<br>")||"-"}</p><h2>Defeito / solicitação</h2><p>${esc(o.problem||"-").replace(/\n/g,"<br>")}</p><h2>Serviço executado</h2><p>${esc(o.service_done||"-").replace(/\n/g,"<br>")}</p><h2>Materiais</h2><p>${esc(o.materials||"-").replace(/\n/g,"<br>")}</p>${photoHtml?`<h2>Fotos do atendimento</h2><div class="photos">${photoHtml}</div>`:""}<h2>Assinaturas</h2><div class="sig"><div><img src="${o.client_signature||""}"><center>Cliente</center></div><div><img src="${o.tech_signature||""}"><center>Técnico</center></div></div><script>window.onload=()=>setTimeout(()=>window.print(),700)<\/script></body></html>`);w.document.close()}
+
+
+
+window.printClientOrders=async clientId=>{
+ const c=clients.find(x=>x.id===clientId);
+ if(!c)return alert("Cliente/loja não encontrado.");
+ const list=orders.filter(o=>o.client_id===clientId)
+   .sort((a,b)=>{
+      const da=String(a.service_date||"");
+      const db=String(b.service_date||"");
+      if(da!==db)return da.localeCompare(db);
+      return String(a.number||"").localeCompare(String(b.number||""),undefined,{numeric:true});
+   });
+ if(!list.length)return alert("Esta loja ainda não possui ordens de serviço.");
+
+ const sections=[];
+ for(const o of list){
+   const a=assets.find(x=>x.id===o.asset_id);
+   const ph=servicePhotos.filter(p=>p.order_id===o.id);
+   const photoHtml=(await Promise.all(ph.map(async p=>{
+      const url=await signedPhotoUrl(p.storage_path);
+      return `<div class="photo"><img src="${url}"><small>${esc(fmtPhotoDate(p.captured_at))}<br>GPS: ${p.latitude!=null?`${Number(p.latitude).toFixed(6)}, ${Number(p.longitude).toFixed(6)}`:"-"}</small></div>`;
+   }))).join("");
+
+   sections.push(`<section class="os">
+     <div class="osHead">
+       <div><h2>OS ${esc(o.number)}</h2><b>${esc(o.service_type||"")}</b></div>
+       <div class="right"><b>${esc(o.service_date||"-")}</b><br>${esc(o.status||"-")}</div>
+     </div>
+     <div class="box">
+       <b>Local / Unidade:</b> ${esc(locationName(o.location_id)||"-")}<br>
+       <b>Equipamento:</b> ${esc(assetFullName(a)||o.equipment||"-")}<br>
+       <b>Técnico:</b> ${esc(o.technician||"-")}<br>
+       <b>Valor:</b> ${money(o.value)}
+     </div>
+     <div class="box"><b>Checklist</b><br>${(o.checklist||[]).map(x=>`${x.done?"☑":"☐"} ${esc(x.item)}`).join("<br>")||"-"}</div>
+     <div class="box"><b>Defeito / solicitação</b><br>${esc(o.problem||"-").replace(/\n/g,"<br>")}</div>
+     <div class="box"><b>Serviço executado</b><br>${esc(o.service_done||"-").replace(/\n/g,"<br>")}</div>
+     <div class="box"><b>Materiais</b><br>${esc(o.materials||"-").replace(/\n/g,"<br>")}</div>
+     ${o.notes?`<div class="box"><b>Observações</b><br>${esc(o.notes).replace(/\n/g,"<br>")}</div>`:""}
+     ${photoHtml?`<h3>Fotos do atendimento</h3><div class="photos">${photoHtml}</div>`:""}
+     <h3>Assinaturas</h3>
+     <div class="sig">
+       <div>${o.client_signature?`<img src="${o.client_signature}">`:"<div class='sigBlank'></div>"}<center>Cliente</center></div>
+       <div>${o.tech_signature?`<img src="${o.tech_signature}">`:"<div class='sigBlank'></div>"}<center>Técnico</center></div>
+     </div>
+   </section>`);
+ }
+
+ const w=window.open("","_blank");
+ if(!w)return alert("O celular bloqueou a abertura do PDF. Permita pop-ups para este aplicativo.");
+ w.document.write(`<!doctype html><html><head><meta charset="utf-8">
+ <title>Relatório ${esc(c.name)} - ${list.length} OS</title>
+ <style>
+ @page{size:A4;margin:11mm}
+ body{font-family:Arial,sans-serif;color:#172434;font-size:11px;margin:0}
+ h1,h2,h3{color:#0b5fb3;margin:0 0 7px}
+ .cover{border-bottom:3px solid #0b5fb3;padding-bottom:12px;margin-bottom:15px}
+ .summary{background:#eef6ff;border:1px solid #cfe1f3;padding:10px;border-radius:8px;margin:10px 0}
+ .os{break-after:page;page-break-after:always}
+ .os:last-child{break-after:auto;page-break-after:auto}
+ .osHead{display:flex;justify-content:space-between;gap:15px;border-bottom:2px solid #0b5fb3;padding-bottom:7px;margin-bottom:8px}
+ .right{text-align:right}
+ .box{border:1px solid #ccd8e3;padding:8px;margin:7px 0;border-radius:6px}
+ .photos{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+ .photo{border:1px solid #ddd;padding:4px;break-inside:avoid}
+ .photo img{width:100%;height:205px;object-fit:contain}
+ .photo small{display:block}
+ .sig{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:12px}
+ .sig img,.sigBlank{width:100%;height:85px;object-fit:contain;border-bottom:1px solid #444}
+ </style></head><body>
+ <div class="cover">
+   <h1>W.Pinho Serviços PRO</h1>
+   <h2>Relatório completo de Ordens de Serviço</h2>
+   <div class="summary">
+     <b>Cliente / Loja:</b> ${esc(c.name)}<br>
+     <b>Documento:</b> ${esc(c.document||"-")}<br>
+     <b>Telefone:</b> ${esc(c.phone||"-")}<br>
+     <b>Endereço:</b> ${esc(c.address||"-")}<br>
+     <b>Total de OS:</b> ${list.length}<br>
+     <b>Período:</b> ${esc(list[0]?.service_date||"-")} até ${esc(list[list.length-1]?.service_date||"-")}<br>
+     <b>Gerado em:</b> ${new Date().toLocaleString("pt-BR")}
+   </div>
+ </div>
+ ${sections.join("")}
+ <script>window.onload=()=>setTimeout(()=>window.print(),900)<\/script>
+ </body></html>`);
+ w.document.close();
+};
+
+window.updateSelectedOrders=()=>{
+ const boxes=[...document.querySelectorAll(".orderSelector")];
+ const selected=boxes.filter(x=>x.checked);
+ if($("#selectedOrdersCount"))$("#selectedOrdersCount").textContent=`${selected.length} selecionada(s)`;
+ if($("#selectAllOrders"))$("#selectAllOrders").checked=boxes.length>0&&selected.length===boxes.length;
+};
+$("#selectAllOrders").onchange=e=>{
+ document.querySelectorAll(".orderSelector").forEach(x=>x.checked=e.target.checked);
+ window.updateSelectedOrders();
+};
+$("#exportSelectedOrders").onclick=async()=>{
+ const ids=[...document.querySelectorAll(".orderSelector:checked")].map(x=>x.value);
+ if(!ids.length)return alert("Selecione pelo menos uma OS.");
+ const selected=orders.filter(o=>ids.includes(o.id)).sort((a,b)=>String(a.number).localeCompare(String(b.number),undefined,{numeric:true}));
+ const blocks=[];
+ for(const o of selected){
+   const c=clients.find(x=>x.id===o.client_id),a=assets.find(x=>x.id===o.asset_id);
+   blocks.push(`<section class="os"><h2>OS ${esc(o.number)} — ${esc(c?.name||"Cliente")}</h2>
+   <div class="box"><b>Data:</b> ${esc(o.service_date||"-")} &nbsp; <b>Técnico:</b> ${esc(o.technician||"-")} &nbsp; <b>Status:</b> ${esc(o.status||"-")}</div>
+   <div class="box"><b>Local:</b> ${esc(locationName(o.location_id)||"-")}<br><b>Equipamento:</b> ${esc(assetFullName(a)||o.equipment||"-")}</div>
+   <div class="box"><b>Checklist</b><br>${(o.checklist||[]).map(x=>`${x.done?"☑":"☐"} ${esc(x.item)}`).join("<br>")||"-"}</div>
+   <div class="box"><b>Defeito / solicitação:</b><br>${esc(o.problem||"-").replace(/\n/g,"<br>")}<br><br><b>Serviço executado:</b><br>${esc(o.service_done||"-").replace(/\n/g,"<br>")}<br><br><b>Materiais:</b><br>${esc(o.materials||"-").replace(/\n/g,"<br>")}</div>
+   </section>`);
+ }
+ const w=window.open("","_blank");
+ w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Relatório PMOC</title><style>@page{size:A4;margin:12mm}body{font-family:Arial;color:#172434;font-size:12px}h1,h2{color:#0b5fb3}.box{border:1px solid #ccd8e3;padding:10px;margin:8px 0;border-radius:7px}.os{break-after:page}.os:last-child{break-after:auto}</style></head><body><h1>${esc(org.name)} — Relatório PMOC / Ordens de Serviço</h1><p>${selected.length} OS selecionada(s) • Gerado em ${new Date().toLocaleString("pt-BR")}</p>${blocks.join("")}<script>window.onload=()=>setTimeout(()=>window.print(),500)<\/script></body></html>`);
+ w.document.close();
+};
 
 async function renderTeam(){const {data,error}=await supabase.from("memberships").select("id,user_id,display_name,role,active,created_at").eq("organization_id",org.id).order("created_at");if(error)return;$("#teamList").innerHTML=(data||[]).map(m=>`<div class="item"><div><strong>${esc(m.display_name||"Usuário")}</strong><small>${esc(m.role)} • ${m.active?"Ativo":"Inativo"}</small></div>${["owner","admin"].includes(membership.role)&&m.user_id!==user.id?`<select onchange="window.changeRole('${m.id}',this.value)"><option ${m.role==="technician"?"selected":""} value="technician">Técnico</option><option ${m.role==="admin"?"selected":""} value="admin">Administrador</option></select>`:""}</div>`).join("")}
 window.changeRole=async(id,role)=>{const {error}=await supabase.from("memberships").update({role}).eq("id",id);if(error)alert(error.message);else renderTeam()}
