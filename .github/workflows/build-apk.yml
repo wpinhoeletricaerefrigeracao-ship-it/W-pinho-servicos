@@ -1,1 +1,90 @@
+name: Gerar APK W.Pinho Serviços
 
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "android_ready/**"
+      - "index.html"
+      - ".github/workflows/build-apk.yml"
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Colocar index atualizado no aplicativo
+        run: |
+          mkdir -p android_ready/www
+          cp index.html android_ready/www/index.html
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Configurar Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: Instalar Capacitor, GPS e botão Voltar nativo
+        working-directory: android_ready
+        run: |
+          npm install
+          npm install @capacitor/geolocation @capacitor/app
+
+      - name: Criar projeto Android
+        working-directory: android_ready
+        run: |
+          rm -rf android
+          npx cap add android
+          npx cap sync android
+
+      - name: Adicionar permissões nativas
+        working-directory: android_ready
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          manifest = Path("android/app/src/main/AndroidManifest.xml")
+          text = manifest.read_text(encoding="utf-8")
+          permissions = [
+            '<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />',
+            '<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />',
+            '<uses-permission android:name="android.permission.CAMERA" />',
+            '<uses-permission android:name="android.permission.INTERNET" />'
+          ]
+          marker = "<application"
+          for permission in permissions:
+              if permission not in text:
+                  text = text.replace(marker, permission + "\n    " + marker, 1)
+          manifest.write_text(text, encoding="utf-8")
+          print(manifest.read_text(encoding="utf-8"))
+          PY
+
+      - name: Sincronizar Capacitor
+        working-directory: android_ready
+        run: |
+          npx cap sync android
+
+      - name: Gerar APK
+        working-directory: android_ready/android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Renomear APK
+        run: |
+          cp android_ready/android/app/build/outputs/apk/debug/app-debug.apk W_Pinho_Servicos.apk
+
+      - name: Salvar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: W_Pinho_Servicos_APK
+          path: W_Pinho_Servicos.apk
+          retention-days: 30
