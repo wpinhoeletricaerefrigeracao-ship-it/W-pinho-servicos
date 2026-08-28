@@ -441,9 +441,15 @@ async function showPublicAsset(token){
            ${o.service_done?`<p><b>Serviço executado:</b><br>${esc(o.service_done).replace(/\n/g,"<br>")}</p>`:""}
            ${o.materials?`<p><b>Materiais:</b><br>${esc(o.materials).replace(/\n/g,"<br>")}</p>`:""}
            ${(o.checklist||[]).length?`<div class="pubChecklist"><b>Checklist:</b><br>${(o.checklist||[]).map(x=>`${x.done?"✅":"◻️"} ${esc(x.item)}`).join("<br>")}</div>`:""}
-           ${(o.photos||[]).length?`<div style="margin-top:10px"><b>📷 Fotos do serviço:</b><div class="pubPhotos">${(o.photos||[]).map(p=>{
-             const url=`${cfg.url}/storage/v1/object/public/service-photos/${String(p.storage_path||"").split("/").map(encodeURIComponent).join("/")}`;
-             return `<div class="pubPhoto"><img src="${url}" loading="lazy" alt="Foto da OS ${esc(o.number||"")}"><small>${esc(fmtPhotoDate(p.captured_at))}${p.latitude!=null?` • GPS ${Number(p.latitude).toFixed(5)}, ${Number(p.longitude).toFixed(5)}`:""}</small></div>`;
+           ${(o.photos||[]).length?`<div style="margin-top:12px"><b>📷 Fotos do serviço:</b><div class="pubPhotos">${(o.photos||[]).map(p=>{
+             const path=String(p.storage_path||"").replace(/^\/+/, "");
+             const url=p.public_url || `${cfg.url}/storage/v1/object/public/service-photos/${path.split("/").map(encodeURIComponent).join("/")}`;
+             return `<div class="pubPhoto">
+               <a href="${url}" target="_blank" rel="noopener" style="display:block">
+                 <img src="${url}" loading="lazy" alt="Foto da OS ${esc(o.number||"")}">
+               </a>
+               <small>${esc(fmtPhotoDate(p.captured_at))}${p.latitude!=null?` • GPS ${Number(p.latitude).toFixed(5)}, ${Number(p.longitude).toFixed(5)}`:""}</small>
+             </div>`;
            }).join("")}</div></div>`:""}
          </div>
        </div>`).join(""):'<div class="muted">Nenhum serviço registrado para este equipamento.</div>'}
