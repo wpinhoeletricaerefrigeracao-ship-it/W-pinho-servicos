@@ -16,6 +16,34 @@ button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{po
 .permissionBox{margin-top:8px;padding:9px 10px;border-radius:9px;background:#fff7e8;border:1px solid #f3d49a;font-size:12px}.syncbar{position:sticky;top:68px;z-index:14;padding:8px 14px;background:#eef6ff;border-bottom:1px solid #cfe1f3;font-size:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}.syncbar.offline{background:#fff4df;color:#754900}.rtcard{border-left:4px solid var(--b)}.pill{display:inline-block;padding:4px 8px;border-radius:99px;background:#eef6ff;color:#073d75;font-size:12px;font-weight:700}
 @media(max-width:900px){.shell{grid-template-columns:1fr}aside{display:none;position:fixed;top:68px;left:0;right:0;z-index:15;max-height:calc(100vh - 68px);overflow:auto}.menuOpen aside{display:block}.grid{grid-template-columns:1fr 1fr}.form{grid-template-columns:1fr}.form .full{grid-column:auto}.photos{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.main{padding:12px}.grid,.photos{grid-template-columns:1fr}.head,.item{align-items:flex-start;flex-direction:column}.item .row{width:100%}.item .row button{flex:1}}
+
+/* ===== V15 • identidade visual profissional ===== */
+body{background:linear-gradient(180deg,#eef5fb 0,#f7f9fc 320px,#f3f7fb 100%)}
+.top{padding:12px 15px;background:linear-gradient(120deg,#052d56 0%,#0b5fb3 62%,#1487d4 100%);box-shadow:0 8px 28px #052d5633}
+.mark{box-shadow:0 5px 14px #001a3333}
+.brand b{font-size:16px;letter-spacing:.1px}.brand small{display:block;margin-top:2px;font-size:11px}
+aside{background:linear-gradient(180deg,#092641,#0a345b);border-right:1px solid #ffffff12}
+nav button{font-weight:650;transition:.15s ease;border:1px solid transparent}
+nav button.active{background:linear-gradient(90deg,#ffffff1f,#ffffff0e);border-color:#ffffff16;box-shadow:inset 3px 0 #55b8ff}
+.main{padding-top:20px}
+.section>.head{background:linear-gradient(135deg,#ffffff,#f4f9fe);border:1px solid #d9e6f1;padding:14px 16px;border-radius:16px;box-shadow:0 8px 24px #153b5b0b}
+.card{border-color:#d6e3ee;box-shadow:0 9px 28px #1138590d}
+.stat{position:relative;overflow:hidden;min-height:108px}
+.stat:after{content:"";position:absolute;width:74px;height:74px;border-radius:50%;right:-22px;top:-20px;background:#0b5fb30e}
+.stat b{font-size:31px}.stat span{font-weight:700;color:#53687b}
+.btn{transition:.15s ease;box-shadow:0 2px 5px #143c5d0a}.btn:active{transform:scale(.985)}
+.btn.primary{background:linear-gradient(135deg,#0b5fb3,#087bd1);box-shadow:0 6px 15px #0b5fb326}
+.item{border-color:#d6e3ee;box-shadow:0 5px 16px #11385908}
+.item:hover{border-color:#b9d3e8}
+input:focus,select:focus,textarea:focus{outline:0;border-color:#2285d0;box-shadow:0 0 0 3px #1687d51a}
+.syncbar{backdrop-filter:blur(8px);box-shadow:0 3px 12px #123b5c0a}
+.wpHero{background:linear-gradient(135deg,#073d75,#0b6fc3);color:#fff;border-radius:18px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden;box-shadow:0 12px 30px #073d7530}
+.wpHero:after{content:"WP";position:absolute;right:18px;top:-16px;font-size:92px;font-weight:900;opacity:.075}
+.wpHero h1{font-size:25px}.wpHero p{margin:6px 0 0;color:#d9edff}
+.quickActions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.quickActions .btn{background:#fff;color:#075498;border:0}
+.reportHint{background:linear-gradient(135deg,#eaf5ff,#f9fcff);border:1px solid #c9e2f5;border-left:4px solid #0b5fb3;padding:12px 14px;border-radius:12px;margin:10px 0}
+@media(max-width:560px){.wpHero{padding:17px}.wpHero h1{font-size:22px}.section>.head{padding:12px}.btn{min-height:42px}}
+
 </style>
 </head>
 <body>
@@ -72,7 +100,7 @@ button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{po
 </div>
 
 <div id="appView" class="hidden">
-<header class="top"><div class="toprow"><div class="brand"><div class="mark">WP</div><div><b>W.Pinho Serviços PRO</b><small id="companyLabel">Online • Multiusuário</small></div></div><button id="menuBtn" class="menu">☰</button></div></header>
+<header class="top"><div class="toprow"><div class="brand"><div class="mark">WP</div><div><b>W.Pinho Serviços PRO</b><small id="companyLabel">PMOC • OS • Climatização • Multiusuário</small></div></div><button id="menuBtn" class="menu">☰</button></div></header>
 <div id="syncBar" class="syncbar"><span id="syncStatus">🟢 Online • sincronizado</span><button id="syncNowBtn" class="btn small" type="button">Sincronizar</button></div><div id="shell" class="shell"><aside><nav>
 <button data-go="dash" class="active">▦ Painel</button>
 <button data-go="clients">👥 Clientes</button>
@@ -91,7 +119,16 @@ button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{po
 <main class="main">
 
 <section id="dash" class="section active">
-<div class="head"><div><h1>Painel</h1><div class="muted" id="welcome"></div></div><button class="btn primary" data-go="newOrder">＋ Nova OS</button></div>
+<div class="wpHero">
+<h1>W.Pinho Serviços PRO</h1>
+<p id="welcome">Gestão profissional de manutenção, PMOC e ordens de serviço.</p>
+<div class="quickActions">
+<button class="btn" data-go="newOrder">＋ Nova OS</button>
+<button class="btn" data-go="pmoc">📋 PMOC</button>
+<button class="btn" data-go="clients">🏢 Clientes / Lojas</button>
+<button class="btn" data-go="gallery">📷 Fotos</button>
+</div>
+</div>
 <div class="grid">
 <div class="card stat"><b id="sClients">0</b><span>Clientes</span></div>
 <div class="card stat"><b id="sOrders">0</b><span>Ordens</span></div>
@@ -147,7 +184,7 @@ button,input,select,textarea{font:inherit}.hidden{display:none!important}.top{po
 <div class="head"><div><h1>Ordens de serviço</h1><div class="muted">Atualizadas em todos os celulares.</div></div><input id="orderSearch" class="search" placeholder="Pesquisar..."></div>
 <div class="selectionBar">
 <label style="display:flex;flex-direction:row;align-items:center;gap:8px;font-weight:700"><input id="selectAllOrders" class="orderCheck" type="checkbox"> Selecionar todas</label>
-<button id="exportSelectedOrders" class="btn primary" type="button">📄 Exportar OS selecionadas / PMOC</button>
+<button id="exportSelectedOrders" class="btn primary" type="button">📄 Exportar OS selecionadas / PMOC</button><div class="reportHint">O <b>PDF completo da loja</b> agora gera uma página-resumo com setores/equipamentos e, em seguida, organiza todos os serviços por equipamento com cabeçalhos azuis e registro fotográfico.</div>
 <span id="selectedOrdersCount" class="muted">0 selecionada(s)</span>
 </div>
 <div id="orderList" class="list"></div>
@@ -567,93 +604,206 @@ window.printOrder=async id=>{const o=orders.find(x=>x.id===id),c=clients.find(x=
 
 
 
+
+function reportDate(v){
+ if(!v)return "-";
+ const p=String(v).split("-");
+ return p.length===3?`${p[2]}/${p[1]}/${p[0]}`:esc(v);
+}
+function pmocGroup(item){
+ const t=String(item||"").toLowerCase();
+ if(t.includes("filtro"))return "FILTROS DE AR";
+ if(t.includes("bandeja")||t.includes("dreno"))return "BANDEJAS E DRENAGEM";
+ if(t.includes("evaporadora")||t.includes("serpentina")||t.includes("aleta"))return "EVAPORADORES";
+ if(t.includes("condensadora"))return "CONDENSADORES";
+ if(t.includes("elétr")||t.includes("tensão")||t.includes("corrente"))return "CIRCUITO ELÉTRICO";
+ if(t.includes("tubula")||t.includes("vazamento")||t.includes("isolamento"))return "CIRCUITO REFRIGERANTE";
+ if(t.includes("temperatura"))return "MEDIÇÕES";
+ if(t.includes("ruído")||t.includes("vibra")||t.includes("fixa")||t.includes("suporte"))return "ESTRUTURA / FIXAÇÕES";
+ if(t.includes("foto"))return "REGISTRO FOTOGRÁFICO";
+ if(t.includes("não conform"))return "NÃO CONFORMIDADES";
+ return "PREVENTIVA EM SISTEMA AVAC-R";
+}
+function groupedChecklistHtml(checklist){
+ const groups={};
+ for(const x of (checklist||[])){
+   const g=pmocGroup(x.item);
+   (groups[g]||(groups[g]=[])).push(x);
+ }
+ return Object.entries(groups).map(([g,items])=>`
+   <div class="bluebar">${esc(g)}</div>
+   <table class="checktable"><tbody>
+   ${items.map(x=>`<tr><td>${esc(x.item)}</td><td class="result">${x.done?"Conforme":"Pendente"}</td></tr>`).join("")}
+   </tbody></table>`).join("") || '<div class="mutedPrint">Sem checklist registrado.</div>';
+}
+function assetSector(a,o){
+ return (a?.environment||locationName(o?.location_id)||a?.tag||o?.equipment||"Sem setor").trim();
+}
+
 window.printClientOrders=async clientId=>{
  const c=clients.find(x=>x.id===clientId);
  if(!c)return alert("Cliente/loja não encontrado.");
+
  const list=orders.filter(o=>o.client_id===clientId)
    .sort((a,b)=>{
-      const da=String(a.service_date||"");
-      const db=String(b.service_date||"");
-      if(da!==db)return da.localeCompare(db);
-      return String(a.number||"").localeCompare(String(b.number||""),undefined,{numeric:true});
+     const aa=assets.find(x=>x.id===a.asset_id),bb=assets.find(x=>x.id===b.asset_id);
+     const sa=assetSector(aa,a),sb=assetSector(bb,b);
+     if(sa!==sb)return sa.localeCompare(sb,"pt-BR");
+     const da=String(a.service_date||""),db=String(b.service_date||"");
+     if(da!==db)return da.localeCompare(db);
+     return String(a.number||"").localeCompare(String(b.number||""),undefined,{numeric:true});
    });
  if(!list.length)return alert("Esta loja ainda não possui ordens de serviço.");
+
+ const clientAssets=assets.filter(a=>a.client_id===clientId)
+   .sort((a,b)=>String(a.environment||a.tag||a.type||"").localeCompare(String(b.environment||b.tag||b.type||""),"pt-BR"));
+
+ const assetRows=(clientAssets.length?clientAssets:list.map(o=>assets.find(a=>a.id===o.asset_id)).filter(Boolean))
+   .filter((a,i,arr)=>arr.findIndex(x=>x.id===a.id)===i)
+   .map(a=>`<tr>
+     <td>${esc(a.environment||a.tag||a.type||"-")}</td>
+     <td>${esc(a.tag||a.type||"-")}</td>
+     <td>${esc(a.brand||"-")}</td>
+     <td>${esc(a.model||a.capacity||"-")}</td>
+   </tr>`).join("");
 
  const sections=[];
  for(const o of list){
    const a=assets.find(x=>x.id===o.asset_id);
    const ph=servicePhotos.filter(p=>p.order_id===o.id);
-   const photoHtml=(await Promise.all(ph.map(async p=>{
-      const url=await signedPhotoUrl(p.storage_path);
-      return `<div class="photo"><img src="${url}"><small>${esc(fmtPhotoDate(p.captured_at))}<br>GPS: ${p.latitude!=null?`${Number(p.latitude).toFixed(6)}, ${Number(p.longitude).toFixed(6)}`:"-"}</small></div>`;
-   }))).join("");
+   const photos=[];
+   for(const p of ph){
+     let url="";
+     try{url=await signedPhotoUrl(p.storage_path)}catch{}
+     if(url)photos.push(`<div class="photo"><img src="${url}"><small>${esc(fmtPhotoDate(p.captured_at))}${p.latitude!=null?` • GPS ${Number(p.latitude).toFixed(5)}, ${Number(p.longitude).toFixed(5)}`:""}</small></div>`);
+   }
 
+   const pmoc=pmocPlans.find(p=>p.asset_id===o.asset_id && p.client_id===clientId);
    sections.push(`<section class="os">
-     <div class="osHead">
-       <div><h2>OS ${esc(o.number)}</h2><b>${esc(o.service_type||"")}</b></div>
-       <div class="right"><b>${esc(o.service_date||"-")}</b><br>${esc(o.status||"-")}</div>
+     <div class="docTop">
+       <div class="miniBrand"><b>W.Pinho</b><span>Serviços PRO</span></div>
+       <div class="docTitle"><b>PMOC • Plano de Manutenção, Operação e Controle</b><span>${esc(c.name)}</span></div>
+       <div class="osNo">OS ${esc(o.number)}</div>
      </div>
-     <div class="box">
-       <b>Local / Unidade:</b> ${esc(locationName(o.location_id)||"-")}<br>
-       <b>Equipamento:</b> ${esc(assetFullName(a)||o.equipment||"-")}<br>
-       <b>Técnico:</b> ${esc(o.technician||"-")}<br>
-       <b>Valor:</b> ${money(o.value)}
+
+     <div class="bluebar">ATIVO / SETOR</div>
+     <table class="infoTable">
+       <tr><th>Setor / Ambiente</th><th>Equipamento</th><th>Marca</th><th>Modelo / Capacidade</th></tr>
+       <tr><td>${esc(assetSector(a,o))}</td><td>${esc(a?.tag||a?.type||o.equipment||"-")}</td><td>${esc(a?.brand||"-")}</td><td>${esc(a?.model||a?.capacity||"-")}</td></tr>
+     </table>
+
+     <div class="metaLine">
+       <b>Data:</b> ${reportDate(o.service_date)}
+       <b>Técnico:</b> ${esc(o.technician||"-")}
+       <b>Status:</b> ${esc(o.status||"-")}
+       ${pmoc?.frequency_days?`<b>Periodicidade:</b> ${esc(String(pmoc.frequency_days))} dias`:""}
      </div>
-     <div class="box"><b>Checklist</b><br>${(o.checklist||[]).map(x=>`${x.done?"☑":"☐"} ${esc(x.item)}`).join("<br>")||"-"}</div>
-     <div class="box"><b>Defeito / solicitação</b><br>${esc(o.problem||"-").replace(/\n/g,"<br>")}</div>
-     <div class="box"><b>Serviço executado</b><br>${esc(o.service_done||"-").replace(/\n/g,"<br>")}</div>
-     <div class="box"><b>Materiais</b><br>${esc(o.materials||"-").replace(/\n/g,"<br>")}</div>
-     ${o.notes?`<div class="box"><b>Observações</b><br>${esc(o.notes).replace(/\n/g,"<br>")}</div>`:""}
-     ${photoHtml?`<h3>Fotos do atendimento</h3><div class="photos">${photoHtml}</div>`:""}
-     <h3>Assinaturas</h3>
+
+     ${groupedChecklistHtml(o.checklist||[])}
+
+     <div class="bluebar">SERVIÇO / OBSERVAÇÕES</div>
+     <table class="textTable">
+       <tr><th>Defeito / Solicitação</th><td>${esc(o.problem||"-").replace(/\n/g,"<br>")}</td></tr>
+       <tr><th>Serviço executado</th><td>${esc(o.service_done||"-").replace(/\n/g,"<br>")}</td></tr>
+       <tr><th>Materiais</th><td>${esc(o.materials||"-").replace(/\n/g,"<br>")}</td></tr>
+       ${o.notes?`<tr><th>Observações</th><td>${esc(o.notes).replace(/\n/g,"<br>")}</td></tr>`:""}
+     </table>
+
+     ${photos.length?`<div class="bluebar">REGISTRO FOTOGRÁFICO</div><div class="photos">${photos.join("")}</div>`:""}
+
+     <div class="bluebar">ASSINATURAS</div>
      <div class="sig">
-       <div>${o.client_signature?`<img src="${o.client_signature}">`:"<div class='sigBlank'></div>"}<center>Cliente</center></div>
-       <div>${o.tech_signature?`<img src="${o.tech_signature}">`:"<div class='sigBlank'></div>"}<center>Técnico</center></div>
+       <div>${o.client_signature?`<img src="${o.client_signature}">`:"<div class='sigBlank'></div>"}<center>Cliente / responsável pela unidade</center></div>
+       <div>${o.tech_signature?`<img src="${o.tech_signature}">`:"<div class='sigBlank'></div>"}<center>Técnico responsável pelo atendimento</center></div>
      </div>
    </section>`);
  }
 
+ const firstDate=list.map(o=>o.service_date).filter(Boolean).sort()[0]||"-";
+ const lastDate=list.map(o=>o.service_date).filter(Boolean).sort().slice(-1)[0]||"-";
+ const rt=rtRequests.find(r=>r.client_id===clientId && ["Ativo","Aprovado","TRT emitido"].includes(r.status));
+
  const w=window.open("","_blank");
  if(!w)return alert("O celular bloqueou a abertura do PDF. Permita pop-ups para este aplicativo.");
+
  w.document.write(`<!doctype html><html><head><meta charset="utf-8">
- <title>Relatório ${esc(c.name)} - ${list.length} OS</title>
+ <title>PMOC - ${esc(c.name)} - ${list.length} OS</title>
  <style>
- @page{size:A4;margin:11mm}
- body{font-family:Arial,sans-serif;color:#172434;font-size:11px;margin:0}
- h1,h2,h3{color:#0b5fb3;margin:0 0 7px}
- .cover{border-bottom:3px solid #0b5fb3;padding-bottom:12px;margin-bottom:15px}
- .summary{background:#eef6ff;border:1px solid #cfe1f3;padding:10px;border-radius:8px;margin:10px 0}
- .os{break-after:page;page-break-after:always}
- .os:last-child{break-after:auto;page-break-after:auto}
- .osHead{display:flex;justify-content:space-between;gap:15px;border-bottom:2px solid #0b5fb3;padding-bottom:7px;margin-bottom:8px}
- .right{text-align:right}
- .box{border:1px solid #ccd8e3;padding:8px;margin:7px 0;border-radius:6px}
- .photos{display:grid;grid-template-columns:1fr 1fr;gap:7px}
- .photo{border:1px solid #ddd;padding:4px;break-inside:avoid}
- .photo img{width:100%;height:205px;object-fit:contain}
- .photo small{display:block}
- .sig{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:12px}
- .sig img,.sigBlank{width:100%;height:85px;object-fit:contain;border-bottom:1px solid #444}
+ @page{size:A4;margin:9mm}
+ *{box-sizing:border-box}body{font-family:Arial,sans-serif;color:#19232d;font-size:9.5px;margin:0;background:#fff}
+ h1,h2,h3,p{margin:0}.cover{page-break-after:always}
+ .docTop{display:grid;grid-template-columns:90px 1fr 90px;align-items:center;gap:8px;margin-bottom:8px}
+ .miniBrand{font-size:12px;color:#0b5fb3}.miniBrand b{display:block;font-size:15px}.miniBrand span{font-size:8px;color:#526474}
+ .docTitle{text-align:center;font-size:13px;line-height:1.2}.docTitle span{display:block;font-size:12px;font-weight:700;margin-top:2px}
+ .osNo{text-align:right;font-weight:700;color:#526474}
+ .hero{background:linear-gradient(135deg,#073d75,#0b74c9);color:#fff;padding:18px 20px;border-radius:4px;margin-bottom:10px}
+ .hero h1{font-size:22px}.hero h2{font-size:14px;margin-top:5px;color:#dff1ff}
+ .bluebar{background:#2d82bf;color:#fff;font-weight:700;padding:5px 7px;margin-top:7px;text-transform:uppercase;letter-spacing:.15px}
+ table{width:100%;border-collapse:collapse}
+ .infoTable th,.infoTable td,.checktable td,.textTable th,.textTable td,.assetTable th,.assetTable td{border:1px solid #cbd3da;padding:4px 5px;vertical-align:top}
+ .infoTable th,.assetTable th{background:#f4f7f9;text-align:left;font-size:8.5px}
+ .assetTable td:first-child{font-weight:700}
+ .checktable td:first-child{width:78%}.checktable .result{width:22%;font-weight:700}
+ .textTable th{width:24%;text-align:left;background:#f4f7f9}
+ .metaLine{display:flex;gap:13px;flex-wrap:wrap;padding:6px;border:1px solid #cbd3da;border-top:0}
+ .companyGrid{display:grid;grid-template-columns:1fr 1fr;border:1px solid #cbd3da;border-top:0}
+ .companyGrid div{padding:6px;border-right:1px solid #cbd3da;border-bottom:1px solid #cbd3da}.companyGrid div:nth-child(even){border-right:0}
+ .companyGrid b{display:block;font-size:8px;color:#596b7b;margin-bottom:2px}
+ .summaryStrip{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:9px 0}
+ .sumBox{border:1px solid #cbd3da;padding:8px;text-align:center}.sumBox b{display:block;color:#0b5fb3;font-size:17px}
+ .os{break-after:page;page-break-after:always}.os:last-child{break-after:auto;page-break-after:auto}
+ .photos{display:grid;grid-template-columns:1fr 1fr;border-left:1px solid #cbd3da}
+ .photo{border-right:1px solid #cbd3da;border-bottom:1px solid #cbd3da;padding:5px;break-inside:avoid}
+ .photo img{display:block;width:100%;height:170px;object-fit:contain}.photo small{display:block;margin-top:3px;color:#536474}
+ .sig{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding-top:10px}
+ .sig img,.sigBlank{width:100%;height:65px;object-fit:contain;border-bottom:1px solid #444}
+ .mutedPrint{border:1px solid #cbd3da;padding:6px;color:#677}
+ .footerNote{font-size:8px;color:#627486;margin-top:8px;text-align:right}
  </style></head><body>
- <div class="cover">
-   <h1>W.Pinho Serviços PRO</h1>
-   <h2>Relatório completo de Ordens de Serviço</h2>
-   <div class="summary">
-     <b>Cliente / Loja:</b> ${esc(c.name)}<br>
-     <b>Documento:</b> ${esc(c.document||"-")}<br>
-     <b>Telefone:</b> ${esc(c.phone||"-")}<br>
-     <b>Endereço:</b> ${esc(c.address||"-")}<br>
-     <b>Total de OS:</b> ${list.length}<br>
-     <b>Período:</b> ${esc(list[0]?.service_date||"-")} até ${esc(list[list.length-1]?.service_date||"-")}<br>
-     <b>Gerado em:</b> ${new Date().toLocaleString("pt-BR")}
+
+ <section class="cover">
+   <div class="docTop">
+     <div class="miniBrand"><b>W.Pinho</b><span>Serviços PRO</span></div>
+     <div class="docTitle"><b>PMOC • Plano de Manutenção, Operação e Controle</b><span>Relatório Geral da Unidade</span></div>
+     <div class="osNo">${list.length} OS</div>
    </div>
- </div>
+   <div class="hero"><h1>${esc(c.name)}</h1><h2>Relatório consolidado de manutenção e climatização</h2></div>
+
+   <div class="bluebar">EMPRESA RESPONSÁVEL</div>
+   <div class="companyGrid">
+     <div><b>Nome</b>${esc(org?.name||"W.Pinho Serviços PRO")}</div>
+     <div><b>Responsável técnico</b>${esc(rt?.rt_name||pmocPlans.find(p=>p.client_id===clientId)?.responsible_technician||"-")}</div>
+     <div><b>Registro / TRT</b>${esc(rt?.trt_number||pmocPlans.find(p=>p.client_id===clientId)?.professional_registry||"-")}</div>
+     <div><b>Gerado em</b>${new Date().toLocaleString("pt-BR")}</div>
+   </div>
+
+   <div class="bluebar">CLIENTE / LOJA</div>
+   <div class="companyGrid">
+     <div><b>Nome</b>${esc(c.name)}</div><div><b>CPF / CNPJ</b>${esc(c.document||"-")}</div>
+     <div><b>Telefone</b>${esc(c.phone||"-")}</div><div><b>E-mail</b>${esc(c.email||"-")}</div>
+     <div style="grid-column:1/-1"><b>Endereço</b>${esc(c.address||"-")}</div>
+   </div>
+
+   <div class="summaryStrip">
+     <div class="sumBox"><b>${list.length}</b>Ordens de serviço</div>
+     <div class="sumBox"><b>${clientAssets.length}</b>Equipamentos</div>
+     <div class="sumBox"><b>${new Set(list.map(o=>assetSector(assets.find(a=>a.id===o.asset_id),o))).size}</b>Setores atendidos</div>
+     <div class="sumBox"><b>${list.filter(o=>o.status==="Concluída").length}</b>Concluídas</div>
+   </div>
+
+   <div class="bluebar">LISTA DE ATIVOS / SETORES</div>
+   <table class="assetTable">
+     <thead><tr><th>Setor / Ambiente</th><th>Nome do ativo</th><th>Marca</th><th>Modelo / Capacidade</th></tr></thead>
+     <tbody>${assetRows||'<tr><td colspan="4">Nenhum ativo cadastrado.</td></tr>'}</tbody>
+   </table>
+   <div class="footerNote">Período dos serviços: ${reportDate(firstDate)} a ${reportDate(lastDate)}</div>
+ </section>
+
  ${sections.join("")}
- <script>window.onload=()=>setTimeout(()=>window.print(),900)<\/script>
+ <script>window.onload=()=>setTimeout(()=>window.print(),1100)<\/script>
  </body></html>`);
  w.document.close();
 };
-
 window.updateSelectedOrders=()=>{
  const boxes=[...document.querySelectorAll(".orderSelector")];
  const selected=boxes.filter(x=>x.checked);
@@ -667,22 +817,19 @@ $("#selectAllOrders").onchange=e=>{
 $("#exportSelectedOrders").onclick=async()=>{
  const ids=[...document.querySelectorAll(".orderSelector:checked")].map(x=>x.value);
  if(!ids.length)return alert("Selecione pelo menos uma OS.");
- const selected=orders.filter(o=>ids.includes(o.id)).sort((a,b)=>String(a.number).localeCompare(String(b.number),undefined,{numeric:true}));
- const blocks=[];
- for(const o of selected){
-   const c=clients.find(x=>x.id===o.client_id),a=assets.find(x=>x.id===o.asset_id);
-   blocks.push(`<section class="os"><h2>OS ${esc(o.number)} — ${esc(c?.name||"Cliente")}</h2>
-   <div class="box"><b>Data:</b> ${esc(o.service_date||"-")} &nbsp; <b>Técnico:</b> ${esc(o.technician||"-")} &nbsp; <b>Status:</b> ${esc(o.status||"-")}</div>
-   <div class="box"><b>Local:</b> ${esc(locationName(o.location_id)||"-")}<br><b>Equipamento:</b> ${esc(assetFullName(a)||o.equipment||"-")}</div>
-   <div class="box"><b>Checklist</b><br>${(o.checklist||[]).map(x=>`${x.done?"☑":"☐"} ${esc(x.item)}`).join("<br>")||"-"}</div>
-   <div class="box"><b>Defeito / solicitação:</b><br>${esc(o.problem||"-").replace(/\n/g,"<br>")}<br><br><b>Serviço executado:</b><br>${esc(o.service_done||"-").replace(/\n/g,"<br>")}<br><br><b>Materiais:</b><br>${esc(o.materials||"-").replace(/\n/g,"<br>")}</div>
-   </section>`);
+ const selected=orders.filter(o=>ids.includes(o.id));
+ const clientIds=[...new Set(selected.map(o=>o.client_id))];
+ if(clientIds.length===1){
+   // Mantém o padrão PMOC consolidado por loja.
+   const originalOrders=orders;
+   const keep=new Set(ids);
+   orders=originalOrders.filter(o=>keep.has(o.id) || o.client_id!==clientIds[0]);
+   try{await window.printClientOrders(clientIds[0])}
+   finally{orders=originalOrders}
+   return;
  }
- const w=window.open("","_blank");
- w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Relatório PMOC</title><style>@page{size:A4;margin:12mm}body{font-family:Arial;color:#172434;font-size:12px}h1,h2{color:#0b5fb3}.box{border:1px solid #ccd8e3;padding:10px;margin:8px 0;border-radius:7px}.os{break-after:page}.os:last-child{break-after:auto}</style></head><body><h1>${esc(org.name)} — Relatório PMOC / Ordens de Serviço</h1><p>${selected.length} OS selecionada(s) • Gerado em ${new Date().toLocaleString("pt-BR")}</p>${blocks.join("")}<script>window.onload=()=>setTimeout(()=>window.print(),500)<\/script></body></html>`);
- w.document.close();
+ alert("Para gerar o PDF PMOC completo, selecione OS de uma única loja por vez.");
 };
-
 function renderRtSelectors(){if(!$('#rtClient'))return;const v=$('#rtClient').value;$('#rtClient').innerHTML='<option value="">Selecione...</option>'+clients.map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');if(clients.some(c=>c.id===v))$('#rtClient').value=v;const cid=$('#rtClient').value,pv=$('#rtPmoc').value;$('#rtPmoc').innerHTML='<option value="">Todos / a definir</option>'+pmocPlans.filter(p=>!cid||p.client_id===cid).map(p=>`<option value="${p.id}">${esc(assetName(p.asset_id)||'PMOC')}</option>`).join('');if(pmocPlans.some(p=>p.id===pv))$('#rtPmoc').value=pv}$('#rtClient').onchange=renderRtSelectors;function isRtAdmin(){return ['owner','admin','rt'].includes(membership?.role||'')}function renderRt(){if(!$('#rtList'))return;renderRtSelectors();$('#rtAdminCard').classList.toggle('hidden',!isRtAdmin());$('#rtList').innerHTML=rtRequests.map(r=>`<div class="item rtcard"><div><strong>${esc(clientName(r.client_id))} • ${esc(r.request_type||'RT PMOC')}</strong><small>Status: ${esc(r.status||'Pendente')}</small>${r.trt_number?`<small><b>TRT:</b> ${esc(r.trt_number)}</small>`:''}</div>${isRtAdmin()?`<div class="row"><button class="btn small primary" onclick="approveRt('${r.id}')">Aprovar</button><button class="btn small" onclick="setRtTrt('${r.id}')">TRT</button><button class="btn small danger" onclick="rejectRt('${r.id}')">Recusar</button></div>`:''}</div>`).join('')||'<div class="muted">Nenhuma solicitação.</div>'}$('#rtRequestForm').onsubmit=async e=>{e.preventDefault();const id=uuid(),row={id,organization_id:org.id,client_id:$('#rtClient').value,pmoc_id:$('#rtPmoc').value||null,request_type:$('#rtType').value,contact:$('#rtContact').value.trim(),request_notes:$('#rtNotes').value.trim(),status:'Pendente',requested_by:user?.id||null,created_at:new Date().toISOString(),updated_at:new Date().toISOString()};await writeData('rt_requests','insert',row,{id});localUpsert(rtRequests,row);cacheState();$('#rtRequestForm').reset();renderRt();alert(navigator.onLine?'Solicitação enviada.':'Solicitação salva offline e será sincronizada depois.')};window.approveRt=async id=>{const r=rtRequests.find(x=>x.id===id),row={...r,status:'Aprovado',approved_by:user?.id||null,approved_at:new Date().toISOString(),updated_at:new Date().toISOString()};await writeData('rt_requests','update',row,{id});localUpsert(rtRequests,row);cacheState();renderRt()};window.rejectRt=async id=>{const r=rtRequests.find(x=>x.id===id),row={...r,status:'Recusado',rt_notes:prompt('Motivo:')||'',updated_at:new Date().toISOString()};await writeData('rt_requests','update',row,{id});localUpsert(rtRequests,row);cacheState();renderRt()};window.setRtTrt=async id=>{const r=rtRequests.find(x=>x.id===id),trt=prompt('Número do TRT:');if(!trt)return;const row={...r,status:'Ativo',trt_number:trt,updated_at:new Date().toISOString()};await writeData('rt_requests','update',row,{id});localUpsert(rtRequests,row);cacheState();renderRt()};function renderSubscription(){if(!$('#subscriptionStatus'))return;const sub=subscriptions[0];$('#subscriptionStatus').textContent='Status: '+(sub?.status||'teste');$('#subscriptionDue').textContent=sub?.current_period_end?new Date(sub.current_period_end).toLocaleDateString('pt-BR'):'—'}
 async function renderTeam(){if(!navigator.onLine||!supabase)return;const {data,error}=await supabase.from("memberships").select("id,user_id,display_name,role,active,created_at").eq("organization_id",org.id).order("created_at");if(error)return;$("#teamList").innerHTML=(data||[]).map(m=>`<div class="item"><div><strong>${esc(m.display_name||"Usuário")}</strong><small>${esc(m.role)} • ${m.active?"Ativo":"Inativo"}</small></div>${["owner","admin"].includes(membership.role)&&m.user_id!==user.id?`<select onchange="window.changeRole('${m.id}',this.value)"><option ${m.role==="technician"?"selected":""} value="technician">Técnico</option><option ${m.role==="admin"?"selected":""} value="admin">Administrador</option></select>`:""}</div>`).join("")}
 window.changeRole=async(id,role)=>{if(!navigator.onLine)return alert("Essa alteração exige internet.");await ensureSupabase();const {error}=await supabase.from("memberships").update({role}).eq("id",id);if(error)alert(error.message);else renderTeam()}
