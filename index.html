@@ -200,7 +200,8 @@ window.WPINHO_SUPABASE = {
   key: "sb_publishable_2pR9V3QSFUPqucO1iZpLDA_YXraMc3F"
 };
 </script>
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="./vendor/supabase.js"></script>
+<script src="./vendor/qrcode.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js'"></script>
 <script type="module">
 
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -209,13 +210,14 @@ if(!cfg.url||!cfg.key||cfg.url.includes("COLE_AQUI")){$("#setupView").classList.
 let supabase=null, authListenerBound=false;
 async function ensureSupabase(){
  if(supabase)return supabase;
- if(!navigator.onLine)throw new Error("OFFLINE");
- const mod=await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm");
- supabase=mod.createClient(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
- if(!authListenerBound){
-  authListenerBound=true;
-  
+ let createClientFn=window.supabase?.createClient;
+ if(!createClientFn){
+   if(!navigator.onLine)throw new Error("OFFLINE");
+   const mod=await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm");
+   createClientFn=mod.createClient;
  }
+ supabase=createClientFn(cfg.url,cfg.key,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ if(!authListenerBound)authListenerBound=true;
  return supabase;
 }
 
@@ -393,7 +395,7 @@ function resetAsset(){$('#assetForm').reset();$('#assetId').value='';$('#assetTi
 window.editAsset=id=>{const a=assets.find(x=>x.id===id);if(!a)return;go('assets');$('#assetId').value=a.id;clientOptions('#assetClient');$('#assetClient').value=a.client_id;fillLocationSelect('#assetLocation',a.client_id);$('#assetLocation').value=a.location_id||'';$('#assetType').value=a.type||'Outro';$('#assetTag').value=a.tag||'';$('#assetBrand').value=a.brand||'';$('#assetModel').value=a.model||'';$('#assetSerial').value=a.serial_number||'';$('#assetCapacity').value=a.capacity||'';$('#assetVoltage').value=a.voltage||'';$('#assetRefrigerant').value=a.refrigerant||'';$('#assetEnvironment').value=a.environment||'';$('#assetInstallDate').value=a.install_date||'';$('#assetStatus').value=a.status||'Ativo';$('#assetNotes').value=a.notes||'';$('#assetTitle').textContent='Editar equipamento';$('#cancelAsset').classList.remove('hidden')};window.deleteAsset=async id=>{if(!confirm('Excluir este equipamento e seus vínculos?'))return;try{await writeData('assets','delete',null,{id});localDelete(assets,id);cacheState();renderAll()}catch(e){alert(e.message)}};
 function qrUrl(id){const u=new URL(location.href);u.searchParams.set('asset',id);return u.toString()}
 window.viewAsset=id=>{const a=assets.find(x=>x.id===id);if(!a)return;const hist=orders.filter(o=>o.asset_id===id);go('assetDetail');$('#assetDetailContent').innerHTML=`<div class="head"><div><h1>${esc(a.tag||a.type||'Equipamento')}</h1><div class="muted">${esc(clientName(a.client_id))} • ${esc(locationName(a.location_id)||'Sem local')}</div></div><div class="row"><button class="btn primary" onclick="newOrderForAsset('${a.id}')">＋ Nova OS</button><button class="btn" onclick="go('assets')">Voltar</button></div></div><div class="grid"><div class="card"><h2>Identificação</h2>${esc(a.type||'-')}<br>${esc(a.brand||'')} ${esc(a.model||'')}<br>Série: ${esc(a.serial_number||'-')}<br>Status: ${esc(a.status||'-')}</div><div class="card"><h2>Dados técnicos</h2>Capacidade: ${esc(a.capacity||'-')}<br>Tensão: ${esc(a.voltage||'-')}<br>Fluido: ${esc(a.refrigerant||'-')}<br>Ambiente: ${esc(a.environment||'-')}</div><div class="card"><h2>QR Code</h2><div id="assetQr"></div><small>Escaneie para abrir esta ficha.</small><br><button class="btn small" style="margin-top:8px" onclick="printQr('${a.id}')">Imprimir QR</button></div><div class="card"><h2>Histórico</h2><b>${hist.length}</b> atendimento(s)<br>Último: ${esc(hist[0]?.service_date||'-')}</div></div><div class="card"><h2>Histórico de manutenção</h2><div class="list">${hist.map(o=>orderCard(o)).join('')||'<span class="muted">Sem atendimentos.</span>'}</div></div>`;setTimeout(()=>new QRCode(document.getElementById('assetQr'),{text:qrUrl(id),width:150,height:150}),50)};
-window.printQr=id=>{const a=assets.find(x=>x.id===id);if(!a)return;const w=window.open('','_blank');w.document.write(`<html><body style="font-family:Arial;text-align:center;padding:30px"><h2>W.Pinho Serviços PRO</h2><h3>${esc(a.tag||a.type)}</h3><div id="q"></div><p>${esc(a.brand||'')} ${esc(a.model||'')}<br>${esc(clientName(a.client_id))}</p><script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"><\/script><script>new QRCode(document.getElementById('q'),{text:${JSON.stringify(qrUrl(id))},width:240,height:240});setTimeout(()=>print(),700)<\/script></body></html>`);w.document.close()};
+window.printQr=id=>{const a=assets.find(x=>x.id===id);if(!a)return;const w=window.open('','_blank');w.document.write(`<html><body style="font-family:Arial;text-align:center;padding:30px"><h2>W.Pinho Serviços PRO</h2><h3>${esc(a.tag||a.type)}</h3><div id="q"></div><p>${esc(a.brand||'')} ${esc(a.model||'')}<br>${esc(clientName(a.client_id))}</p><script src="./vendor/qrcode.min.js"><\/script><script>new QRCode(document.getElementById('q'),{text:${JSON.stringify(qrUrl(id))},width:240,height:240});setTimeout(()=>print(),700)<\/script></body></html>`);w.document.close()};
 window.newOrderForAsset=id=>{const a=assets.find(x=>x.id===id);if(!a)return;go('newOrder');$('#orderClient').value=a.client_id;renderOrderRelations();$('#orderLocation').value=a.location_id||'';fillAssetSelect('#orderAsset',a.client_id,a.location_id||'');$('#orderAsset').value=a.id;$('#orderEquipment').value=assetName(a.id)};
 function openAssetFromUrl(){const id=new URLSearchParams(location.search).get('asset');if(id&&assets.some(a=>a.id===id)){history.replaceState({},document.title,location.pathname);viewAsset(id)}}
 const PMOC_ITEMS=['Limpeza de filtros','Limpeza e inspeção da evaporadora','Limpeza e inspeção da condensadora','Verificar bandeja e dreno','Verificar serpentinas e aletas','Verificar conexões elétricas','Medição de tensão e corrente','Verificar temperatura de insuflamento/retorno','Verificar ruídos e vibrações','Verificar isolamento das tubulações','Verificar fixações e suportes','Inspeção visual de vazamentos','Registrar fotos antes/depois','Registrar não conformidades'];
