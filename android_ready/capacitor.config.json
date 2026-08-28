@@ -1,10 +1,5 @@
 {
   "appId": "br.com.wpinho.servicos",
   "appName": "W.Pinho Serviços PRO",
-  "webDir": "www",
-  "server": {
-    "url": "https://wpinhoeletricaerefrigeracao-ship-it.github.io/W-pinho-servicos/",
-    "cleartext": false,
-    "androidScheme": "https"
-  }
+  "webDir": "www"
 }
