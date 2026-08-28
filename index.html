@@ -44,6 +44,22 @@ input:focus,select:focus,textarea:focus{outline:0;border-color:#2285d0;box-shado
 .reportHint{background:linear-gradient(135deg,#eaf5ff,#f9fcff);border:1px solid #c9e2f5;border-left:4px solid #0b5fb3;padding:12px 14px;border-radius:12px;margin:10px 0}
 @media(max-width:560px){.wpHero{padding:17px}.wpHero h1{font-size:22px}.section>.head{padding:12px}.btn{min-height:42px}}
 
+
+/* ===== V16 • página pública do QR ===== */
+.publicPage{min-height:100vh;background:#eef4f9}
+.publicTop{display:flex;align-items:center;gap:10px;padding:14px 16px;color:#fff;background:linear-gradient(120deg,#052d56,#0b6fc3);position:sticky;top:0;z-index:5}
+.publicTop .mark{width:40px;height:40px}.publicTop b{display:block;font-size:16px}.publicTop small{display:block;color:#dceeff}
+.publicMain{max-width:850px;margin:auto;padding:16px}
+.pubHero{background:linear-gradient(135deg,#073d75,#0b74c9);color:white;padding:18px;border-radius:15px;margin-bottom:13px}
+.pubHero h1{font-size:23px;margin:0}.pubHero p{margin:6px 0 0;color:#ddecfa}
+.pubGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}
+.pubBox{border:1px solid #d4e0e9;background:#fff;padding:10px;border-radius:10px}.pubBox b{display:block;color:#607386;font-size:11px;margin-bottom:3px}
+.pubService{border:1px solid #d4e0e9;border-radius:12px;margin-top:10px;overflow:hidden;background:#fff}
+.pubServiceHead{background:#2d82bf;color:#fff;padding:8px 10px;font-weight:800;display:flex;justify-content:space-between;gap:10px}
+.pubServiceBody{padding:10px}.pubServiceBody p{margin:6px 0;line-height:1.4}
+.pubChecklist{margin-top:7px;border-top:1px solid #e1e7ec;padding-top:6px}
+@media(max-width:560px){.pubGrid{grid-template-columns:1fr}.publicMain{padding:10px}}
+
 </style>
 </head>
 <body>
@@ -83,6 +99,17 @@ input:focus,select:focus,textarea:focus{outline:0;border-color:#2285d0;box-shado
 </form>
 <div id="authMsg" class="muted" style="margin-top:10px"></div>
 </div>
+</div>
+
+
+<div id="publicView" class="hidden publicPage">
+  <div class="publicTop">
+    <div class="mark">WP</div>
+    <div><b>W.Pinho Serviços PRO</b><small>Histórico público do equipamento</small></div>
+  </div>
+  <main class="publicMain">
+    <div id="publicAssetContent" class="card"><b>Carregando histórico...</b></div>
+  </main>
 </div>
 
 <div id="recoveryView" class="login hidden">
@@ -319,6 +346,47 @@ function showRecovery(){recoveryMode=true;$("#authView").classList.add("hidden")
 $("#recoveryForm").onsubmit=async e=>{e.preventDefault();const p1=$("#newPassword").value,p2=$("#confirmPassword").value,box=$("#recoveryMsg");if(p1.length<6){box.textContent="Use uma senha com pelo menos 6 caracteres.";return}if(p1!==p2){box.textContent="As senhas não são iguais.";return}box.textContent="Salvando nova senha...";await ensureSupabase();const {error}=await supabase.auth.updateUser({password:p1});if(error){box.textContent=error.message;return}box.textContent="Senha alterada com sucesso. Você já pode entrar.";await supabase.auth.signOut();history.replaceState({},document.title,location.pathname);setTimeout(()=>location.reload(),1200)};
 
 
+
+async function showPublicAsset(token){
+ $("#authView").classList.add("hidden");
+ $("#appView").classList.add("hidden");
+ $("#setupView").classList.add("hidden");
+ $("#recoveryView").classList.add("hidden");
+ $("#publicView").classList.remove("hidden");
+ const box=$("#publicAssetContent");
+ try{
+   await ensureSupabase();
+   const {data,error}=await supabase.rpc("get_public_asset_history",{share_token:token});
+   if(error)throw error;
+   if(!data?.asset){box.innerHTML='<div class="notice">Este QR Code não está ativo ou o equipamento não foi encontrado.</div>';return}
+   const a=data.asset,c=data.client||{},l=data.location||{},os=data.orders||[];
+   box.innerHTML=`
+     <div class="pubHero"><h1>${esc(a.tag||a.type||"Equipamento")}</h1><p>${esc(c.name||"Cliente")} • ${esc(l.name||a.environment||"Setor não informado")}</p></div>
+     <div class="pubGrid">
+       <div class="pubBox"><b>Equipamento</b>${esc(a.type||"-")}</div>
+       <div class="pubBox"><b>Marca / modelo</b>${esc(a.brand||"-")} ${esc(a.model||"")}</div>
+       <div class="pubBox"><b>Capacidade</b>${esc(a.capacity||"-")}</div>
+       <div class="pubBox"><b>Status</b>${esc(a.status||"-")}</div>
+     </div>
+     <h2>Histórico de serviços</h2>
+     ${os.length?os.map(o=>`
+       <div class="pubService">
+         <div class="pubServiceHead"><span>OS ${esc(o.number||"-")}</span><span>${reportDate(o.service_date)}</span></div>
+         <div class="pubServiceBody">
+           <p><b>Tipo:</b> ${esc(o.service_type||"-")} • <b>Status:</b> ${esc(o.status||"-")}</p>
+           ${o.technician?`<p><b>Técnico:</b> ${esc(o.technician)}</p>`:""}
+           ${o.problem?`<p><b>Solicitação/defeito:</b><br>${esc(o.problem).replace(/\n/g,"<br>")}</p>`:""}
+           ${o.service_done?`<p><b>Serviço executado:</b><br>${esc(o.service_done).replace(/\n/g,"<br>")}</p>`:""}
+           ${o.materials?`<p><b>Materiais:</b><br>${esc(o.materials).replace(/\n/g,"<br>")}</p>`:""}
+           ${(o.checklist||[]).length?`<div class="pubChecklist"><b>Checklist:</b><br>${(o.checklist||[]).map(x=>`${x.done?"✅":"◻️"} ${esc(x.item)}`).join("<br>")}</div>`:""}
+         </div>
+       </div>`).join(""):'<div class="muted">Nenhum serviço registrado para este equipamento.</div>'}
+     <p class="muted" style="margin-top:14px">Consulta somente leitura. Dados administrativos, valores e assinaturas não são exibidos.</p>`;
+ }catch(e){
+   box.innerHTML=`<div class="notice">Não foi possível consultar este equipamento. Verifique a conexão e tente novamente.<br><small>${esc(e.message||"")}</small></div>`;
+ }
+}
+
 async function getContext(){
  await ensureSupabase();const {data:{user:u}}=await supabase.auth.getUser();user=u;if(!user)return false;
  const {data:m,error}=await supabase.from("memberships").select("id,organization_id,display_name,role,active").eq("user_id",user.id).eq("active",true).limit(1).maybeSingle();
@@ -430,9 +498,17 @@ function renderAssets(){clientOptions('#assetClient');fillLocationSelect('#asset
 $('#assetForm').onsubmit=async e=>{e.preventDefault();const id=$('#assetId').value||uuid(),row={id,organization_id:org.id,client_id:$('#assetClient').value,location_id:$('#assetLocation').value||null,type:$('#assetType').value,tag:$('#assetTag').value.trim(),brand:$('#assetBrand').value.trim(),model:$('#assetModel').value.trim(),serial_number:$('#assetSerial').value.trim(),capacity:$('#assetCapacity').value.trim(),voltage:$('#assetVoltage').value.trim(),refrigerant:$('#assetRefrigerant').value.trim(),environment:$('#assetEnvironment').value.trim(),install_date:$('#assetInstallDate').value||null,status:$('#assetStatus').value,notes:$('#assetNotes').value.trim(),updated_at:new Date().toISOString()};try{await writeData('assets',assets.some(x=>x.id===id)?'update':'insert',row,{id});localUpsert(assets,row);cacheState();resetAsset();navigator.onLine?await loadAll():renderAll()}catch(err){alert(err.message)}};
 function resetAsset(){$('#assetForm').reset();$('#assetId').value='';$('#assetTitle').textContent='Novo equipamento';$('#cancelAsset').classList.add('hidden');clientOptions('#assetClient');fillLocationSelect('#assetLocation','')};$('#cancelAsset').onclick=resetAsset;
 window.editAsset=id=>{const a=assets.find(x=>x.id===id);if(!a)return;go('assets');$('#assetId').value=a.id;clientOptions('#assetClient');$('#assetClient').value=a.client_id;fillLocationSelect('#assetLocation',a.client_id);$('#assetLocation').value=a.location_id||'';$('#assetType').value=a.type||'Outro';$('#assetTag').value=a.tag||'';$('#assetBrand').value=a.brand||'';$('#assetModel').value=a.model||'';$('#assetSerial').value=a.serial_number||'';$('#assetCapacity').value=a.capacity||'';$('#assetVoltage').value=a.voltage||'';$('#assetRefrigerant').value=a.refrigerant||'';$('#assetEnvironment').value=a.environment||'';$('#assetInstallDate').value=a.install_date||'';$('#assetStatus').value=a.status||'Ativo';$('#assetNotes').value=a.notes||'';$('#assetTitle').textContent='Editar equipamento';$('#cancelAsset').classList.remove('hidden')};window.deleteAsset=async id=>{if(!confirm('Excluir este equipamento e seus vínculos?'))return;try{await writeData('assets','delete',null,{id});localDelete(assets,id);cacheState();renderAll()}catch(e){alert(e.message)}};
-function qrUrl(id){const u=new URL(location.href);u.searchParams.set('asset',id);return u.toString()}
-window.viewAsset=id=>{const a=assets.find(x=>x.id===id);if(!a)return;const hist=orders.filter(o=>o.asset_id===id);go('assetDetail');$('#assetDetailContent').innerHTML=`<div class="head"><div><h1>${esc(a.tag||a.type||'Equipamento')}</h1><div class="muted">${esc(clientName(a.client_id))} • ${esc(locationName(a.location_id)||'Sem local')}</div></div><div class="row"><button class="btn primary" onclick="newOrderForAsset('${a.id}')">＋ Nova OS</button><button class="btn" onclick="go('assets')">Voltar</button></div></div><div class="grid"><div class="card"><h2>Identificação</h2>${esc(a.type||'-')}<br>${esc(a.brand||'')} ${esc(a.model||'')}<br>Série: ${esc(a.serial_number||'-')}<br>Status: ${esc(a.status||'-')}</div><div class="card"><h2>Dados técnicos</h2>Capacidade: ${esc(a.capacity||'-')}<br>Tensão: ${esc(a.voltage||'-')}<br>Fluido: ${esc(a.refrigerant||'-')}<br>Ambiente: ${esc(a.environment||'-')}</div><div class="card"><h2>QR Code</h2><div id="assetQr"></div><small>Escaneie para abrir esta ficha.</small><br><button class="btn small" style="margin-top:8px" onclick="printQr('${a.id}')">Imprimir QR</button></div><div class="card"><h2>Histórico</h2><b>${hist.length}</b> atendimento(s)<br>Último: ${esc(hist[0]?.service_date||'-')}</div></div><div class="card"><h2>Histórico de manutenção</h2><div class="list">${hist.map(o=>orderCard(o)).join('')||'<span class="muted">Sem atendimentos.</span>'}</div></div>`;setTimeout(()=>new QRCode(document.getElementById('assetQr'),{text:qrUrl(id),width:150,height:150}),50)};
-window.printQr=id=>{const a=assets.find(x=>x.id===id);if(!a)return;const w=window.open('','_blank');w.document.write(`<html><body style="font-family:Arial;text-align:center;padding:30px"><h2>W.Pinho Serviços PRO</h2><h3>${esc(a.tag||a.type)}</h3><div id="q"></div><p>${esc(a.brand||'')} ${esc(a.model||'')}<br>${esc(clientName(a.client_id))}</p><script src="./vendor/qrcode.min.js"><\/script><script>new QRCode(document.getElementById('q'),{text:${JSON.stringify(qrUrl(id))},width:240,height:240});setTimeout(()=>print(),700)<\/script></body></html>`);w.document.close()};
+function qrUrl(id){
+ const a=assets.find(x=>x.id===id);
+ if(!a?.public_token)return "";
+ return `https://wpinhoeletricaerefrigeracao-ship-it.github.io/W-pinho-servicos/?public_asset=${encodeURIComponent(a.public_token)}`;
+}
+window.viewAsset=id=>{const a=assets.find(x=>x.id===id);if(!a)return;const hist=orders.filter(o=>o.asset_id===id);go('assetDetail');$('#assetDetailContent').innerHTML=`<div class="head"><div><h1>${esc(a.tag||a.type||'Equipamento')}</h1><div class="muted">${esc(clientName(a.client_id))} • ${esc(locationName(a.location_id)||'Sem local')}</div></div><div class="row"><button class="btn primary" onclick="newOrderForAsset('${a.id}')">＋ Nova OS</button><button class="btn" onclick="go('assets')">Voltar</button></div></div><div class="grid"><div class="card"><h2>Identificação</h2>${esc(a.type||'-')}<br>${esc(a.brand||'')} ${esc(a.model||'')}<br>Série: ${esc(a.serial_number||'-')}<br>Status: ${esc(a.status||'-')}</div><div class="card"><h2>Dados técnicos</h2>Capacidade: ${esc(a.capacity||'-')}<br>Tensão: ${esc(a.voltage||'-')}<br>Fluido: ${esc(a.refrigerant||'-')}<br>Ambiente: ${esc(a.environment||'-')}</div><div class="card"><h2>QR Code</h2><div id="assetQr"></div><small>Escaneie para abrir esta ficha.</small><br><button class="btn small" style="margin-top:8px" onclick="printQr('${a.id}')">Imprimir QR</button></div><div class="card"><h2>Histórico</h2><b>${hist.length}</b> atendimento(s)<br>Último: ${esc(hist[0]?.service_date||'-')}</div></div><div class="card"><h2>Histórico de manutenção</h2><div class="list">${hist.map(o=>orderCard(o)).join('')||'<span class="muted">Sem atendimentos.</span>'}</div></div>`;setTimeout(()=>{
+      const url=qrUrl(id), box=document.getElementById('assetQr');
+      if(url)new QRCode(box,{text:url,width:150,height:150});
+      else box.innerHTML='<div class="notice">Conecte o app à internet e sincronize para ativar o QR público deste equipamento.</div>';
+    },50)};
+window.printQr=id=>{const a=assets.find(x=>x.id===id);if(!a)return;const url=qrUrl(id);if(!url)return alert('QR público ainda não ativado. Sincronize com internet e tente novamente.');const w=window.open('','_blank');w.document.write(`<html><body style="font-family:Arial;text-align:center;padding:30px"><h2>W.Pinho Serviços PRO</h2><h3>${esc(a.tag||a.type)}</h3><div id="q"></div><p>${esc(a.brand||'')} ${esc(a.model||'')}<br>${esc(clientName(a.client_id))}</p><script src="./vendor/qrcode.min.js"><\/script><script>new QRCode(document.getElementById('q'),{text:${JSON.stringify(url)},width:240,height:240});setTimeout(()=>print(),700)<\/script></body></html>`);w.document.close()};
 window.newOrderForAsset=id=>{const a=assets.find(x=>x.id===id);if(!a)return;go('newOrder');$('#orderClient').value=a.client_id;renderOrderRelations();$('#orderLocation').value=a.location_id||'';fillAssetSelect('#orderAsset',a.client_id,a.location_id||'');$('#orderAsset').value=a.id;$('#orderEquipment').value=assetName(a.id)};
 function openAssetFromUrl(){const id=new URLSearchParams(location.search).get('asset');if(id&&assets.some(a=>a.id===id)){history.replaceState({},document.title,location.pathname);viewAsset(id)}}
 const PMOC_ITEMS=['Limpeza de filtros','Limpeza e inspeção da evaporadora','Limpeza e inspeção da condensadora','Verificar bandeja e dreno','Verificar serpentinas e aletas','Verificar conexões elétricas','Medição de tensão e corrente','Verificar temperatura de insuflamento/retorno','Verificar ruídos e vibrações','Verificar isolamento das tubulações','Verificar fixações e suportes','Inspeção visual de vazamentos','Registrar fotos antes/depois','Registrar não conformidades'];
@@ -730,7 +806,12 @@ window.printClientOrders=async clientId=>{
  <title>PMOC - ${esc(c.name)} - ${list.length} OS</title>
  <style>
  @page{size:A4;margin:9mm}
- *{box-sizing:border-box}body{font-family:Arial,sans-serif;color:#19232d;font-size:9.5px;margin:0;background:#fff}
+ *{box-sizing:border-box;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ body{font-family:Arial,sans-serif;color:#19232d;font-size:9.5px;margin:0;background:#fff}
+ .pdfToolbar{position:sticky;top:0;z-index:100;background:#102a42;color:white;padding:10px;display:flex;gap:8px;justify-content:center;box-shadow:0 3px 12px #0002}
+ .pdfToolbar button{border:0;border-radius:8px;padding:10px 14px;font-weight:800;cursor:pointer}
+ .pdfToolbar .download{background:#0b74c9;color:white}.pdfToolbar .print{background:white;color:#123}
+ @media print{.pdfToolbar{display:none!important}}
  h1,h2,h3,p{margin:0}.cover{page-break-after:always}
  .docTop{display:grid;grid-template-columns:90px 1fr 90px;align-items:center;gap:8px;margin-bottom:8px}
  .miniBrand{font-size:12px;color:#0b5fb3}.miniBrand b{display:block;font-size:15px}.miniBrand span{font-size:8px;color:#526474}
@@ -738,7 +819,7 @@ window.printClientOrders=async clientId=>{
  .osNo{text-align:right;font-weight:700;color:#526474}
  .hero{background:linear-gradient(135deg,#073d75,#0b74c9);color:#fff;padding:18px 20px;border-radius:4px;margin-bottom:10px}
  .hero h1{font-size:22px}.hero h2{font-size:14px;margin-top:5px;color:#dff1ff}
- .bluebar{background:#2d82bf;color:#fff;font-weight:700;padding:5px 7px;margin-top:7px;text-transform:uppercase;letter-spacing:.15px}
+ .bluebar{background:#2d82bf!important;color:#fff!important;font-weight:700;padding:5px 7px;margin-top:7px;text-transform:uppercase;letter-spacing:.15px;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
  table{width:100%;border-collapse:collapse}
  .infoTable th,.infoTable td,.checktable td,.textTable th,.textTable td,.assetTable th,.assetTable td{border:1px solid #cbd3da;padding:4px 5px;vertical-align:top}
  .infoTable th,.assetTable th{background:#f4f7f9;text-align:left;font-size:8.5px}
@@ -760,7 +841,11 @@ window.printClientOrders=async clientId=>{
  .mutedPrint{border:1px solid #cbd3da;padding:6px;color:#677}
  .footerNote{font-size:8px;color:#627486;margin-top:8px;text-align:right}
  </style></head><body>
-
+ <div class="pdfToolbar">
+   <button class="download" onclick="baixarPdf()">⬇️ Baixar PDF</button>
+   <button class="print" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+ </div>
+ <div id="pdfReport">
  <section class="cover">
    <div class="docTop">
      <div class="miniBrand"><b>W.Pinho</b><span>Serviços PRO</span></div>
@@ -800,7 +885,37 @@ window.printClientOrders=async clientId=>{
  </section>
 
  ${sections.join("")}
- <script>window.onload=()=>setTimeout(()=>window.print(),1100)<\/script>
+ </div>
+ <script src="./vendor/html2pdf.bundle.min.js" onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js'"><\/script>
+ <script>
+ const pdfName=${json.dumps("PLACEHOLDER")};
+ async function baixarPdf(){
+   try{
+     const name=document.title.replace(/[\\\\/:*?"<>|]+/g,"_")+".pdf";
+     const el=document.getElementById("pdfReport");
+     const opt={
+       margin:[4,4,4,4],
+       filename:name,
+       image:{type:"jpeg",quality:0.88},
+       html2canvas:{scale:1.35,useCORS:true,backgroundColor:"#ffffff"},
+       jsPDF:{unit:"mm",format:"a4",orientation:"portrait",compress:true},
+       pagebreak:{mode:["css","legacy"]}
+     };
+     const worker=html2pdf().set(opt).from(el).toPdf();
+     const dataUri=await worker.outputPdf("datauristring");
+     const Filesystem=window.Capacitor?.Plugins?.Filesystem;
+     const Share=window.Capacitor?.Plugins?.Share;
+     if(Filesystem){
+       const base64=dataUri.split(",")[1];
+       const saved=await Filesystem.writeFile({path:name,data:base64,directory:"DOCUMENTS",recursive:true});
+       if(Share)await Share.share({title:name,text:"Relatório PMOC / OS",url:saved.uri,dialogTitle:"Salvar ou compartilhar PDF"});
+       else alert("PDF salvo em Documentos: "+name);
+     }else{
+       await html2pdf().set(opt).from(el).save();
+     }
+   }catch(e){alert("Não foi possível gerar o PDF: "+(e.message||e))}
+ }
+ <\/script>
  </body></html>`);
  w.document.close();
 };
@@ -836,7 +951,11 @@ window.changeRole=async(id,role)=>{if(!navigator.onLine)return alert("Essa alter
 $("#exportBtn").onclick=()=>{const data={exportedAt:new Date().toISOString(),organization:org,clients,locations,assets,pmocPlans,orders};const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:"application/json"}));a.download="W_Pinho_Backup_"+today()+".json";a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
 
 updateSyncBar();
-if(recoveryMode){if(navigator.onLine){await ensureSupabase();showRecovery()}else alert("A redefinição de senha exige internet.")}
+const publicAssetToken=new URLSearchParams(location.search).get("public_asset");
+if(publicAssetToken){
+ await showPublicAsset(publicAssetToken);
+}
+else if(recoveryMode){if(navigator.onLine){await ensureSupabase();showRecovery()}else alert("A redefinição de senha exige internet.")}
 else if(!navigator.onLine){if(!(await showAppFromCache())){$("#authView").classList.remove("hidden");msg("Conecte à internet uma vez neste aparelho para ativar o modo offline.")}}
 else{try{await ensureSupabase();const {data:{session}}=await supabase.auth.getSession();if(session)boot();else $("#authView").classList.remove("hidden")}catch(e){if(!(await showAppFromCache())){$("#authView").classList.remove("hidden");msg("Falha de conexão. Tente novamente quando houver internet.")}}}
 </script>
