@@ -807,7 +807,7 @@ window.printClientOrders=async clientId=>{
  <style>
  @page{size:A4;margin:9mm}
  *{box-sizing:border-box;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
- body{font-family:Arial,sans-serif;color:#19232d;font-size:9.5px;margin:0;background:#fff}
+ body{font-family:Arial,sans-serif;color:#19232d;font-size:9.5px;margin:0;background:#fff;-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
  .pdfToolbar{position:sticky;top:0;z-index:100;background:#102a42;color:white;padding:10px;display:flex;gap:8px;justify-content:center;box-shadow:0 3px 12px #0002}
  .pdfToolbar button{border:0;border-radius:8px;padding:10px 14px;font-weight:800;cursor:pointer}
  .pdfToolbar .download{background:#0b74c9;color:white}.pdfToolbar .print{background:white;color:#123}
@@ -897,7 +897,7 @@ window.printClientOrders=async clientId=>{
        margin:[4,4,4,4],
        filename:name,
        image:{type:"jpeg",quality:0.88},
-       html2canvas:{scale:1.35,useCORS:true,backgroundColor:"#ffffff"},
+       html2canvas:{scale:1.6,useCORS:true,backgroundColor:"#ffffff",logging:false},
        jsPDF:{unit:"mm",format:"a4",orientation:"portrait",compress:true},
        pagebreak:{mode:["css","legacy"]}
      };
