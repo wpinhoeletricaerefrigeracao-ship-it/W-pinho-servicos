@@ -137,9 +137,29 @@ nav button.active{box-shadow:inset 3px 0 #45a5ff;background:linear-gradient(90de
 
 
 .loginHeroIcon{width:72px;height:72px;border-radius:20px;display:grid;place-items:center;background:linear-gradient(145deg,#071d34,#0b3156);border:1px solid #d6e6f455;padding:8px;box-shadow:0 10px 28px #00182d38}.loginHeroIcon .orbiSvg{width:100%;height:100%;display:block}
+
+/* ===== OrbiServ site institucional (camada pública; sistema preservado) ===== */
+.siteView{min-height:100vh;background:linear-gradient(160deg,#06182a 0%,#0a3155 52%,#0b5fb3 100%);color:#fff;font-family:inherit}.siteNav{max-width:1180px;margin:auto;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px}.siteBrand{display:flex;align-items:center;gap:12px}.siteBrand .mark{width:48px;height:48px}.siteBrand b{font-size:24px}.siteBrand small{display:block;letter-spacing:.13em;color:#9fd0ff;font-size:10px}.siteLinks{display:flex;gap:22px;align-items:center}.siteLinks a{color:#dcecff;text-decoration:none;font-weight:700}.siteLogin{border:1px solid #8ec8ff!important;background:#ffffff12!important;color:#fff!important}.siteHero{max-width:1180px;margin:auto;padding:76px 22px 60px;display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}.siteKicker{display:inline-block;padding:7px 12px;border:1px solid #68b8ff66;border-radius:999px;background:#0a7ddd22;color:#a9d8ff;font-weight:800;font-size:12px;letter-spacing:.08em}.siteHero h1{font-size:52px;line-height:1.04;margin:18px 0;color:#fff;max-width:760px}.siteHero p{font-size:19px;line-height:1.6;color:#d4e7f7;max-width:690px}.siteActions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.siteActions .btn{padding:14px 20px}.siteMock{background:#ffffff0e;border:1px solid #ffffff25;border-radius:28px;padding:22px;box-shadow:0 30px 70px #0007}.siteMockInner{background:#f7fbff;color:#17324a;border-radius:20px;padding:24px}.siteMockInner h3{margin:0 0 18px;color:#0b5fb3}.mockRow{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mockCard{padding:16px;border-radius:14px;background:#eaf4fc;font-weight:800}.siteSection{background:#f6f9fc;color:#172434;padding:72px 22px}.siteSectionInner{max-width:1180px;margin:auto}.siteSection h2{text-align:center;font-size:36px;margin:0 0 12px;color:#102c46}.siteLead{text-align:center;color:#60768a;max-width:760px;margin:0 auto 34px;line-height:1.6}.featureGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.featureCard{background:#fff;border:1px solid #dce8f2;border-radius:18px;padding:22px;box-shadow:0 8px 28px #163b5c0d}.featureIcon{font-size:26px}.featureCard h3{margin:10px 0 8px;color:#0b5fb3}.featureCard p{margin:0;color:#62788c;line-height:1.5}.siteCta{padding:64px 22px;background:#071d34;color:#fff;text-align:center}.siteCta h2{font-size:34px;margin:0 0 10px}.siteCta p{color:#bed5e8}.siteFooter{background:#041321;color:#93adc2;padding:24px;text-align:center;font-size:13px}@media(max-width:800px){.siteLinks a:not(.siteLogin){display:none}.siteHero{grid-template-columns:1fr;padding-top:45px}.siteHero h1{font-size:38px}.siteMock{display:none}.featureGrid{grid-template-columns:1fr}.siteSection{padding-top:52px}.siteNav{padding:14px 16px}.siteBrand b{font-size:21px}}
+
 </style>
 </head>
 <body>
+
+
+<div id="siteView" class="siteView hidden">
+  <nav class="siteNav"><div class="siteBrand"><div class="mark orbiMark"><svg class="orbiSvg" viewBox="0 0 100 100" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="ogsite" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#eef5ff"/><stop offset="0.45" stop-color="#8fb9e8"/><stop offset="1" stop-color="#1488ff"/></linearGradient></defs><path d="M50 7 84 27v18l-12-7V34L50 21 28 34v32l22 13 22-13V55H52V43h34v30L50 93 16 73V27Z" fill="url(#ogsite)"/><path d="M38 39 50 32l12 7-12 7 12 7-12 7-12-7 8-5-8-5Z" fill="#0b5fb3" opacity=".95"/></svg></div><div><b>OrbiServ</b><small>SISTEMA INTELIGENTE</small></div></div><div class="siteLinks"><a href="#recursos">Recursos</a><a href="#solucoes">Soluções</a><a class="btn siteLogin" href="?app=1">Entrar no sistema</a></div></nav>
+  <section class="siteHero"><div><span class="siteKicker">GESTÃO DE SERVIÇOS E PMOC</span><h1>Gestão profissional de serviços, equipamentos e PMOC em um só lugar.</h1><p>Organize clientes, ativos, ordens de serviço, registros fotográficos, assinaturas, relatórios e histórico por QR Code em uma plataforma preparada para o trabalho em campo.</p><div class="siteActions"><a class="btn primary" href="?app=1">Acessar OrbiServ</a><a class="btn siteLogin" href="#recursos">Conhecer recursos</a></div></div><div class="siteMock"><div class="siteMockInner"><h3>Controle da operação</h3><div class="mockRow"><div class="mockCard">✓ Clientes e ativos</div><div class="mockCard">✓ Ordens de serviço</div><div class="mockCard">✓ PMOC</div><div class="mockCard">✓ Fotos e GPS</div><div class="mockCard">✓ QR Code</div><div class="mockCard">✓ Relatórios PDF</div></div></div></div></section>
+  <section id="recursos" class="siteSection"><div class="siteSectionInner"><h2>Recursos para o serviço de campo</h2><p class="siteLead">Do cadastro do cliente ao relatório final, o OrbiServ reúne as informações do atendimento e mantém o histórico organizado.</p><div class="featureGrid">
+    <div class="featureCard"><div class="featureIcon">🏢</div><h3>Clientes e equipamentos</h3><p>Cadastre clientes, locais e equipamentos e mantenha os ativos organizados por empresa.</p></div>
+    <div class="featureCard"><div class="featureIcon">🛠️</div><h3>Ordens de serviço</h3><p>Registre atendimento, checklist, defeito, serviço executado, materiais e responsável técnico.</p></div>
+    <div class="featureCard"><div class="featureIcon">📋</div><h3>PMOC</h3><p>Organize planos e registros de manutenção para acompanhar os equipamentos atendidos.</p></div>
+    <div class="featureCard"><div class="featureIcon">📷</div><h3>Fotos, data e localização</h3><p>Documente os serviços com registros fotográficos e informações do atendimento em campo.</p></div>
+    <div class="featureCard"><div class="featureIcon">▦</div><h3>QR Code por equipamento</h3><p>Consulte o histórico público do equipamento pelo QR Code, incluindo os registros disponibilizados.</p></div>
+    <div class="featureCard"><div class="featureIcon">📄</div><h3>PDF e assinaturas</h3><p>Gere relatórios profissionais com dados do serviço, fotos e assinaturas do cliente e do técnico.</p></div>
+  </div></div></section>
+  <section id="solucoes" class="siteCta"><h2>Sua gestão. Um novo padrão.</h2><p>Acesse sua operação OrbiServ pelo navegador ou pelo aplicativo.</p><div class="siteActions" style="justify-content:center"><a class="btn primary" href="?app=1">Entrar no sistema</a></div></section>
+  <footer class="siteFooter">© OrbiServ • Sistema Inteligente</footer>
+</div>
 
 <div id="splashView">
   <div class="splashBox">
@@ -1109,11 +1129,15 @@ $("#exportBtn").onclick=()=>{const data={exportedAt:new Date().toISOString(),org
 updateSyncBar();
 const hideSplash=()=>document.getElementById("splashView")?.classList.add("hide");
 setTimeout(hideSplash,900);
-const publicAssetToken=new URLSearchParams(location.search).get("public_asset");
+const pageParams=new URLSearchParams(location.search);
+const publicAssetToken=pageParams.get("public_asset");
+const nativeApp=!!(window.Capacitor && typeof window.Capacitor.isNativePlatform==="function" && window.Capacitor.isNativePlatform());
+const systemMode=pageParams.get("app")==="1" || nativeApp;
 if(publicAssetToken){
  await showPublicAsset(publicAssetToken);
 }
 else if(recoveryMode){if(navigator.onLine){await ensureSupabase();showRecovery()}else alert("A redefinição de senha exige internet.")}
+else if(!systemMode){document.getElementById("siteView")?.classList.remove("hidden")}
 else if(!navigator.onLine){if(!(await showAppFromCache())){$("#authView").classList.remove("hidden");msg("Conecte à internet uma vez neste aparelho para ativar o modo offline.")}}
 else{try{await ensureSupabase();const {data:{session}}=await supabase.auth.getSession();if(session)boot();else $("#authView").classList.remove("hidden")}catch(e){if(!(await showAppFromCache())){$("#authView").classList.remove("hidden");msg("Falha de conexão. Tente novamente quando houver internet.")}}}
 </script>
