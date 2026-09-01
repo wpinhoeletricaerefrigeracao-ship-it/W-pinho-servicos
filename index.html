@@ -883,6 +883,58 @@ function assetSector(a,o){
  return (a?.environment||locationName(o?.location_id)||a?.tag||o?.equipment||"Sem setor").trim();
 }
 
+// Dados da empresa/técnico que assinam o relatório consolidado.
+// Ficam separados da marca OrbiServ: OrbiServ é apenas o sistema utilizado para gerar o documento.
+function reportIssuerKey(clientId){
+ return `orbiserv_report_issuer_${org?.id||"org"}_${clientId||"client"}`;
+}
+function loadReportIssuer(clientId){
+ try{return JSON.parse(localStorage.getItem(reportIssuerKey(clientId))||"{}")||{}}catch{return {}}
+}
+function saveReportIssuer(clientId,data){
+ try{localStorage.setItem(reportIssuerKey(clientId),JSON.stringify(data||{}))}catch{}
+}
+function askReportIssuer(clientId,defaults={}){
+ return new Promise(resolve=>{
+   const old=document.getElementById("reportIssuerModal");if(old)old.remove();
+   const saved=loadReportIssuer(clientId);
+   const data={
+     company:saved.company||defaults.company||"",
+     technician:saved.technician||defaults.technician||"",
+     registry:saved.registry||defaults.registry||""
+   };
+   const overlay=document.createElement("div");
+   overlay.id="reportIssuerModal";
+   overlay.style.cssText="position:fixed;inset:0;z-index:1000000;background:#061525cc;display:flex;align-items:center;justify-content:center;padding:18px";
+   overlay.innerHTML=`<div style="width:min(520px,100%);background:#fff;color:#172534;border-radius:18px;padding:20px;box-shadow:0 20px 60px #0008">
+     <div style="font-weight:900;font-size:20px;color:#0b5fb3;margin-bottom:4px">Dados do responsável pelo relatório</div>
+     <div style="font-size:13px;color:#5f6f7d;margin-bottom:16px">Preencha quem realmente executou/responde pelo serviço. OrbiServ continuará aparecendo somente como o sistema que gerou o relatório.</div>
+     <label style="display:block;font-weight:700;margin:10px 0 5px">Empresa responsável</label>
+     <input id="reportCompany" value="${esc(data.company)}" placeholder="Ex.: W Pinho Elétrica e Refrigeração" style="width:100%;padding:12px;border:1px solid #c8d2dc;border-radius:10px;font-size:16px">
+     <label style="display:block;font-weight:700;margin:10px 0 5px">Responsável técnico</label>
+     <input id="reportTechnician" value="${esc(data.technician)}" placeholder="Nome do responsável técnico" style="width:100%;padding:12px;border:1px solid #c8d2dc;border-radius:10px;font-size:16px">
+     <label style="display:block;font-weight:700;margin:10px 0 5px">Registro / TRT</label>
+     <input id="reportRegistry" value="${esc(data.registry)}" placeholder="CRT / CREA / CFT / TRT" style="width:100%;padding:12px;border:1px solid #c8d2dc;border-radius:10px;font-size:16px">
+     <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap">
+       <button type="button" id="reportIssuerCancel" style="padding:11px 16px;border-radius:10px;border:1px solid #c8d2dc;background:#fff;font-weight:800">Cancelar</button>
+       <button type="button" id="reportIssuerContinue" style="padding:11px 16px;border-radius:10px;border:0;background:#0b74c9;color:#fff;font-weight:800">Gerar relatório</button>
+     </div>
+   </div>`;
+   document.body.appendChild(overlay);
+   const finish=v=>{overlay.remove();resolve(v)};
+   overlay.querySelector("#reportIssuerCancel").onclick=()=>finish(null);
+   overlay.querySelector("#reportIssuerContinue").onclick=()=>{
+     const v={
+       company:overlay.querySelector("#reportCompany").value.trim(),
+       technician:overlay.querySelector("#reportTechnician").value.trim(),
+       registry:overlay.querySelector("#reportRegistry").value.trim()
+     };
+     saveReportIssuer(clientId,v);
+     finish(v);
+   };
+ });
+}
+
 window.printClientOrders=async clientId=>{
  const c=clients.find(x=>x.id===clientId);
  if(!c)return alert("Cliente/loja não encontrado.");
@@ -965,6 +1017,13 @@ window.printClientOrders=async clientId=>{
  const firstDate=list.map(o=>o.service_date).filter(Boolean).sort()[0]||"-";
  const lastDate=list.map(o=>o.service_date).filter(Boolean).sort().slice(-1)[0]||"-";
  const rt=rtRequests.find(r=>r.client_id===clientId && ["Ativo","Aprovado","TRT emitido"].includes(r.status));
+ const pmocResp=pmocPlans.find(p=>p.client_id===clientId);
+ const issuer=await askReportIssuer(clientId,{
+   company:"",
+   technician:rt?.rt_name||pmocResp?.responsible_technician||"",
+   registry:rt?.trt_number||pmocResp?.professional_registry||""
+ });
+ if(!issuer)return;
 
  // Abre o relatório DENTRO do app. Não usa window.open/_blank,
  // pois no Android/Capacitor isso pode abrir o navegador/GitHub.
@@ -1033,9 +1092,9 @@ window.printClientOrders=async clientId=>{
 
    <div class="bluebar">EMPRESA RESPONSÁVEL</div>
    <div class="companyGrid">
-     <div><b>Nome</b>${esc(displayOrgName())}</div>
-     <div><b>Responsável técnico</b>${esc(rt?.rt_name||pmocPlans.find(p=>p.client_id===clientId)?.responsible_technician||"-")}</div>
-     <div><b>Registro / TRT</b>${esc(rt?.trt_number||pmocPlans.find(p=>p.client_id===clientId)?.professional_registry||"-")}</div>
+     <div><b>Nome</b>${esc(issuer.company||"-")}</div>
+     <div><b>Responsável técnico</b>${esc(issuer.technician||"-")}</div>
+     <div><b>Registro / TRT</b>${esc(issuer.registry||"-")}</div>
      <div><b>Gerado em</b>${new Date().toLocaleString("pt-BR")}</div>
    </div>
 
