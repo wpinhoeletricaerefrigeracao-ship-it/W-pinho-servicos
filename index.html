@@ -684,12 +684,90 @@ async function ensureAssetPublicToken(id){
   return "";
 }
 
-window.viewAsset=async id=>{const a=assets.find(x=>x.id===id);if(!a)return;await ensureAssetPublicToken(id);const hist=orders.filter(o=>o.asset_id===id);go('assetDetail');$('#assetDetailContent').innerHTML=`<div class="head"><div><h1>${esc(a.tag||a.type||'Equipamento')}</h1><div class="muted">${esc(clientName(a.client_id))} • ${esc(locationName(a.location_id)||'Sem local')}</div></div><div class="row"><button class="btn primary" onclick="newOrderForAsset('${a.id}')">＋ Nova OS</button><button class="btn" onclick="go('assets')">Voltar</button></div></div><div class="grid"><div class="card"><h2>Identificação</h2>${esc(a.type||'-')}<br>${esc(a.brand||'')} ${esc(a.model||'')}<br>Série: ${esc(a.serial_number||'-')}<br>Status: ${esc(a.status||'-')}</div><div class="card"><h2>Dados técnicos</h2>Capacidade: ${esc(a.capacity||'-')}<br>Tensão: ${esc(a.voltage||'-')}<br>Fluido: ${esc(a.refrigerant||'-')}<br>Ambiente: ${esc(a.environment||'-')}</div><div class="card"><h2>QR Code</h2><div id="assetQr" style="min-height:160px"></div><small>Escaneie para abrir o histórico e as fotos deste equipamento.</small><br><button class="btn small" style="margin-top:8px" onclick="printQr('${a.id}')">Baixar / imprimir QR</button></div><div class="card"><h2>Histórico</h2><b>${hist.length}</b> atendimento(s)<br>Último: ${esc(hist[0]?.service_date||'-')}</div></div><div class="card"><h2>Histórico de manutenção</h2><div class="list">${hist.map(o=>orderCard(o)).join('')||'<span class="muted">Sem atendimentos.</span>'}</div></div>`;setTimeout(()=>{
-      const url=qrUrl(id), box=document.getElementById('assetQr');
-      if(url)new QRCode(box,{text:url,width:150,height:150});
-      else box.innerHTML='<div class="notice">Conecte o app à internet e sincronize para ativar o QR público deste equipamento.</div>';
-    },50)};
-window.printQr=id=>{const a=assets.find(x=>x.id===id);if(!a)return;const url=qrUrl(id);if(!url)return alert('QR público ainda não ativado. Sincronize com internet e tente novamente.');const w=window.open('','_blank');w.document.write(`<html><body style="font-family:Arial;text-align:center;padding:30px"><h2>OrbiServ</h2><h3>${esc(a.tag||a.type)}</h3><div id="q"></div><p>${esc(a.brand||'')} ${esc(a.model||'')}<br>${esc(clientName(a.client_id))}</p><script src="./vendor/qrcode.min.js"><\/script><script>new QRCode(document.getElementById('q'),{text:${JSON.stringify(url)},width:240,height:240});setTimeout(()=>print(),700)<\/script><div style="display:none" id="orbiservBuild">V24-EMPRESA-RT</div></body></html>`);w.document.close()};
+async function ensureQrLibrary(){
+ if(typeof QRCode!=="undefined")return true;
+ if(window.__orbiservQrLoading)return window.__orbiservQrLoading;
+ window.__orbiservQrLoading=new Promise(resolve=>{
+   const tryLoad=(src,next)=>{
+     const sc=document.createElement('script');
+     sc.src=src;sc.async=true;
+     sc.onload=()=>resolve(typeof QRCode!=="undefined");
+     sc.onerror=()=>next?next():resolve(false);
+     document.head.appendChild(sc);
+   };
+   tryLoad('./vendor/qrcode.min.js',()=>tryLoad('https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js'));
+ });
+ return window.__orbiservQrLoading;
+}
+
+async function renderAssetQr(id){
+ const box=document.getElementById('assetQr');
+ if(!box)return;
+ box.innerHTML='<div class="muted">Carregando QR Code...</div>';
+ await ensureAssetPublicToken(id);
+ const url=qrUrl(id);
+ if(!url){box.innerHTML='<div class="notice">Conecte o app à internet e sincronize para ativar o QR público deste equipamento.</div>';return;}
+ const ok=await ensureQrLibrary();
+ if(!ok){box.innerHTML='<div class="notice">Não foi possível carregar o gerador de QR Code. Verifique a internet e tente novamente.</div>';return;}
+ box.innerHTML='';
+ try{new QRCode(box,{text:url,width:180,height:180,correctLevel:QRCode.CorrectLevel?.M});}
+ catch(e){console.warn('QR render:',e);box.innerHTML='<div class="notice">Falha ao gerar o QR Code. Toque em Sincronizar e tente novamente.</div>';}
+}
+
+async function makeQrPngDataUrl(id,size=640){
+ const a=assets.find(x=>x.id===id);if(!a)throw new Error('Equipamento não encontrado.');
+ await ensureAssetPublicToken(id);
+ const url=qrUrl(id);if(!url)throw new Error('QR público ainda não ativado. Sincronize com internet e tente novamente.');
+ if(!await ensureQrLibrary())throw new Error('Não foi possível carregar o gerador de QR Code.');
+ const holder=document.createElement('div');holder.style.cssText='position:fixed;left:-10000px;top:-10000px;background:#fff;padding:20px';document.body.appendChild(holder);
+ new QRCode(holder,{text:url,width:size,height:size,correctLevel:QRCode.CorrectLevel?.H});
+ await new Promise(r=>setTimeout(r,120));
+ let dataUrl='';
+ const canvas=holder.querySelector('canvas');
+ const img=holder.querySelector('img');
+ if(canvas)dataUrl=canvas.toDataURL('image/png');
+ else if(img?.src)dataUrl=img.src;
+ holder.remove();
+ if(!dataUrl)throw new Error('Não foi possível gerar a imagem do QR Code.');
+ return dataUrl;
+}
+
+window.downloadQr=async id=>{
+ const a=assets.find(x=>x.id===id);if(!a)return;
+ try{
+   const dataUrl=await makeQrPngDataUrl(id,640);
+   const safe=(a.tag||a.type||'equipamento').replace(/[^a-zA-Z0-9_-]+/g,'_').replace(/^_+|_+$/g,'');
+   const name=`OrbiServ_QR_${safe||'equipamento'}.png`;
+   const base64=dataUrl.split(',')[1];
+   const Cap=window.Capacitor;
+   const Filesystem=Cap?.Plugins?.Filesystem;
+   const Share=Cap?.Plugins?.Share;
+   if(Cap?.isNativePlatform?.() && Filesystem){
+     const saved=await Filesystem.writeFile({path:name,data:base64,directory:'DOCUMENTS',recursive:true});
+     if(Share)await Share.share({title:'QR Code OrbiServ',text:`QR Code - ${a.tag||a.type||'Equipamento'}`,url:saved.uri,dialogTitle:'Salvar ou compartilhar QR Code'});
+     else alert('QR Code salvo em Documentos: '+name);
+     return;
+   }
+   const res=await fetch(dataUrl);const blob=await res.blob();
+   if(navigator.share && navigator.canShare){
+     try{const file=new File([blob],name,{type:'image/png'});if(navigator.canShare({files:[file]})){await navigator.share({title:'QR Code OrbiServ',files:[file]});return;}}catch(_){ }
+   }
+   const link=document.createElement('a');link.href=URL.createObjectURL(blob);link.download=name;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(link.href),1500);
+ }catch(e){alert(e.message||'Não foi possível baixar o QR Code.');}
+};
+
+window.viewAsset=async id=>{const a=assets.find(x=>x.id===id);if(!a)return;await ensureAssetPublicToken(id);const hist=orders.filter(o=>o.asset_id===id);go('assetDetail');$('#assetDetailContent').innerHTML=`<div class="head"><div><h1>${esc(a.tag||a.type||'Equipamento')}</h1><div class="muted">${esc(clientName(a.client_id))} • ${esc(locationName(a.location_id)||'Sem local')}</div></div><div class="row"><button class="btn primary" onclick="newOrderForAsset('${a.id}')">＋ Nova OS</button><button class="btn" onclick="go('assets')">Voltar</button></div></div><div class="grid"><div class="card"><h2>Identificação</h2>${esc(a.type||'-')}<br>${esc(a.brand||'')} ${esc(a.model||'')}<br>Série: ${esc(a.serial_number||'-')}<br>Status: ${esc(a.status||'-')}</div><div class="card"><h2>Dados técnicos</h2>Capacidade: ${esc(a.capacity||'-')}<br>Tensão: ${esc(a.voltage||'-')}<br>Fluido: ${esc(a.refrigerant||'-')}<br>Ambiente: ${esc(a.environment||'-')}</div><div class="card"><h2>QR Code</h2><div id="assetQr" style="min-height:190px;display:flex;align-items:center;justify-content:center"></div><small>Escaneie para abrir o histórico e as fotos deste equipamento.</small><div class="row" style="margin-top:10px"><button class="btn small primary" onclick="downloadQr('${a.id}')">⬇ Baixar QR Code</button><button class="btn small" onclick="printQr('${a.id}')">🖨 Imprimir QR</button></div></div><div class="card"><h2>Histórico</h2><b>${hist.length}</b> atendimento(s)<br>Último: ${esc(hist[0]?.service_date||'-')}</div></div><div class="card"><h2>Histórico de manutenção</h2><div class="list">${hist.map(o=>orderCard(o)).join('')||'<span class="muted">Sem atendimentos.</span>'}</div></div>`;setTimeout(()=>renderAssetQr(id),50)};
+
+window.printQr=async id=>{
+ const a=assets.find(x=>x.id===id);if(!a)return;
+ try{
+   const dataUrl=await makeQrPngDataUrl(id,500);
+   const title=esc(a.tag||a.type||'Equipamento'), detail=esc(`${a.brand||''} ${a.model||''}`.trim()), cli=esc(clientName(a.client_id));
+   const w=window.open('','_blank');
+   if(!w){alert('O navegador bloqueou a janela de impressão. Use o botão Baixar QR Code.');return;}
+   w.document.write(`<html><head><meta name="viewport" content="width=device-width,initial-scale=1"><title>QR Code OrbiServ</title></head><body style="font-family:Arial;text-align:center;padding:30px"><h2>OrbiServ</h2><h3>${title}</h3><img src="${dataUrl}" style="width:280px;height:280px;max-width:90vw"><p>${detail}<br>${cli}</p><button onclick="print()" style="padding:10px 16px">Imprimir</button></body></html>`);w.document.close();
+ }catch(e){alert(e.message||'Não foi possível preparar o QR Code para impressão.');}
+};
 window.newOrderForAsset=id=>{const a=assets.find(x=>x.id===id);if(!a)return;go('newOrder');$('#orderClient').value=a.client_id;renderOrderRelations();$('#orderLocation').value=a.location_id||'';fillAssetSelect('#orderAsset',a.client_id,a.location_id||'');$('#orderAsset').value=a.id;$('#orderEquipment').value=assetName(a.id)};
 function openAssetFromUrl(){const id=new URLSearchParams(location.search).get('asset');if(id&&assets.some(a=>a.id===id)){history.replaceState({},document.title,location.pathname);viewAsset(id)}}
 const PMOC_ITEMS=['Limpeza de filtros','Limpeza e inspeção da evaporadora','Limpeza e inspeção da condensadora','Verificar bandeja e dreno','Verificar serpentinas e aletas','Verificar conexões elétricas','Medição de tensão e corrente','Verificar temperatura de insuflamento/retorno','Verificar ruídos e vibrações','Verificar isolamento das tubulações','Verificar fixações e suportes','Inspeção visual de vazamentos','Registrar fotos antes/depois','Registrar não conformidades'];
