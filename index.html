@@ -141,6 +141,19 @@ nav button.active{box-shadow:inset 3px 0 #45a5ff;background:linear-gradient(90de
 /* ===== OrbiServ site institucional (camada pública; sistema preservado) ===== */
 .siteView{min-height:100vh;background:linear-gradient(160deg,#06182a 0%,#0a3155 52%,#0b5fb3 100%);color:#fff;font-family:inherit}.siteNav{max-width:1180px;margin:auto;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px}.siteBrand{display:flex;align-items:center;gap:12px}.siteBrand .mark{width:48px;height:48px}.siteBrand b{font-size:24px}.siteBrand small{display:block;letter-spacing:.13em;color:#9fd0ff;font-size:10px}.siteLinks{display:flex;gap:22px;align-items:center}.siteLinks a{color:#dcecff;text-decoration:none;font-weight:700}.siteLogin{border:1px solid #8ec8ff!important;background:#ffffff12!important;color:#fff!important}.siteHero{max-width:1180px;margin:auto;padding:76px 22px 60px;display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center}.siteKicker{display:inline-block;padding:7px 12px;border:1px solid #68b8ff66;border-radius:999px;background:#0a7ddd22;color:#a9d8ff;font-weight:800;font-size:12px;letter-spacing:.08em}.siteHero h1{font-size:52px;line-height:1.04;margin:18px 0;color:#fff;max-width:760px}.siteHero p{font-size:19px;line-height:1.6;color:#d4e7f7;max-width:690px}.siteActions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.siteActions .btn{padding:14px 20px}.siteMock{background:#ffffff0e;border:1px solid #ffffff25;border-radius:28px;padding:22px;box-shadow:0 30px 70px #0007}.siteMockInner{background:#f7fbff;color:#17324a;border-radius:20px;padding:24px}.siteMockInner h3{margin:0 0 18px;color:#0b5fb3}.mockRow{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mockCard{padding:16px;border-radius:14px;background:#eaf4fc;font-weight:800}.siteSection{background:#f6f9fc;color:#172434;padding:72px 22px}.siteSectionInner{max-width:1180px;margin:auto}.siteSection h2{text-align:center;font-size:36px;margin:0 0 12px;color:#102c46}.siteLead{text-align:center;color:#60768a;max-width:760px;margin:0 auto 34px;line-height:1.6}.featureGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.featureCard{background:#fff;border:1px solid #dce8f2;border-radius:18px;padding:22px;box-shadow:0 8px 28px #163b5c0d}.featureIcon{font-size:26px}.featureCard h3{margin:10px 0 8px;color:#0b5fb3}.featureCard p{margin:0;color:#62788c;line-height:1.5}.siteCta{padding:64px 22px;background:#071d34;color:#fff;text-align:center}.siteCta h2{font-size:34px;margin:0 0 10px}.siteCta p{color:#bed5e8}.siteFooter{background:#041321;color:#93adc2;padding:24px;text-align:center;font-size:13px}@media(max-width:800px){.siteLinks a:not(.siteLogin){display:none}.siteHero{grid-template-columns:1fr;padding-top:45px}.siteHero h1{font-size:38px}.siteMock{display:none}.featureGrid{grid-template-columns:1fr}.siteSection{padding-top:52px}.siteNav{padding:14px 16px}.siteBrand b{font-size:21px}}
 
+/* ===== V25 • CHAT ORBISERV ===== */
+.chatLaunch{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.chatLaunch .btn{flex:1;min-width:220px}
+.chatPanel{margin-top:14px;border:1px solid #cbd9e5;border-radius:14px;background:#fff;overflow:hidden;box-shadow:0 8px 28px rgba(20,50,80,.08)}
+.chatHead{background:linear-gradient(120deg,#073d75,#0b74c9);color:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px}.chatHead b{flex:1}.chatHead small{color:#d9ecff}
+.chatBody{height:330px;overflow:auto;padding:12px;background:#f3f7fa;display:flex;flex-direction:column;gap:8px}
+.chatBubble{max-width:82%;padding:9px 11px;border-radius:13px;font-size:13px;line-height:1.4;white-space:pre-wrap}.chatBubble.client{align-self:flex-end;background:#0b74c9;color:#fff;border-bottom-right-radius:4px}.chatBubble.staff{align-self:flex-start;background:#fff;border:1px solid #d5e0e8;color:#163047;border-bottom-left-radius:4px}.chatBubble small{display:block;margin-top:5px;opacity:.72;font-size:9px}
+.chatForm{padding:10px;background:#fff;border-top:1px solid #dbe5ed}.chatForm textarea{width:100%;min-height:70px;resize:vertical;border:1px solid #cbd9e5;border-radius:10px;padding:10px;font:inherit}.chatFields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}.chatFields input,.chatFields select{width:100%;border:1px solid #cbd9e5;border-radius:10px;padding:10px;background:#fff}
+.msgBadge{display:inline-flex;min-width:20px;height:20px;padding:0 6px;align-items:center;justify-content:center;border-radius:999px;background:#d91f34;color:#fff;font-size:10px;font-weight:900;margin-left:6px}
+.msgLayout{display:grid;grid-template-columns:330px 1fr;gap:12px}.msgList{max-height:70vh;overflow:auto}.msgItem{border:1px solid #d9e3ea;border-radius:12px;padding:10px;margin-bottom:8px;cursor:pointer;background:#fff}.msgItem.active{outline:2px solid #0b74c9;background:#edf6ff}.msgItem.unread{border-left:5px solid #d91f34}.msgItem small{display:block;color:#607386;margin-top:3px}.msgThread{min-height:520px}.msgThreadBody{height:410px;overflow:auto;background:#f4f7f9;border:1px solid #d9e3ea;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}.msgReply{display:flex;gap:8px;margin-top:8px}.msgReply textarea{flex:1;min-height:64px;border:1px solid #cbd9e5;border-radius:10px;padding:10px}.leadPill{display:inline-block;padding:4px 7px;border-radius:999px;background:#efe6ff;color:#6930a7;font-size:9px;font-weight:900}
+@media(max-width:760px){.msgLayout{grid-template-columns:1fr}.msgList{max-height:260px}.chatFields{grid-template-columns:1fr}.chatBody{height:290px}}
+
+/* ===== CHAT COMERCIAL PÚBLICO (ADITIVO) ===== */
+.siteSalesBox{max-width:760px;margin:20px auto 0;text-align:left}.siteSalesBox .chatPanel{box-shadow:0 15px 45px #0003}.siteSalesBox .chatHead{background:linear-gradient(120deg,#0a3155,#0b74c9)}
 </style>
 </head>
 <body>
@@ -157,7 +170,7 @@ nav button.active{box-shadow:inset 3px 0 #45a5ff;background:linear-gradient(90de
     <div class="featureCard"><div class="featureIcon">▦</div><h3>QR Code por equipamento</h3><p>Consulte o histórico público do equipamento pelo QR Code, incluindo os registros disponibilizados.</p></div>
     <div class="featureCard"><div class="featureIcon">📄</div><h3>PDF e assinaturas</h3><p>Gere relatórios profissionais com dados do serviço, fotos e assinaturas do cliente e do técnico.</p></div>
   </div></div></section>
-  <section id="solucoes" class="siteCta"><h2>Sua gestão. Um novo padrão.</h2><p>Acesse sua operação OrbiServ pelo navegador ou pelo aplicativo.</p><div class="siteActions" style="justify-content:center"><a class="btn primary" href="?app=1">Entrar no sistema</a></div></section>
+  <section id="solucoes" class="siteCta"><h2>Sua gestão. Um novo padrão.</h2><p>Acesse sua operação OrbiServ pelo navegador ou converse com nossa equipe para conhecer e contratar o sistema.</p><div class="siteActions" style="justify-content:center"><a class="btn primary" href="?app=1">Entrar no sistema</a><button class="btn siteLogin" id="siteSalesChatBtn" type="button">💬 Falar com o OrbiServ</button></div><div id="siteSalesMount" class="siteSalesBox"></div></section>
   <footer class="siteFooter">© OrbiServ • Sistema Inteligente</footer>
 </div>
 
@@ -249,6 +262,7 @@ nav button.active{box-shadow:inset 3px 0 #45a5ff;background:linear-gradient(90de
 <button data-go="orders">🛠 Ordens de serviço</button>
 <button data-go="newOrder">＋ Nova OS</button>
 <button data-go="gallery">🖼 Galeria de fotos</button>
+<button data-go="messages">💬 Mensagens <span id="msgNavBadge" class="msgBadge hidden">0</span></button>
 <button data-go="team">👤 Equipe</button>
 <button data-go="backup">💾 Backup</button>
 <button id="logoutBtn">↪ Sair</button>
@@ -264,6 +278,7 @@ nav button.active{box-shadow:inset 3px 0 #45a5ff;background:linear-gradient(90de
 <button class="btn" data-go="pmoc">📋 PMOC</button>
 <button class="btn" data-go="clients">🏢 Clientes / Lojas</button>
 <button class="btn" data-go="gallery">📷 Fotos</button>
+<button class="btn" data-go="messages">💬 Mensagens</button>
 </div>
 </div>
 <div class="grid">
@@ -355,6 +370,12 @@ nav button.active{box-shadow:inset 3px 0 #45a5ff;background:linear-gradient(90de
 <div id="galleryGrid" class="photos"></div>
 </section>
 
+<section id="messages" class="section">
+<div class="head"><div><h1>💬 Mensagens</h1><div class="muted">Conversas abertas pelo QR Code dos equipamentos e contatos interessados em assinar o OrbiServ.</div></div><button class="btn" id="msgRefresh">↻ Atualizar</button></div>
+<div class="card"><div class="row" style="margin-bottom:10px"><button class="btn small primary" data-msgfilter="all">Todas</button><button class="btn small" data-msgfilter="equipment">Equipamentos</button><button class="btn small" data-msgfilter="sales">Assinatura</button><button class="btn small" data-msgfilter="unread">Não lidas</button></div>
+<div class="msgLayout"><div><div id="msgConversationList" class="msgList"><div class="muted">Carregando conversas...</div></div></div><div id="msgThread" class="msgThread"><div class="muted">Selecione uma conversa.</div></div></div></div>
+</section>
+
 <section id="team" class="section">
 <div class="head"><div><h1>Equipe</h1><div class="muted">Acesso remoto para vários celulares.</div></div></div>
 <div class="card"><h2>Código para entrar na empresa</h2><div class="notice"><b id="teamCode">—</b><br><small>O funcionário cria uma conta e escolhe “Entrar em uma empresa existente”, usando este código.</small></div></div>
@@ -397,7 +418,7 @@ async function ensureSupabase(){
 
 let user=null, membership=null, org=null, clients=[], locations=[], assets=[], pmocPlans=[], orders=[], servicePhotos=[], pendingPhotos=[], savedOrderPhotos=[], gps=null;
 const OFFLINE_KEY="wpinho_v142_cache", QUEUE_KEY="wpinho_v142_queue";
-let rtRequests=[],subscriptions=[],syncBusy=false;
+let rtRequests=[],subscriptions=[],syncBusy=false,chatConversations=[],chatMessages=[],chatFilter="all",activeChatId=null;
 
 function cacheState(){
  try{localStorage.setItem(OFFLINE_KEY,JSON.stringify({
@@ -501,11 +522,78 @@ async function showPublicAsset(token){
            }).join("")}</div></div>`:""}
          </div>
        </div>`).join(""):'<div class="muted">Nenhum serviço registrado para este equipamento.</div>'}
-     <p class="muted" style="margin-top:14px">Consulta somente leitura. Dados administrativos, valores e assinaturas não são exibidos.</p>`;
+     <div class="chatLaunch"><button class="btn primary" id="pubChatEquipment">💬 Falar sobre este equipamento</button><button class="btn" id="pubChatSales">🚀 Quero conhecer / assinar o OrbiServ</button></div><div id="publicChatMount"></div><p class="muted" style="margin-top:14px">Consulta somente leitura. Dados administrativos, valores e assinaturas não são exibidos.</p>`;
+   setTimeout(()=>initPublicChat(token,a,c),0);
  }catch(e){
    box.innerHTML=`<div class="notice">Não foi possível consultar este equipamento. Verifique a conexão e tente novamente.<br><small>${esc(e.message||"")}</small></div>`;
  }
 }
+
+// ===== V25 CHAT: QR DO EQUIPAMENTO + INTERESSE EM ASSINATURA =====
+let publicChatTimer=null,publicChatCtx=null;
+function chatWhen(v){try{return new Date(v).toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}catch{return ''}}
+function publicChatStorageKey(assetToken,kind){return `orbiserv_chat_${kind}_${assetToken||'site'}`}
+function initPublicChat(assetToken,asset,client){
+ publicChatCtx={assetToken,asset,client};
+ const eq=$('#pubChatEquipment'),sales=$('#pubChatSales');
+ if(eq)eq.onclick=()=>openPublicChat('equipment');if(sales)sales.onclick=()=>openPublicChat('sales');
+}
+async function openPublicChat(kind){
+ const ctx=publicChatCtx||{},mount=$('#publicChatMount');if(!mount)return;
+ const key=publicChatStorageKey(ctx.assetToken,kind);let session={};try{session=JSON.parse(localStorage.getItem(key)||'{}')}catch{}
+ mount.innerHTML=`<div class="chatPanel"><div class="chatHead"><span style="font-size:24px">💬</span><div><b>${kind==='sales'?'Quero conhecer o OrbiServ':'Atendimento do equipamento'}</b><small>${kind==='sales'?'Fale com nossa equipe comercial':esc(ctx.asset?.tag||ctx.asset?.type||'Equipamento')}</small></div></div><div class="chatBody" id="pubChatBody"><div class="muted">Abrindo conversa...</div></div><form class="chatForm" id="pubChatForm"><div class="chatFields ${session.token?'hidden':''}" id="pubChatIdentity"><input id="pubChatName" placeholder="Seu nome" value="${esc(session.name||'')}" required><input id="pubChatContact" placeholder="Telefone ou e-mail" value="${esc(session.contact||'')}" required></div><textarea id="pubChatText" placeholder="Digite sua mensagem..." required></textarea><button class="btn primary" style="width:100%;margin-top:8px">Enviar mensagem</button><div id="pubChatStatus" class="muted" style="margin-top:6px"></div></form></div>`;
+ async function ensureSession(firstMessage){
+   if(session.token)return session.token;
+   const name=$('#pubChatName').value.trim(),contact=$('#pubChatContact').value.trim();if(!name||!contact)throw new Error('Informe seu nome e telefone/e-mail.');
+   const {data,error}=await supabase.rpc('public_open_chat',{share_token:ctx.assetToken||null,chat_kind:kind,visitor_name:name,visitor_contact:contact,first_message:firstMessage||null});if(error)throw error;
+   session={token:data?.conversation_token||data?.token||data,name,contact};localStorage.setItem(key,JSON.stringify(session));$('#pubChatIdentity')?.classList.add('hidden');return session.token;
+ }
+ async function refresh(){if(!session.token)return;const {data,error}=await supabase.rpc('public_get_chat',{conversation_token:session.token});if(error)return;const msgs=data?.messages||data||[];const body=$('#pubChatBody');if(!body)return;body.innerHTML=msgs.map(m=>`<div class="chatBubble ${m.sender_type==='staff'?'staff':'client'}">${esc(m.message||'')}<small>${m.sender_type==='staff'?'OrbiServ':'Você'} • ${chatWhen(m.created_at)}</small></div>`).join('')||'<div class="muted">Envie a primeira mensagem.</div>';body.scrollTop=body.scrollHeight}
+ $('#pubChatForm').onsubmit=async e=>{e.preventDefault();const status=$('#pubChatStatus'),ta=$('#pubChatText'),txt=ta.value.trim();if(!txt)return;status.textContent='Enviando...';try{await ensureSession();const {error}=await supabase.rpc('public_send_chat_message',{conversation_token:session.token,message_text:txt});if(error)throw error;ta.value='';status.textContent='Mensagem enviada.';await refresh()}catch(err){status.textContent='Não foi possível enviar: '+(err.message||err)}};
+ try{await ensureSupabase();if(session.token)await refresh();else $('#pubChatBody').innerHTML='<div class="muted">Informe seus dados e escreva sua mensagem. A conversa ficará vinculada a este atendimento.</div>';clearInterval(publicChatTimer);publicChatTimer=setInterval(refresh,7000)}catch(e){$('#pubChatBody').innerHTML='<div class="notice">Chat indisponível no momento.</div>'}
+}
+
+// ===== CHAT COMERCIAL NO SITE (ADITIVO) =====
+let siteSalesTimer=null,siteSalesSession=null;
+function siteSalesStorageKey(){return 'orbiserv_sales_chat'}
+function initSiteSalesChat(){const btn=$('#siteSalesChatBtn');if(btn)btn.onclick=()=>openSiteSalesChat()}
+async function openSiteSalesChat(){
+ const mount=$('#siteSalesMount');if(!mount)return;
+ try{siteSalesSession=JSON.parse(localStorage.getItem(siteSalesStorageKey())||'{}')}catch{siteSalesSession={}}
+ mount.innerHTML=`<div class="chatPanel"><div class="chatHead"><span style="font-size:24px">💬</span><div><b>Falar com o OrbiServ</b><small>Tire dúvidas e converse sobre contratação do sistema</small></div></div><div class="chatBody" id="siteSalesBody"><div class="muted">Abrindo conversa...</div></div><form class="chatForm" id="siteSalesForm"><div class="chatFields ${siteSalesSession?.token?'hidden':''}" id="siteSalesIdentity"><input id="siteSalesName" placeholder="Seu nome" value="${esc(siteSalesSession?.name||'')}" required><input id="siteSalesContact" placeholder="Telefone ou e-mail" value="${esc(siteSalesSession?.contact||'')}" required></div><textarea id="siteSalesText" placeholder="Digite sua mensagem..." required></textarea><button class="btn primary" style="width:100%;margin-top:8px">Enviar mensagem</button><div id="siteSalesStatus" class="muted" style="margin-top:6px"></div></form></div>`;
+ async function ensureSalesSession(firstMessage){
+   if(siteSalesSession?.token)return siteSalesSession.token;
+   const name=$('#siteSalesName').value.trim(),contact=$('#siteSalesContact').value.trim();if(!name||!contact)throw new Error('Informe seu nome e telefone/e-mail.');
+   const {data,error}=await supabase.rpc('public_open_sales_chat',{visitor_name:name,visitor_contact:contact,first_message:firstMessage||null});if(error)throw error;
+   siteSalesSession={token:data?.conversation_token||data?.token||data,name,contact};localStorage.setItem(siteSalesStorageKey(),JSON.stringify(siteSalesSession));$('#siteSalesIdentity')?.classList.add('hidden');return siteSalesSession.token;
+ }
+ async function refreshSales(){if(!siteSalesSession?.token)return;const {data,error}=await supabase.rpc('public_get_chat',{conversation_token:siteSalesSession.token});if(error)return;const msgs=data?.messages||data||[];const body=$('#siteSalesBody');if(!body)return;body.innerHTML=msgs.map(m=>`<div class="chatBubble ${m.sender_type==='staff'?'staff':'client'}">${esc(m.message||'')}<small>${m.sender_type==='staff'?'OrbiServ':'Você'} • ${chatWhen(m.created_at)}</small></div>`).join('')||'<div class="muted">Envie a primeira mensagem.</div>';body.scrollTop=body.scrollHeight}
+ $('#siteSalesForm').onsubmit=async e=>{e.preventDefault();const status=$('#siteSalesStatus'),ta=$('#siteSalesText'),txt=ta.value.trim();if(!txt)return;status.textContent='Enviando...';try{if(!siteSalesSession?.token){await ensureSalesSession(txt);ta.value='';status.textContent='Mensagem enviada.';await refreshSales()}else{const {error}=await supabase.rpc('public_send_chat_message',{conversation_token:siteSalesSession.token,message_text:txt});if(error)throw error;ta.value='';status.textContent='Mensagem enviada.';await refreshSales()}}catch(err){status.textContent='Não foi possível enviar: '+(err.message||err)}};
+ try{await ensureSupabase();if(siteSalesSession?.token)await refreshSales();else $('#siteSalesBody').innerHTML='<div class="muted">Informe seus dados e escreva sua mensagem. Nossa equipe poderá responder por este mesmo canal.</div>';clearInterval(siteSalesTimer);siteSalesTimer=setInterval(refreshSales,7000)}catch(e){$('#siteSalesBody').innerHTML='<div class="notice">Chat indisponível no momento.</div>'}
+ mount.scrollIntoView({behavior:'smooth',block:'center'});
+}
+initSiteSalesChat();
+
+async function loadMessagesAdmin(){
+ if(!org||!navigator.onLine){const list=$('#msgConversationList');if(list)list.innerHTML='<div class="muted">Conecte à internet para carregar as mensagens.</div>';return}
+ try{await ensureSupabase();const {data,error}=await supabase.from('chat_conversations').select('*').eq('organization_id',org.id).order('last_message_at',{ascending:false});if(error)throw error;chatConversations=data||[];updateMessageBadge();renderConversationList();if(activeChatId&&chatConversations.some(c=>c.id===activeChatId))await openAdminChat(activeChatId)}catch(e){const list=$('#msgConversationList');if(list)list.innerHTML='<div class="notice">Execute o SQL do Chat V25 no Supabase para ativar esta função.<br><small>'+esc(e.message||'')+'</small></div>'}
+}
+function updateMessageBadge(){const n=(chatConversations||[]).reduce((a,c)=>a+Number(c.unread_staff_count||0),0),b=$('#msgNavBadge');if(b){b.textContent=n;b.classList.toggle('hidden',!n)}}
+function renderConversationList(){
+ const box=$('#msgConversationList');if(!box)return;let arr=chatConversations||[];if(chatFilter==='equipment')arr=arr.filter(c=>c.kind==='equipment');if(chatFilter==='sales')arr=arr.filter(c=>c.kind==='sales');if(chatFilter==='unread')arr=arr.filter(c=>Number(c.unread_staff_count||0)>0);
+ box.innerHTML=arr.map(c=>`<div class="msgItem ${c.id===activeChatId?'active':''} ${Number(c.unread_staff_count||0)>0?'unread':''}" data-chatid="${c.id}"><div><b>${esc(c.visitor_name||'Contato')}</b> ${c.kind==='sales'?'<span class="leadPill">ASSINATURA</span>':''}</div><small>${esc(c.asset_label|| (c.kind==='sales'?'Interesse no OrbiServ':'Equipamento'))}</small><small>${esc(c.visitor_contact||'')} • ${chatWhen(c.last_message_at||c.created_at)} ${Number(c.unread_staff_count||0)?' • '+c.unread_staff_count+' nova(s)':''}</small></div>`).join('')||'<div class="muted">Nenhuma conversa neste filtro.</div>';
+ box.querySelectorAll('[data-chatid]').forEach(el=>el.onclick=()=>openAdminChat(el.dataset.chatid));
+}
+async function openAdminChat(id){
+ activeChatId=id;renderConversationList();const c=chatConversations.find(x=>x.id===id),box=$('#msgThread');if(!c||!box)return;box.innerHTML='<div class="muted">Carregando...</div>';
+ const {data,error}=await supabase.from('chat_messages').select('*').eq('conversation_id',id).order('created_at',{ascending:true});if(error){box.innerHTML='<div class="notice">'+esc(error.message)+'</div>';return}chatMessages=data||[];
+ box.innerHTML=`<div class="head"><div><h2 style="margin:0">${esc(c.visitor_name||'Contato')}</h2><div class="muted">${esc(c.visitor_contact||'')} • ${c.kind==='sales'?'Interesse em assinatura':esc(c.asset_label||'Equipamento')}</div></div><button class="btn small" id="msgCloseConversation">Encerrar</button></div><div class="msgThreadBody" id="msgThreadBody">${chatMessages.map(m=>`<div class="chatBubble ${m.sender_type==='staff'?'client':'staff'}">${esc(m.message||'')}<small>${m.sender_type==='staff'?'Você / equipe':esc(c.visitor_name||'Cliente')} • ${chatWhen(m.created_at)}</small></div>`).join('')||'<div class="muted">Sem mensagens.</div>'}</div><form class="msgReply" id="msgReplyForm"><textarea id="msgReplyText" placeholder="Responder..."></textarea><button class="btn primary">Enviar</button></form>`;
+ const body=$('#msgThreadBody');body.scrollTop=body.scrollHeight;await supabase.rpc('staff_mark_chat_read',{p_conversation_id:id});c.unread_staff_count=0;updateMessageBadge();renderConversationList();
+ $('#msgReplyForm').onsubmit=async e=>{e.preventDefault();const ta=$('#msgReplyText'),txt=ta.value.trim();if(!txt)return;const {error}=await supabase.from('chat_messages').insert({conversation_id:id,organization_id:org.id,sender_type:'staff',sender_user_id:user.id,message:txt});if(error)return alert(error.message);ta.value='';await supabase.from('chat_conversations').update({last_message_at:new Date().toISOString(),status:'open'}).eq('id',id);await openAdminChat(id)};
+ $('#msgCloseConversation').onclick=async()=>{await supabase.from('chat_conversations').update({status:'closed'}).eq('id',id);await loadMessagesAdmin()};
+}
+$('#msgRefresh')&&($('#msgRefresh').onclick=loadMessagesAdmin);$$('[data-msgfilter]').forEach(b=>b.onclick=()=>{$$('[data-msgfilter]').forEach(x=>x.classList.remove('primary'));b.classList.add('primary');chatFilter=b.dataset.msgfilter;renderConversationList()});
+setInterval(()=>{if(org&&navigator.onLine)loadMessagesAdmin()},20000);
 
 async function getContext(){
  await ensureSupabase();const {data:{user:u}}=await supabase.auth.getUser();user=u;if(!user)return false;
@@ -527,20 +615,22 @@ function listenRealtime(){
  .on("postgres_changes",{event:"*",schema:"public",table:"pmoc_plans",filter:`organization_id=eq.${org.id}`},()=>loadAll())
  .on("postgres_changes",{event:"*",schema:"public",table:"orders",filter:`organization_id=eq.${org.id}`},()=>loadAll())
  .on("postgres_changes",{event:"*",schema:"public",table:"service_photos",filter:`organization_id=eq.${org.id}`},()=>loadAll())
+ .on("postgres_changes",{event:"*",schema:"public",table:"chat_conversations",filter:`organization_id=eq.${org.id}`},()=>loadMessagesAdmin())
+ .on("postgres_changes",{event:"*",schema:"public",table:"chat_messages",filter:`organization_id=eq.${org.id}`},()=>loadMessagesAdmin())
  .subscribe()
 }
 $("#logoutBtn").onclick=async()=>{if(navigator.onLine){try{await ensureSupabase();await supabase.auth.signOut()}catch{}}localStorage.removeItem(OFFLINE_KEY);location.reload()}
 $("#menuBtn").onclick=()=>$("#shell").classList.toggle("menuOpen");
 document.addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)})
 let currentSection="dash",navStack=["dash"];
-function go(id,fromBack=false){if(!document.getElementById(id))return;if(!fromBack&&currentSection!==id)navStack.push(id);currentSection=id;$$('.section').forEach(x=>x.classList.toggle('active',x.id===id));$$('nav [data-go]').forEach(b=>b.classList.toggle('active',b.dataset.go===id));$('#shell').classList.remove('menuOpen');history.replaceState({wpSection:id},'',`#${id}`);window.scrollTo(0,0)}
+function go(id,fromBack=false){if(!document.getElementById(id))return;if(id==='messages')setTimeout(()=>loadMessagesAdmin(),20);if(!fromBack&&currentSection!==id)navStack.push(id);currentSection=id;$$('.section').forEach(x=>x.classList.toggle('active',x.id===id));$$('nav [data-go]').forEach(b=>b.classList.toggle('active',b.dataset.go===id));$('#shell').classList.remove('menuOpen');history.replaceState({wpSection:id},'',`#${id}`);window.scrollTo(0,0)}
 function appBack(){saveDraft();if(navStack.length>1){navStack.pop();go(navStack[navStack.length-1]||'dash',true);return}if(currentSection!=='dash'){go('dash',true);navStack=['dash'];return}const t=$('#syncStatus');if(t){const old=t.textContent;t.textContent='Você já está na tela inicial';setTimeout(()=>updateSyncBar(),1200)}}
 window.appBack=appBack;
 history.replaceState({wpSection:'dash'},'','#dash');window.addEventListener('popstate',()=>{appBack();history.pushState({wpSection:currentSection},'',`#${currentSection}`)});
 setTimeout(()=>{try{const A=window.Capacitor?.Plugins?.App;A?.addListener?.('backButton',()=>appBack())}catch(e){console.warn(e)}},300);
 
 
-function renderAll(){renderDash();renderClients();renderLocations();renderAssets();renderPmoc();renderOrders();renderClientSelect();renderOrderRelations();renderGalleryFilters();renderGallery();renderRtSelectors()}
+function renderAll(){renderDash();renderClients();renderLocations();renderAssets();renderPmoc();renderOrders();renderClientSelect();renderOrderRelations();renderGalleryFilters();renderGallery();renderRtSelectors();updateMessageBadge();if(currentSection==="messages")loadMessagesAdmin()}
 function renderDash(){$("#sClients").textContent=clients.length;$("#sOrders").textContent=orders.length;$("#sOpen").textContent=orders.filter(o=>o.status!=="Concluída").length;$("#sDone").textContent=orders.filter(o=>o.status==="Concluída").length;$("#sAssets").textContent=assets.length;$("#sPmoc").textContent=pmocPlans.filter(p=>p.active!==false).length;$("#recentOrders").innerHTML=orders.slice(0,5).map(orderCard).join("")||'<div class="muted">Nenhuma OS.</div>'}
 
 function displayOrgName(){
