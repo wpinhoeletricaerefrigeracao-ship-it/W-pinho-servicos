@@ -1,0 +1,217 @@
+
+name: Gerar AAB OrbiServ Play Store
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/build-aab.yml"
+
+jobs:
+  build-aab:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "21"
+
+      - name: Preparar projeto Android
+        run: |
+          cd android_ready
+
+          rm -rf android node_modules package-lock.json
+
+          mkdir -p www/vendor
+
+          cp ../index.html www/index.html
+
+          npm init -y
+
+          npm install \
+            @capacitor/core \
+            @capacitor/cli \
+            @capacitor/android \
+            @capacitor/geolocation \
+            @capacitor/app \
+            @capacitor/filesystem \
+            @capacitor/share
+
+          cat > capacitor.config.json <<'EOF'
+          {
+            "appId": "br.com.wpinho.servicos",
+            "appName": "OrbiServ",
+            "webDir": "www"
+          }
+          EOF
+
+          curl -L \
+            https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js \
+            -o www/vendor/supabase.js
+
+          curl -L \
+            https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js \
+            -o www/vendor/qrcode.min.js
+
+          curl -L \
+            https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js \
+            -o www/vendor/html2pdf.bundle.min.js
+
+          npx cap add android
+          npx cap sync android
+
+      - name: Instalar biblioteca do ícone
+        run: |
+          python3 -m pip install Pillow
+
+      - name: Aplicar ícone OrbiServ
+        run: |
+          python3 - <<'PY'
+          from PIL import Image
+          import os
+
+          src = "app-icon.png"
+
+          img = Image.open(src).convert("RGBA")
+
+          sizes = {
+              "mipmap-mdpi": 48,
+              "mipmap-hdpi": 72,
+              "mipmap-xhdpi": 96,
+              "mipmap-xxhdpi": 144,
+              "mipmap-xxxhdpi": 192
+          }
+
+          base = "android_ready/android/app/src/main/res"
+
+          for folder, size in sizes.items():
+              path = os.path.join(base, folder)
+              os.makedirs(path, exist_ok=True)
+
+              icon = img.resize((size, size), Image.LANCZOS)
+
+              icon.save(os.path.join(path, "ic_launcher.png"))
+              icon.save(os.path.join(path, "ic_launcher_round.png"))
+
+          print("Ícone OrbiServ aplicado com sucesso.")
+          PY
+
+      - name: Configurar permissões Android
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path(
+              "android_ready/android/app/src/main/AndroidManifest.xml"
+          )
+
+          text = path.read_text()
+
+          permissions = [
+              '<uses-permission android:name="android.permission.INTERNET" />',
+              '<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />',
+              '<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />',
+              '<uses-permission android:name="android.permission.CAMERA" />'
+          ]
+
+          pos = text.find("<application")
+
+          for permission in permissions:
+              if permission not in text:
+                  text = text[:pos] + permission + "\n    " + text[pos:]
+                  pos = text.find("<application")
+
+          path.write_text(text)
+
+          print("Permissões Android configuradas.")
+          PY
+
+      - name: Garantir nome OrbiServ
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path(
+              "android_ready/android/app/src/main/res/values/strings.xml"
+          )
+
+          text = path.read_text()
+
+          text = text.replace(
+              "W.Pinho Serviços PRO",
+              "OrbiServ"
+          )
+
+          text = text.replace(
+              "W.Pinho Serviços",
+              "OrbiServ"
+          )
+
+          path.write_text(text)
+
+          print("Nome OrbiServ configurado.")
+          PY
+
+      - name: Preparar assinatura de publicação
+        env:
+          ORBISERV_KEYSTORE_BASE64: ${{ secrets.ORBISERV_KEYSTORE_BASE64 }}
+          ORBISERV_KEYSTORE_PASSWORD: ${{ secrets.ORBISERV_KEYSTORE_PASSWORD }}
+          ORBISERV_KEY_ALIAS: ${{ secrets.ORBISERV_KEY_ALIAS }}
+          ORBISERV_KEY_PASSWORD: ${{ secrets.ORBISERV_KEY_PASSWORD }}
+        run: |
+          set -euo pipefail
+          for var in ORBISERV_KEYSTORE_BASE64 ORBISERV_KEYSTORE_PASSWORD ORBISERV_KEY_ALIAS ORBISERV_KEY_PASSWORD; do
+            if [ -z "${!var}" ]; then
+              echo "ERRO: Configure o secret $var antes de executar o workflow."
+              exit 1
+            fi
+          done
+          printf '%s' "$ORBISERV_KEYSTORE_BASE64" | base64 --decode > android_ready/android/app/orbiserv-upload.jks
+          chmod 600 android_ready/android/app/orbiserv-upload.jks
+          cat >> android_ready/android/app/build.gradle <<'EOF'
+
+          android {
+              signingConfigs {
+                  orbiservUpload {
+                      storeFile file('orbiserv-upload.jks')
+                      storePassword System.getenv('ORBISERV_KEYSTORE_PASSWORD')
+                      keyAlias System.getenv('ORBISERV_KEY_ALIAS')
+                      keyPassword System.getenv('ORBISERV_KEY_PASSWORD')
+                  }
+              }
+              buildTypes {
+                  release {
+                      signingConfig signingConfigs.orbiservUpload
+                  }
+              }
+          }
+          EOF
+
+      - name: Compilar AAB de publicação
+        env:
+          ORBISERV_KEYSTORE_PASSWORD: ${{ secrets.ORBISERV_KEYSTORE_PASSWORD }}
+          ORBISERV_KEY_ALIAS: ${{ secrets.ORBISERV_KEY_ALIAS }}
+          ORBISERV_KEY_PASSWORD: ${{ secrets.ORBISERV_KEY_PASSWORD }}
+        run: |
+          cd android_ready/android
+          chmod +x gradlew
+          ./gradlew bundleRelease
+
+      - name: Publicar AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: OrbiServ-PlayStore-AAB
+          path: android_ready/android/app/build/outputs/bundle/release/app-release.aab
+          if-no-files-found: error
