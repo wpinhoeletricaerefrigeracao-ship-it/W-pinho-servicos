@@ -1,0 +1,57 @@
+
+name: Criar chave de assinatura OrbiServ
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gerar-chave:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Preparar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Verificar senha segura
+        shell: bash
+        env:
+          STORE_PASSWORD: ${{ secrets.ORBISERV_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.ORBISERV_KEY_PASSWORD }}
+        run: |
+          if [ -z "$STORE_PASSWORD" ] || [ -z "$KEY_PASSWORD" ]; then
+            echo "::error::Configure primeiro ORBISERV_STORE_PASSWORD e ORBISERV_KEY_PASSWORD nos Secrets."
+            exit 1
+          fi
+
+      - name: Gerar chave Android
+        shell: bash
+        env:
+          STORE_PASSWORD: ${{ secrets.ORBISERV_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.ORBISERV_KEY_PASSWORD }}
+        run: |
+          keytool -genkeypair \
+            -keystore orbiserv-upload.jks \
+            -storetype JKS \
+            -alias orbiserv \
+            -keyalg RSA \
+            -keysize 3072 \
+            -validity 10000 \
+            -storepass "$STORE_PASSWORD" \
+            -keypass "$KEY_PASSWORD" \
+            -dname "CN=OrbiServ, OU=Aplicativos, O=OrbiServ, L=Imperatriz, ST=Maranhao, C=BR"
+
+      - name: Disponibilizar chave para backup
+        uses: actions/upload-artifact@v4
+        with:
+          name: orbiserv-chave-assinatura
+          path: orbiserv-upload.jks
+          retention-days: 1
+          if-no-files-found: error
+          
